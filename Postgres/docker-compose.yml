@@ -1,0 +1,42 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+# networks:
+#   lab:
+#     name: auth-network
+#     internal: true
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 10.0.103.0/24
+
+services:
+
+  db:
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ./postgres-data/:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+# services:
+#   ssh-server:
+#     build: ./ssh_server
+#     container_name: ssh-server
+#     hostname: ssh-server
+#     restart: always
+#     privileged: true
+#     networks:
+#       lab:
+#         ipv4_address: 10.0.103.2
+    # volumes:
+    #   - ./ssh_server:/s_keys    
+
+
