@@ -1,7 +1,7 @@
 
 # Start PostgreSQL Database Server container in a terminal
-docker-compose up db
 docker-compose up db -d
+docker-compose up db 
 
 
 # Log into the PostgreSQL container
@@ -18,8 +18,8 @@ grant all privileges on database ma to ma ;
 
 
 # pgAdminer
-docker-compose up adminer
 docker-compose up adminer -d
+docker-compose up adminer 
 
 http://127.0.0.1:8080
 # Default username for PostgreSQL 
