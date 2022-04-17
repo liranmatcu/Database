@@ -20,9 +20,9 @@ services:
     container_name: pg-container
     hostname: pg-server
     restart: always
-    # environment:
-    #   POSTGRES_USER: postgres
-    #   POSTGRES_PASSWORD: example
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     volumes:
       - ./data/:/var/lib/postgresql/data
     ports:
