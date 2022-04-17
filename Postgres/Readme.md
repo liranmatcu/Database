@@ -1,6 +1,6 @@
 
 # Start PostgreSQL Database Server container in a terminal
-docker-compose up db -d
+docker-compose up -d db 
 docker-compose up db 
 
 
@@ -21,10 +21,12 @@ grant all privileges on database ma to ma ;
 
 
 # pgAdmin
-docker-compose up pgadmin -d
+docker-compose up -d pgadmin
+admin@db.io/password
+
 
 # Adminer
-docker-compose up adminer -d
+docker-compose up -d adminer 
 docker-compose up adminer 
 
 http://127.0.0.1:8080
