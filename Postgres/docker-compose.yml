@@ -28,11 +28,22 @@ services:
     ports:
       - 5432:5432
 
+  pgadmin:
+    container_name: pgadmin4-container
+    image: dpage/pgadmin4
+    hostname: pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin
+      PGADMIN_DEFAULT_PASSWORD: secret
+    ports:
+      - "5050:80"
+
   adminer:
     image: adminer
     container_name: adminer
     environment:
-      PGADMIN_DEFAULT_EMAIL: sf@tcu.edu
+      PGADMIN_DEFAULT_EMAIL: admin@eurekalabs.net
       PGADMIN_DEFAULT_PASSWORD: secret
     ports:
       - 8080:8080
@@ -49,9 +60,12 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: test_db
     volumes:
-      - ./data/:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
+      - ./data2/:/var/lib/postgresql/data
+    # ports:
+    #   - 5432:5432
+
+
+
 
 # services:
 #   ssh-server:
