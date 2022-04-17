@@ -1,30 +1,57 @@
-# Use postgres/example user/password credentials
-version: '3.1'
+
+version: '3.8'
 
 # networks:
 #   lab:
-#     name: auth-network
+#     name: db-network
 #     internal: true
 #     driver: bridge
 #     ipam:
 #       config:
 #         - subnet: 10.0.103.0/24
 
+
 services:
 
+# Use postgres/example as user/password credentials
   db:
-    image: postgres:14.2-alpine
+    # image: postgres:14.2-alpine
+    image: postgres:14.2
+    container_name: pg-container
+    hostname: pg-server
     restart: always
-    environment:
-      POSTGRES_PASSWORD: example
+    # environment:
+    #   POSTGRES_USER: postgres
+    #   POSTGRES_PASSWORD: example
     volumes:
-      - ./postgres-data/:/var/lib/postgresql/data
+      - ./data/:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
 
   adminer:
     image: adminer
-    restart: always
+    container_name: adminer
+    environment:
+      PGADMIN_DEFAULT_EMAIL: sf@tcu.edu
+      PGADMIN_DEFAULT_PASSWORD: secret
     ports:
       - 8080:8080
+    restart: always
+
+
+# Use different as user/password credentials
+  db2:
+    image: postgres:14.2-alpine
+    container_name: pgdb
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: test_db
+    volumes:
+      - ./data/:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
 
 # services:
 #   ssh-server:
