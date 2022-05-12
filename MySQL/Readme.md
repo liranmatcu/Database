@@ -8,8 +8,23 @@ docker-compose up mysql
 
 docker-compose up -d mysql
 
+docker exec -it mysql bash
+
+mysql -u root -p  
+(password for root is password)
+
+show databases;
+
+create database TCU;
+show databases;
+use TCU;
+
+create table STUDENT (
+	sid int(7),
+	sname varchar(30),
+	sdno int(5));
+
+describe STUDENT;
 
 
-https://towardsdatascience.com/local-development-set-up-of-postgresql-with-docker-c022632f13ea
-
-https://hub.docker.com/_/postgres
+insert into STUDENT values (30, 'John Doe', 20);
