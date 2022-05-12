@@ -1,0 +1,123 @@
+
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'superfrog'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'password'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - ./data:/var/lib/mysql
+
+
+  mysql-workbench:
+    image: lscr.io/linuxserver/mysql-workbench:latest
+    container_name: mysql-workbench
+    environment:
+      - PUID=1000
+      - PGID=1000
+      # - TZ=America/Chicago
+    volumes:
+      - ./workbench:/config
+    ports:
+      - 3000:3000
+    cap_add:
+      - IPC_LOCK
+    restart: unless-stopped
+
+# networks:
+#   lab:
+#     name: db-network
+#     internal: true
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 10.0.103.0/24
+
+
+# services:
+
+# # Use postgres/example as user/password credentials
+#   db:
+#     # image: postgres:14.2-alpine
+#     image: postgres:14.2
+#     container_name: pg-container
+#     hostname: pg-server
+#     restart: always
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#     volumes:
+#       - ./data/:/var/lib/postgresql/data
+#     ports:
+#       - 5432:5432
+
+
+#   pgadmin:
+#     container_name: pgadmin4-container
+#     image: dpage/pgadmin4
+#     hostname: pgadmin4
+#     restart: always
+#     environment:
+#       PGADMIN_DEFAULT_EMAIL: admin@db.io
+#       PGADMIN_DEFAULT_PASSWORD: password
+#     ports:
+#       - "5050:80"
+
+
+#   adminer:
+#     image: adminer
+#     container_name: adminer
+#     environment:
+#       PGADMIN_DEFAULT_EMAIL: admin@eurekalabs.net
+#       PGADMIN_DEFAULT_PASSWORD: secret
+#     ports:
+#       - 8080:8080
+#     restart: always
+
+
+# # Use different as user/password credentials
+#   db2:
+#     image: postgres:14.2-alpine
+#     container_name: pgdb
+#     restart: always
+#     environment:
+#       POSTGRES_USER: root
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: test_db
+#     volumes:
+#       - ./data2/:/var/lib/postgresql/data
+#     # ports:
+#     #   - 5432:5432
+
+
+
+
+# services:
+#   ssh-server:
+#     build: ./ssh_server
+#     container_name: ssh-server
+#     hostname: ssh-server
+#     restart: always
+#     privileged: true
+#     networks:
+#       lab:
+#         ipv4_address: 10.0.103.2
+    # volumes:
+    #   - ./ssh_server:/s_keys    
+
+
