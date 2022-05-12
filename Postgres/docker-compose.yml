@@ -69,17 +69,3 @@ services:
 
 
 
-# services:
-#   ssh-server:
-#     build: ./ssh_server
-#     container_name: ssh-server
-#     hostname: ssh-server
-#     restart: always
-#     privileged: true
-#     networks:
-#       lab:
-#         ipv4_address: 10.0.103.2
-    # volumes:
-    #   - ./ssh_server:/s_keys    
-
-
