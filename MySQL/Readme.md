@@ -1,15 +1,14 @@
-https://medium.com/@chrischuck35/how-to-create-a-mysql-instance-with-docker-compose-1598f3cc1bee
-
-
-
 
 # Start MySQL Database Server container in a terminal
-docker-compose up mysql
-
 docker-compose up -d mysql
+(or docker-compose up mysql if you want to view debug info)
 
+
+# Drop into the mysql container
 docker exec -it mysql bash
 
+
+# Operate mysql database
 mysql -u root -p  
 (password for root is password)
 
@@ -31,3 +30,9 @@ insert into STUDENT values (30, 'John Doe', 20);
 
 
 select * from STUDENT;
+
+
+
+# Reference
+https://medium.com/@chrischuck35/how-to-create-a-mysql-instance-with-docker-compose-1598f3cc1bee
+
