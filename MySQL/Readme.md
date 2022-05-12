@@ -36,3 +36,14 @@ select * from STUDENT;
 # Reference
 https://medium.com/@chrischuck35/how-to-create-a-mysql-instance-with-docker-compose-1598f3cc1bee
 
+
+
+# Adminer
+docker-compose up -d adminer 
+docker-compose up adminer 
+
+http://127.0.0.1:8080
+# Default username for MySQL 
+root	
+# Default password is 
+password
