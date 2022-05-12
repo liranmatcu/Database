@@ -28,3 +28,6 @@ describe STUDENT;
 
 
 insert into STUDENT values (30, 'John Doe', 20);
+
+
+select * from STUDENT;
