@@ -49,35 +49,6 @@ services:
 #         - subnet: 10.0.103.0/24
 
 
-# services:
-
-# # Use postgres/example as user/password credentials
-#   db:
-#     # image: postgres:14.2-alpine
-#     image: postgres:14.2
-#     container_name: pg-container
-#     hostname: pg-server
-#     restart: always
-#     environment:
-#       POSTGRES_USER: postgres
-#       POSTGRES_PASSWORD: password
-#     volumes:
-#       - ./data/:/var/lib/postgresql/data
-#     ports:
-#       - 5432:5432
-
-
-#   pgadmin:
-#     container_name: pgadmin4-container
-#     image: dpage/pgadmin4
-#     hostname: pgadmin4
-#     restart: always
-#     environment:
-#       PGADMIN_DEFAULT_EMAIL: admin@db.io
-#       PGADMIN_DEFAULT_PASSWORD: password
-#     ports:
-#       - "5050:80"
-
 
 #   adminer:
 #     image: adminer
@@ -105,19 +76,5 @@ services:
 #     #   - 5432:5432
 
 
-
-
-# services:
-#   ssh-server:
-#     build: ./ssh_server
-#     container_name: ssh-server
-#     hostname: ssh-server
-#     restart: always
-#     privileged: true
-#     networks:
-#       lab:
-#         ipv4_address: 10.0.103.2
-    # volumes:
-    #   - ./ssh_server:/s_keys    
 
 
