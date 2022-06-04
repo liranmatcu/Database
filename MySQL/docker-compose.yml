@@ -9,8 +9,10 @@ services:
     container_name: mysql
     hostname: mysql
     environment:
+      # The default database to be created
       MYSQL_DATABASE: 'db'
-      # So you don't have to use root, but you can if you like
+      # The user that you would like to use to manage the database
+      # So you don not have to use root, but you can if you like
       MYSQL_USER: 'superfrog'
       # You can use whatever password you like
       MYSQL_PASSWORD: 'password'
@@ -26,6 +28,7 @@ services:
     volumes:
       - ./data:/var/lib/mysql
 
+
   phpmyadmin:
     image: phpmyadmin:latest
     ports:
@@ -36,6 +39,7 @@ services:
       PMA_USER: 'superfrog'
       PMA_PASSWORD: 'password'
     restart: unless-stopped
+
 
   mysql-workbench:
     image: lscr.io/linuxserver/mysql-workbench:latest
