@@ -3,6 +3,10 @@
 docker-compose up -d mysql
 (or docker-compose up mysql if you want to view debug info)
 
+# Start phpmyadmin
+docker-compose up phpmyadmin
+http://127.0.0.1:8080/
+(Not http://localhost:8080/)
 
 # Drop into the mysql container
 docker exec -it mysql bash
