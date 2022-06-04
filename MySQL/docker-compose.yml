@@ -41,6 +41,17 @@ services:
     restart: unless-stopped
 
 
+  adminer:
+    image: adminer
+    container_name: adminer
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@eurekalabs.net
+      PGADMIN_DEFAULT_PASSWORD: secret
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+
+
   mysql-workbench:
     image: lscr.io/linuxserver/mysql-workbench:latest
     container_name: mysql-workbench
@@ -56,16 +67,6 @@ services:
       - IPC_LOCK
     restart: unless-stopped
 
-
-  adminer:
-    image: adminer
-    container_name: adminer
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@eurekalabs.net
-      PGADMIN_DEFAULT_PASSWORD: secret
-    ports:
-      - 8080:8080
-    restart: always
 
 
 
