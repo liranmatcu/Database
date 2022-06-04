@@ -7,6 +7,8 @@ docker-compose up -d mysql
 docker-compose up phpmyadmin
 http://127.0.0.1:8080/
 (Not http://localhost:8080/)
+Automatically log in as superfrog (or root) user
+
 
 # Drop into the mysql container
 docker exec -it mysql bash
