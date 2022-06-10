@@ -35,8 +35,8 @@ services:
       - 8080:80
     environment:
       PMA_HOST: 'mysql-db'
-      PMA_USER: 'root'
-      # PMA_USER: 'superfrog'
+      # PMA_USER: 'root'
+      PMA_USER: 'superfrog'
       PMA_PASSWORD: 'password'
     restart: unless-stopped
 
@@ -71,18 +71,18 @@ services:
   sqlpad:
     image: sqlpad/sqlpad:5.5
     depends_on:
-      - mysql-db
+      - 'mysql-db'
     ports:
-      - "3000:3000"
+      - 3000:3000
     environment:
       SQLPAD_AUTH_DISABLED: 'true'
-      # SQLPAD_AUTH_DISABLED_DEFAULT_ROLE: 'admin'
+      SQLPAD_AUTH_DISABLED_DEFAULT_ROLE: 'admin'
       SQLPAD_APP_LOG_LEVEL: debug
       SQLPAD_WEB_LOG_LEVEL: warn
       SQLPAD_CONNECTIONS__mysql__name: mysql
       SQLPAD_CONNECTIONS__mysql__driver: mysql
-      SQLPAD_CONNECTIONS__mysql__host: localhost
-      SQLPAD_CONNECTIONS__mysql__username: 'superfrog'
+      SQLPAD_CONNECTIONS__mysql__host: 'mysql-db'
+      SQLPAD_CONNECTIONS__mysql__username: 'root'
       SQLPAD_CONNECTIONS__mysql__password: 'password'
       SQLPAD_CONNECTIONS__mysql__database: 'tcu'
 
