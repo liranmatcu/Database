@@ -1,7 +1,7 @@
 
 # Start MySQL database server container
-docker-compose up -d mysql
-(or docker-compose up mysql if you want to view debug info)
+docker-compose up -d db
+(or docker-compose up db/mysql if you want to view debug info)
 
 ## Drop into the mysql container
 docker exec -it mysql bash
