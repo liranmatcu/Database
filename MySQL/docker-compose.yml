@@ -2,7 +2,7 @@
 version: '3.8'
 
 services:
-  mysql:
+  db:
     image: mysql:latest
     # image: mysql:5.7
     container_name: mysql
@@ -34,7 +34,7 @@ services:
     ports:
       - 8080:80
     environment:
-      PMA_HOST: 'mysql'
+      PMA_HOST: 'db'
       # PMA_USER: 'root'
       PMA_USER: 'superfrog'
       PMA_PASSWORD: 'password'
@@ -68,6 +68,22 @@ services:
     restart: unless-stopped
 
 
+  sqlpad:
+    image: sqlpad/sqlpad:5.5
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      SQLPAD_AUTH_DISABLED: 'true'
+      # SQLPAD_AUTH_DISABLED_DEFAULT_ROLE: 'admin'
+      SQLPAD_APP_LOG_LEVEL: debug
+      SQLPAD_WEB_LOG_LEVEL: warn
+      SQLPAD_CONNECTIONS__mysql__name: mysql
+      SQLPAD_CONNECTIONS__mysql__driver: mysql
+      SQLPAD_CONNECTIONS__mysql__host: localhost
+      SQLPAD_CONNECTIONS__mysql__username: 'superfrog'
+      SQLPAD_CONNECTIONS__mysql__password: 'password'
 
 
 
