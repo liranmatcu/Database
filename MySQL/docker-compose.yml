@@ -66,27 +66,3 @@ services:
     cap_add:
       - IPC_LOCK
     restart: unless-stopped
-
-
-  sqlpad:
-    image: sqlpad/sqlpad:5.5
-    depends_on:
-      - 'mysql-db'
-    ports:
-      - 3000:3000
-    environment:
-      SQLPAD_AUTH_DISABLED: 'true'
-      SQLPAD_AUTH_DISABLED_DEFAULT_ROLE: 'admin'
-      SQLPAD_APP_LOG_LEVEL: debug
-      SQLPAD_WEB_LOG_LEVEL: warn
-      SQLPAD_CONNECTIONS__mysql__name: mysql
-      SQLPAD_CONNECTIONS__mysql__driver: mysql
-      SQLPAD_CONNECTIONS__mysql__host: 'mysql-db'
-      SQLPAD_CONNECTIONS__mysql__username: 'root'
-      SQLPAD_CONNECTIONS__mysql__password: 'password'
-      SQLPAD_CONNECTIONS__mysql__database: 'tcu'
-
-
-
-
-
