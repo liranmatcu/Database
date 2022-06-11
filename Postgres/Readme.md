@@ -1,7 +1,7 @@
 
 # Start PostgreSQL Database Server container in a terminal
-docker-compose up -d db 
-docker-compose up db 
+docker-compose up -d pgdb 
+docker-compose up pgdb 
 
 
 # Log into the PostgreSQL container
