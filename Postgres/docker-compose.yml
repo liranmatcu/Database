@@ -18,7 +18,7 @@ services:
     # image: postgres:14.2-alpine
     image: postgres:14.2
     container_name: pg-container
-    hostname: pg-server
+    hostname: pgdb
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -44,6 +44,8 @@ services:
   adminer:
     image: adminer
     container_name: adminer
+    depends_on: 
+      - 'pgdb'
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@eurekalabs.net
       PGADMIN_DEFAULT_PASSWORD: secret
