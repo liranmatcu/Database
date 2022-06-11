@@ -46,9 +46,15 @@ services:
   adminer:
     image: adminer
     container_name: adminer
+    depends_on: 
+      - 'mdb'
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@eurekalabs.net
-      PGADMIN_DEFAULT_PASSWORD: secret
+      # PGADMIN_DEFAULT_EMAIL: admin@eurekalabs.net
+      # PGADMIN_DEFAULT_PASSWORD: secret
+      ADMINER_DEFAULT_SERVER: 'mdb'
+      ADMINER_DEFAULT_DB_NAME: 'tcu'
+      ADMINER_DESIGN: nette
+      ADMINER_PLUGINS: tables-filter tinymce
     ports:
       - 8080:8080
     restart: unless-stopped
