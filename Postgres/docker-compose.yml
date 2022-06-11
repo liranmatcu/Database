@@ -14,7 +14,7 @@ version: '3.8'
 services:
 
 # Use postgres/example as user/password credentials
-  db:
+  pgdb:
     # image: postgres:14.2-alpine
     image: postgres:14.2
     container_name: pg-container
@@ -47,15 +47,16 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@eurekalabs.net
       PGADMIN_DEFAULT_PASSWORD: secret
+      ADMINER_DEFAULT_SERVER: 'pgdb'
     ports:
       - 8080:8080
     restart: always
 
 
 # Use different as user/password credentials
-  db2:
+  pgdb2:
     image: postgres:14.2-alpine
-    container_name: pgdb
+    container_name: pgdb2
     restart: always
     environment:
       POSTGRES_USER: root
