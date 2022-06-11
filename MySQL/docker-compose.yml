@@ -31,6 +31,8 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:latest
+    container_name: phpmyadmin
+    hostname: phpmyadmin
     ports:
       - 8080:80
     environment:
