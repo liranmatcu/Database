@@ -2,7 +2,7 @@
 version: '3.8'
 
 services:
-  mysql-db:
+  mdb:
     image: mysql:latest
     # image: mysql:5.7
     container_name: mysql
@@ -34,7 +34,7 @@ services:
     ports:
       - 8080:80
     environment:
-      PMA_HOST: 'mysql-db'
+      PMA_HOST: 'mdb'
       # PMA_USER: 'root'
       PMA_USER: 'superfrog'
       PMA_PASSWORD: 'password'
