@@ -1,13 +1,14 @@
-
 # Start MySQL database server container
 docker-compose up -d mdb
 (or docker-compose up mdb if you want to view debug info)
 
 ## Drop into the mysql container
 docker exec -it mysql bash
+mysql -u root -p
 
-
-
+<!-- ALTER USER 'superfrog'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT ALL PRIVILEGES ON tcu.* TO 'superfrog'@'%';
+FLUSH PRIVILEGES; -->
 
 # Start phpmyadmin container
 docker-compose up phpmyadmin
@@ -32,6 +33,10 @@ root
 password
 
 
+# Start SQLPad
+docker-compose up sqlpad
+sf@tcu.edu (username/email)
+frog (password)
 
 # Example mysql commands
 mysql -u root -p  
