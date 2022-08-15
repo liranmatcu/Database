@@ -29,20 +29,6 @@ services:
       MYSQL_ROOT_PASSWORD: 'password'
 
 
-  phpmyadmin:
-    image: phpmyadmin:latest
-    container_name: phpmyadmin
-    hostname: phpmyadmin
-    ports:
-      - 8080:80
-    environment:
-      PMA_HOST: 'mdb'
-      # PMA_USER: 'root'
-      PMA_USER: 'superfrog'
-      PMA_PASSWORD: 'password'
-    restart: unless-stopped
-
-
   adminer:
     image: adminer
     container_name: adminer
@@ -56,6 +42,20 @@ services:
       ADMINER_PLUGINS: tables-filter tinymce
     ports:
       - 8080:8080
+    restart: unless-stopped
+
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    hostname: phpmyadmin
+    ports:
+      - 80:80
+    environment:
+      PMA_HOST: 'mdb'
+      # PMA_USER: 'root'
+      PMA_USER: 'superfrog'
+      PMA_PASSWORD: 'password'
     restart: unless-stopped
 
 
