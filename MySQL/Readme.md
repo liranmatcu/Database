@@ -15,8 +15,8 @@ docker-compose up phpmyadmin
 docker-compose up -d phpmyadmin
 
 ## View MySQL server as the superfrog user in a browser
-http://127.0.0.1:8080/
-(Or http://localhost:8080/)
+http://127.0.0.1
+(Or http://localhost)
 Automatically log in as superfrog (or root) user
 
 
