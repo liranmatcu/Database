@@ -1,4 +1,4 @@
-# Source: https://geshan.com.np/blog/2022/01/redis-docker/
+# Reference: https://geshan.com.np/blog/2022/01/redis-docker/
 
 # Start
 docker-compose up cache
