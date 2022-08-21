@@ -17,6 +17,7 @@ services:
     volumes: 
       # Where our data will be persisted
       - ./data:/var/lib/mysql
+      - ./resources:/resources
     environment:
       # The default database to be created
       MYSQL_DATABASE: 'tcu'
