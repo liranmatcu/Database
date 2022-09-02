@@ -55,8 +55,8 @@ services:
       - 80:80
     environment:
       PMA_HOST: 'mdb'
-      # PMA_USER: 'root'
-      PMA_USER: 'superfrog'
+      PMA_USER: 'root'
+      # PMA_USER: 'superfrog'
       PMA_PASSWORD: 'password'
     restart: unless-stopped
 
