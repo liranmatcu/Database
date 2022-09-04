@@ -18,7 +18,7 @@ http://127.0.0.1:8081 or http://localhost:8081
 Reference: https://github.com/mongo-express/mongo-express
 
 
-# Start Mongoku 
+# Start Mongoku for query different collections
 docker-compose up -d mongoku
 # Access Mongoku via a browser
 http://127.0.0.1:3100/
