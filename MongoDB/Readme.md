@@ -1,16 +1,16 @@
 # Start MongoDB server and Mongo-express
 docker-compose up -d
 
-# Start MongoDB server container
+## Start MongoDB server container alone
 docker-compose up -d mongo
 
-## Drop into the  MongoDB container
+## Drop into the MongoDB container via mongo shell
 docker exec -it mongo mongosh admin -u root -p password
 Default password for root is: password
 <!-- mongo admin -u root -p rootpassword -->
 
 
-# Access Mongo-express via a browser
+# Access MongoDB server via Mongo-express in a browser
 http://127.0.0.1:8081
 or
 http://localhost:8081
