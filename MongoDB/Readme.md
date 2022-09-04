@@ -20,6 +20,14 @@ mexpress
 # Default password is 
 mexpress
 
+Reference: https://github.com/mongo-express/mongo-express
+
+
+
+# Access Mongoku via a browser
+http://127.0.0.1:3100/
+Reference: https://github.com/huggingface/Mongoku
+
 
 
 # Reference
