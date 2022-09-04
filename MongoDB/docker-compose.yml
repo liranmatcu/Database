@@ -17,6 +17,7 @@ services:
       # - ./database/dev.archive:/Databases/dev.archive
       # - ./database/production:/Databases/production
 
+
   mongo-express:
     image: mongo-express
     container_name: mexpress
@@ -31,3 +32,18 @@ services:
     restart: unless-stopped
     ports:
       - "8081:8081"
+
+
+  mongoku:
+    image: huggingface/mongoku
+    container_name: mongoku
+    ports:
+      - 3100:3100
+    expose:
+      - 3100
+    environment:
+      MONGOKU_DEFAULT_HOST: "mongodb://root:password@mongo:27017"
+      # MONGOKU_DEFAULT_HOST: "mongodb://root:password@mongo:27017/?authMechanism=SCRAM-SHA-1"
+    depends_on:
+      - mongo
+    restart: always
