@@ -8,7 +8,7 @@ Default password for root is: password
 
 
 # Start Mongo-express
-docker-compose up -d
+docker-compose up -d mongo-express
 ## Access MongoDB server via Mongo-express in a browser
 http://127.0.0.1:8081 or http://localhost:8081
 
