@@ -5,7 +5,7 @@ menu_options = {
     1: 'Add a Publisher',
     2: 'Add a Book',
     3: 'Edit a Book',
-    # more options to be added
+    # More options to be added
     5: 'Search Books',
     6: 'Exit',
 }
@@ -25,15 +25,16 @@ def option2():
     print('Handle option \'Option 2\'')
 
 def option5():
-    # Make a sub-menu
+    # A sub-menu may be needed
     cursor = connection.cursor()
     query = "select * from bookmanager.Book"
     cursor.execute(query)
     results = cursor.fetchall()
+    # print(results)
+    
     print("The following are the all books.")
     for item in results:
         print(item[1])
-    # print(results)
     print("The end of all books.")
 
 
@@ -48,13 +49,13 @@ if __name__=='__main__':
             sys.exit(0)
         except:
             print('Wrong input. Please enter a number ...')
-        # Check what choice was entered and act accordingly
 
+        # Check what choice was entered and act accordingly
         if option == 1:
            option1()
         elif option == 2:
             option2()
-        # more options to be added
+        # More options to be added
         elif option == 5:
             option5()
         elif option == 6:
