@@ -5,7 +5,7 @@ menu_options = {
     1: 'Add a Publisher',
     2: 'Add a Book',
     3: 'Edit a Book',
-    # more options
+    # more options to be added
     5: 'Search Books',
     6: 'Exit',
 }
@@ -48,7 +48,8 @@ if __name__=='__main__':
             sys.exit(0)
         except:
             print('Wrong input. Please enter a number ...')
-        #Check what choice was entered and act accordingly
+        # Check what choice was entered and act accordingly
+
         if option == 1:
            option1()
         elif option == 2:
