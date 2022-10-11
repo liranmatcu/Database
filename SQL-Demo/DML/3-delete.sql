@@ -3,7 +3,8 @@ USE demo;
 SELECT * FROM iud_demo;
 
 /* DELETE syntax:
-   UPDATE FROM Table
+
+   DELETE FROM Table
    [WHERE conditions]
 */
 
