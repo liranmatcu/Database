@@ -73,6 +73,19 @@ ALTER TABLE t1
     MODIFY COLUMN c2 VARCHAR(30) NOT NULL ;
 DESC t1;
 
+ALTER TABLE t1
+    ADD CHECK ( c3 > 0 AND c3 < 1000);
+
+ALTER TABLE t1
+    DROP CONSTRAINT t1_chk_1;
+
+ALTER TABLE t1
+ADD CONSTRAINT age_chk
+CHECK ( t1.c3 > 10 AND c3 < 100);
+
+SHOW CREATE TABLE t1;
+
+
 -- Change column name and its attributes
 ALTER TABLE t1
 	CHANGE c2 GPA DECIMAL(3.2);
