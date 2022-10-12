@@ -1,14 +1,21 @@
 
 -- Arithmetic operators:
-SELECT 100, 100+1, 100+'1', 100+'a', 100+NULL ;
+SELECT 100, 100+1, 100+'1', 100+'a', 100+NULL
+FROM DUAL;
 
 SELECT 100*2, 100*2.0, 100/2, 100/2.0, 100 DIV 0 ;
 
 SELECT 12%5, 12 MOD -5, -12 MOD -5, -12%5;
 
 USE COMPANY;
+# Select monthly salary
+SELECT Salary/12 "Monthly Salary" FROM EMPLOYEE;
+
+# Select those whose ssn is odd number
 SELECT * FROM EMPLOYEE
 WHERE Ssn%2 = 1;
+
+
 
 -- MySQL Comparison Operators: =, <=> <, >, <=, >=, <>
 SELECT 1='1', 1='a', 0='a', 1=2,1;
