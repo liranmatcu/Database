@@ -1,5 +1,6 @@
 
--- Arithmetic operators:
+-- Arithmetic operators: +, -, *, /, %
+
 SELECT 100, 100+1, 100+'1', 100+'a', 100+NULL
 FROM DUAL;
 
@@ -14,6 +15,11 @@ SELECT Salary/12 "Monthly Salary" FROM EMPLOYEE;
 # Select those whose ssn is odd number
 SELECT * FROM EMPLOYEE
 WHERE Ssn%2 = 1;
+
+
+
+
+
 
 
 
