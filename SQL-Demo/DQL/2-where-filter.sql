@@ -58,16 +58,16 @@ WHERE Super_ssn = NULL;
 -- MySQL Logical Operators: AND, OR, NOT, BETWEEN, IN, XOR
 
 -- Range selection 
-SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE
-	Salary >= 30000 AND Salary <= 40000;
+SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE
+WHERE Salary >= 30000 AND Salary <= 40000;
 
-SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE
-	Salary BETWEEN 30000 AND 40000;
+SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE
+WHERE Salary BETWEEN 30000 AND 40000;
 
-SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE
-	Salary < 30000 OR Salary > 40000;
-SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE
-	Salary NOT BETWEEN 30000 AND 40000;
+SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE
+WHERE Salary < 30000 OR Salary > 40000;
+SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE
+WHERE Salary NOT BETWEEN 30000 AND 40000;
 
 # Exercise
 -- Select the name and salary of those whose
@@ -82,8 +82,8 @@ SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE
 
 
 -- Discrete value search: IN (set), NOT IN (set)
-SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE
-	Salary IN (25000, 30000, 40000); -- in the set specified
+SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE
+WHERE Salary IN (25000, 30000, 40000); -- in the set specified
 
 
 # Exercise:
@@ -91,16 +91,16 @@ SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE
 -- those whose department id is either 1 or 5
 
 
-SELECT Fname AS "First Name", Lname "Last Name", Dno FROM EMPLOYEE WHERE
-	Dno IN (1, 5);
+SELECT Fname AS "First Name", Lname "Last Name", Dno FROM EMPLOYEE
+WHERE Dno IN (1, 5);
 # Would the following work?
-SELECT Fname AS "First Name", Lname "Last Name", Dno FROM EMPLOYEE WHERE
-	Dno = 1 OR 5;
+SELECT Fname AS "First Name", Lname "Last Name", Dno FROM EMPLOYEE
+WHERE Dno = 1 OR 5;
 # How to fix it?
 
 -- those whose department id ranges from 1 to 4
-SELECT Fname AS "First Name", Lname "Last Name", Dno FROM EMPLOYEE WHERE
-	Dno BETWEEN 1 AND 4;
+SELECT Fname AS "First Name", Lname "Last Name", Dno FROM EMPLOYEE
+WHERE Dno BETWEEN 1 AND 4;
 
 
 SELECT DISTINCT (Dno)
