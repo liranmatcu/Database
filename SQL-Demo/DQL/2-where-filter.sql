@@ -1,10 +1,13 @@
 -- Filter with conditions, WHERE
 
+/*
+ Basic syntax SELECT ... FROM ... WHERE ...;
+ */
+
+
 USE COMPANY;
-
--- Basic syntax SELECT ... FROM ... WHERE ...;
-
-# MySQL Comparison Operators: =, <=> <, >, <=, >=, <>
+# MySQL Comparison Operators: =, <, >, <=, >=, <>, <=>
+# LEAST() and GREATEST()
 SELECT * FROM EMPLOYEE 
 	WHERE Lname = 'Wallace';
 
@@ -17,13 +20,14 @@ SELECT Fname AS "First Name", Lname "Last Name", Dno FROM EMPLOYEE
 	WHERE Dno = 5;
 
 SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE	
-	Salary >= 10000;
+	Salary > 25000;
+
+SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE
+	Salary <= 25000;
 
 SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE	
 	Salary <> 30000;
-
-SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE
-	Salary != 30000;
+# 	Salary != 30000;
 
 # Exercise
 -- Select all employees whose monthly salary is less than 3000
