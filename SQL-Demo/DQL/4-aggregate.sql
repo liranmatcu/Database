@@ -1,8 +1,9 @@
--- SQL aggregate functions.
+-- SQL aggregate functions: Count(), Sum(), Avg(), Min(), Max()
 
 USE COMPANY;
 SELECT * FROM EMPLOYEE;
 
+# COUNT()
 SELECT COUNT(*) FROM EMPLOYEE;
 SELECT COUNT(1) FROM EMPLOYEE;
 
@@ -10,26 +11,28 @@ SELECT COUNT(Ssn) FROM EMPLOYEE;
 SELECT COUNT(Super_ssn) FROM EMPLOYEE;
 
 
-SELECT COUNT(Salary) FROM EMPLOYEE;
+# AVG()
 SELECT AVG(Salary) FROM EMPLOYEE;
 
-SELECT MIN(Salary) "Minimum Salary" FROM EMPLOYEE;
+SELECT MIN(Salary) AS "Minimum Salary" FROM EMPLOYEE;
 
 SELECT MAX(Salary) "Maximum Salary" FROM EMPLOYEE;
 
+# Get the average salary by supervisor
 SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
 FROM EMPLOYEE
 GROUP BY Super_ssn;
 
+# How to eliminate those without a supervisor?
 SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
 FROM EMPLOYEE
 GROUP BY Super_ssn
-HAVING COUNT(Salary) > 1;
+HAVING COUNT(*) > 1;
 
 SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
 FROM EMPLOYEE
 GROUP BY Super_ssn
-HAVING COUNT(Ssn) > 1;
+HAVING COUNT(1) > 1;
 
 
 SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
