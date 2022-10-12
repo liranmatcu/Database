@@ -41,6 +41,8 @@ WHERE Super_ssn = NULL;
 # WHERE Super_ssn != NULL;
 # WHERE Super_ssn <=> NULL;
 # WHERE Super_ssn IS NULL ;
+# WHERE NOT Super_ssn <=> NULL;
+# WHERE Super_ssn IS NOT NULL ;
 
 
 -- MySQL Logical Operators: AND, OR, NOT, BETWEEN, IN, XOR
