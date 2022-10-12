@@ -4,10 +4,10 @@ USE COMPANY;
 
 -- Basic syntax SELECT ... FROM ...;
 
--- Select all tuples (*) with all attributes
+-- Select all tuples (*) with all columns/attributes
 SELECT * FROM EMPLOYEE;
 
--- Select all tuples with certain attributes
+-- Select all tuples with certain columns/attributes
 SELECT Fname, Lname FROM EMPLOYEE;
  
 
