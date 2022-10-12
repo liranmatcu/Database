@@ -1,32 +1,38 @@
 -- Filter with conditions, WHERE
 
 /*
- Basic syntax SELECT ... FROM ... WHERE ...;
+ Basic syntax SELECT ... FROM ... WHERE conditions;
  */
 
-
 USE COMPANY;
+
 # MySQL Comparison Operators: =, <, >, <=, >=, <>, <=>
 # LEAST() and GREATEST()
-SELECT * FROM EMPLOYEE 
-	WHERE Lname = 'Wallace';
+SELECT *
+FROM EMPLOYEE
+WHERE Lname = 'Wallace';
 
 -- Does the letter case matter?
-SELECT * FROM EMPLOYEE 
-	WHERE Lname = 'wallace';
+SELECT *
+FROM EMPLOYEE
+WHERE Lname = 'wallace';
     
     
-SELECT Fname AS "First Name", Lname "Last Name", Dno FROM EMPLOYEE
-	WHERE Dno = 5;
+SELECT Fname AS "First Name", Lname "Last Name", Dno
+FROM EMPLOYEE
+WHERE Dno = 5;
 
-SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE	
-	Salary > 25000;
+SELECT Fname AS "First Name", Lname "Last Name", Salary
+FROM EMPLOYEE
+WHERE Salary > 25000;
 
-SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE
-	Salary <= 25000;
+SELECT Fname AS "First Name", Lname "Last Name", Salary
+FROM EMPLOYEE
+WHERE Salary <= 25000;
 
-SELECT Fname AS "First Name", Lname "Last Name", Salary FROM EMPLOYEE WHERE	
-	Salary <> 30000;
+SELECT Fname AS "First Name", Lname "Last Name", Salary
+FROM EMPLOYEE
+WHERE Salary <> 30000;
 # 	Salary != 30000;
 
 # Exercise
