@@ -1,5 +1,5 @@
 
--- Arithmetic operators
+-- Arithmetic operators:
 SELECT 100, 100+1, 100+'1', 100+'a', 100+NULL ;
 
 SELECT 100*2, 100*2.0, 100/2, 100/2.0, 100 DIV 0 ;
@@ -10,7 +10,7 @@ USE COMPANY;
 SELECT * FROM EMPLOYEE
 WHERE Ssn%2 = 1;
 
--- Comparison operators
+-- MySQL Comparison Operators: =, <=> <, >, <=, >=, <>
 SELECT 1='1', 1='a', 0='a', 1=2,1;
 
 SELECT 1=NULL, NULL=NULL;
@@ -28,7 +28,18 @@ WHERE Super_ssn = NULL;
 # WHERE Super_ssn IS NULL ;
 # WHERE ISNULL(Super_ssn) ;
 
+# SELECT 1 IS NOT NULL, NULL <=> NULL;
 
+
+/*
+ LEAST() function in MySQL is used to find smallest values
+ from given arguments respectively.
+ If any given value is NULL, it return NULLs.
+ Otherwise it returns the smallest value.
+ */
 SELECT least('a', 'b', 't', 'f' );
-SELECT least(Lname,Fname)
+
+SELECT least(Lname, Fname)
 FROM EMPLOYEE;
+
+-- GREATEST() function
