@@ -35,11 +35,37 @@ SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 
+# Oder the results by Department name
+SELECT concat(Fname, ' ', Lname), Dname
+FROM EMPLOYEE E
+CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno
+ORDER BY Dname DESC ;
+
+# and show page by page, with each page of 5 records
+SELECT concat(Fname, ' ', Lname), Dname
+FROM EMPLOYEE E
+CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno
+ORDER BY Dname DESC
+LIMIT 5;
+
+/*
+ However, cross join is not a preferred approach.
+ */
+
 # Preferred approach: join
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 # This is inner join
+
+
+# Other approaches
+SELECT concat(Fname, ' ', Lname)
+FROM EMPLOYEE
+WHERE exists(
+    SELECT 1 FROM DEPARTMENT D
+             WHERE D.Dnumber = EMPLOYEE.Dno);
+
 
 
 /*
