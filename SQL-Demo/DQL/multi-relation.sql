@@ -66,6 +66,16 @@ WHERE exists(
     SELECT 1 FROM DEPARTMENT D
              WHERE D.Dnumber = EMPLOYEE.Dno);
 
+/*
+ SQL statements that use the EXISTS Condition in MySQL
+ are very inefficient since the sub-query is RE-RUN for EVERY row
+ in the outer query's table.
+ There are more efficient ways to write most queries,
+ that do not use the EXISTS Condition.
+ */
+
+
+-- Nested query
 
 
 /*
