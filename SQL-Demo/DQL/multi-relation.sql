@@ -1,6 +1,41 @@
 USE COMPANY;
 
 /* The need for query multiple relations.
+   Example: Find the names of employees
+   who work for the Research department
+ */
+SELECT concat(Fname, ' ', Lname)
+FROM EMPLOYEE E
+JOIN DEPARTMENT D ON D.Dnumber = E.Dno
+WHERE Dname = 'Research';
+
+-- Nested query
+SELECT concat(Fname, ' ', Lname)
+FROM EMPLOYEE
+WHERE Dno = (
+            SELECT Dnumber
+            FROM DEPARTMENT
+            WHERE Dname = 'Research'
+            );
+
+# EXISTS Condition
+SELECT concat(Fname, ' ', Lname)
+FROM EMPLOYEE
+WHERE exists(
+    SELECT 1
+    FROM DEPARTMENT
+    WHERE Dname = 'Research'
+    );
+
+/*
+ SQL statements that use the EXISTS Condition in MySQL
+ are very inefficient since the sub-query is RE-RUN for EVERY row
+ in the outer query's table.
+ There are more efficient ways to write most queries,
+ that do not use the EXISTS Condition.
+ */
+
+/* The need for query multiple relations.
    Example: Select each Employee's name and the
    department name.
  */
