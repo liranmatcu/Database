@@ -2,19 +2,55 @@ USE COMPANY;
 
 /* The need for query multiple relations.
    Example: Find the names of employees
-   who work for the Research department
+   who work for the 'Research' department
  */
+
+#  Intuitive approach
+SELECT concat(Fname, ' ', Lname)
+FROM EMPLOYEE, DEPARTMENT
+WHERE Dname = 'Research';
+-- Did it work? Why or why not?
+-- How you interpret the results?
+SELECT *
+FROM EMPLOYEE, DEPARTMENT;
+# It is called the Cartesian product.
+
+# It is similar to Cross Join
+SELECT *
+FROM EMPLOYEE
+CROSS JOIN DEPARTMENT;
+
+# How to Fix?
+SELECT concat(Fname, ' ', Lname)
+FROM EMPLOYEE E, DEPARTMENT D
+WHERE Dname = 'Research' AND E.Dno = D.Dnumber;
+# , Dname
+
+# Inner Join
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE
 JOIN DEPARTMENT ON Dnumber = Dno
 WHERE Dname = 'Research';
-# or
+-- or
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno
 WHERE Dname = 'Research';
 
--- Nested query
+-- To make sense of the inner join
+SELECT *
+FROM EMPLOYEE E
+JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
+
+
+# Cross Join
+SELECT concat(Fname, ' ', Lname)
+FROM EMPLOYEE
+CROSS JOIN DEPARTMENT D ON D.Dnumber = EMPLOYEE.Dno
+WHERE Dname = 'Research';
+
+
+# Nested query
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE
 WHERE Dno = (
@@ -40,8 +76,8 @@ WHERE exists(
  that do not use the EXISTS Condition.
  */
 
-/* The need for query multiple relations.
-   Example: Select each Employee's name and the
+/*
+   Task: Show each Employee's name and the
    department name.
  */
 
