@@ -5,6 +5,11 @@ USE COMPANY;
    who work for the Research department
  */
 SELECT concat(Fname, ' ', Lname)
+FROM EMPLOYEE
+JOIN DEPARTMENT ON Dnumber = Dno
+WHERE Dname = 'Research';
+# or
+SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno
 WHERE Dname = 'Research';
