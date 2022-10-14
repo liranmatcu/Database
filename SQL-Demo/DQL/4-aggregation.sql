@@ -19,7 +19,7 @@ SELECT MIN(Salary) AS "Minimum Salary" FROM EMPLOYEE;
 
 SELECT MAX(Salary) "Maximum Salary" FROM EMPLOYEE;
 
-
+# Group By and Having
 -- Get the average salary by supervisor
 SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
 FROM EMPLOYEE
@@ -59,6 +59,11 @@ WHERE Salary IN (
     GROUP BY Dno
     );
 
+-- Find the longest hours in each project
+SELECT max(Hours)
+FROM WORKS_ON
+GROUP BY Pno;
+
 -- Find those who work the longest hours in each project
 SELECT max(Hours)
 FROM WORKS_ON
@@ -84,9 +89,6 @@ WHERE Ssn IN (
                     )
     );
 
-SELECT max(Hours)
-FROM WORKS_ON
-GROUP BY Pno;
 
 
 -- Which department has the most employees?
