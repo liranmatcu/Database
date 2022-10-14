@@ -1,18 +1,24 @@
+USE COMPANY;
+
+/*
+SET Operators (UNION, INTERSECT, Minus) in SQL
+*/
 
 -- Union
 /*
 The UNION set operation is used to combine the outputs 
-of two or more SELECT statements. This will eliminate duplicates 
-from its result set. The number of columns and the datatype must be 
-the same in both the tables on which the UNION operation is being used.
+of two or more SELECT statements. 
+
+This will eliminate duplicates from its result set. 
+
+The number of columns and the datatype must be the same 
+in both the tables on which the UNION operation is being used.
 
 SELECT FROM First
 UNION
 SELECT FROM Second;
-
 */
 
-USE COMPANY;
 
 /*
 Example: 
@@ -42,8 +48,8 @@ SELECT * FROM First
 MINUS
 SELECT * FROM Second;
 
-MySQL does not recognise MINUS and INTERSECT,
-these are Oracle based operations.
+MySQL does not recognize MINUS and INTERSECT,
+which are Oracle based operations.
 In MySQL we can use NOT IN or NOT EXISTS as MINUS.
 
  */
@@ -54,6 +60,7 @@ Example:
 Find the ssn of all employees
 who works on project 20 but not project 30.
 */
+
 SELECT Ssn
 FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
@@ -105,3 +112,5 @@ WHERE Pno = 20 or Pno = 30
 -- WHERE Pno = 10 or Pno = 30
 GROUP BY (Ssn)
 HAVING count(Ssn) >= 2;
+
+
