@@ -42,9 +42,9 @@ SELECT * FROM First
 MINUS
 SELECT * FROM Second;
 
-MySql does not recognise MINUS and INTERSECT,
+MySQL does not recognise MINUS and INTERSECT,
 these are Oracle based operations.
-In MySql a user can use NOT IN or NOT EXISTS as MINUS.
+In MySQL we can use NOT IN or NOT EXISTS as MINUS.
 
  */
 
@@ -75,3 +75,33 @@ AND NOT EXISTS
 
 
 -- Intersect
+/*
+ In MySQL we can use IN or EXISTS as MINUS.
+ */
+
+/*
+ P. 27
+ Find the ssn of all employees
+ who works on project 20 and project 30 simultaneously.
+ */
+
+SELECT Ssn
+FROM EMPLOYEE E
+JOIN WORKS_ON WO ON E.Ssn = WO.Essn
+WHERE Pno = 20
+AND EXISTS
+    (SELECT 1
+    FROM WORKS_ON
+    WHERE Pno = 30 AND E.Ssn = Essn);
+
+SELECT L.Essn
+FROM (SELECT Essn FROM WORKS_ON WHERE Pno = 20) AS L
+JOIN (SELECT Essn FROM WORKS_ON WHERE Pno = 30) AS R
+WHERE L.Essn = R.Essn;
+
+SELECT Ssn FROM EMPLOYEE E
+JOIN WORKS_ON WO ON E.Ssn = WO.Essn
+WHERE Pno = 20 or Pno = 30
+-- WHERE Pno = 10 or Pno = 30
+GROUP BY (Ssn)
+HAVING count(Ssn) >= 2;
