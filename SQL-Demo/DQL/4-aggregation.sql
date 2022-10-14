@@ -84,6 +84,11 @@ WHERE Ssn IN (
                     )
     );
 
+SELECT max(Hours)
+FROM WORKS_ON
+GROUP BY Pno;
+
+
 -- Which department has the most employees?
 SELECT Dno, count(*) AS "counter"
 FROM EMPLOYEE
