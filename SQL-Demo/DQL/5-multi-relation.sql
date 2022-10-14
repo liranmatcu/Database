@@ -1,6 +1,7 @@
 USE COMPANY;
 
 /* The need for query multiple relations.
+
    Example: Find the names of employees
    who work for the 'Research' department
  */
@@ -10,17 +11,22 @@ SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE, DEPARTMENT
 WHERE Dname = 'Research';
 -- Did it work? Why or why not?
+
 -- How you interpret the results?
 SELECT *
+FROM EMPLOYEE;
+SELECT *
+FROM DEPARTMENT;
+SELECT *
 FROM EMPLOYEE, DEPARTMENT;
-# It is called the Cartesian product.
+-- It is called the Cartesian product.
 
 # It is similar to Cross Join
 SELECT *
 FROM EMPLOYEE
 CROSS JOIN DEPARTMENT;
 
-# How to Fix?
+-- How to Fix?
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE E, DEPARTMENT D
 WHERE Dname = 'Research' AND E.Dno = D.Dnumber;
@@ -31,7 +37,7 @@ SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE
 JOIN DEPARTMENT ON Dnumber = Dno
 WHERE Dname = 'Research';
--- or
+-- or with aliasing
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno
@@ -59,6 +65,7 @@ WHERE Dno = (
             WHERE Dname = 'Research'
             );
 
+
 # EXISTS Condition
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE
@@ -76,48 +83,41 @@ WHERE exists(
  that do not use the EXISTS Condition.
  */
 
+
+
+
 /*
    Task: Show each Employee's name and the
    department name.
  */
-
+-- Erroneous solutions
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE, DEPARTMENT;
-
-# How to make sense of the results?
-SELECT count(*)
-FROM EMPLOYEE, DEPARTMENT;
-SELECT count(*)
-FROM EMPLOYEE;
-SELECT count(*)
-FROM DEPARTMENT;
-# This is called Cartesian product
-
-# Like a cross join
+-- Like a cross join
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 CROSS JOIN DEPARTMENT;
 
-# How to get the correct results?
+-- How to get the correct results?
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE, DEPARTMENT
 WHERE EMPLOYEE.Dno = DEPARTMENT.Dnumber;
-# or
+-- or
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E, DEPARTMENT D
 WHERE E.Dno = D.Dnumber;
-# or
+-- or
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 
-# Oder the results by Department name
+-- Oder the results by Department name
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno
 ORDER BY Dname DESC ;
 
-# and show page by page, with each page of 5 records
+-- and show page by page, with each page of 5 records
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno
@@ -127,7 +127,6 @@ LIMIT 5;
 /*
  However, cross join is not a preferred approach.
  */
-
 # Preferred approach: join
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
@@ -135,23 +134,17 @@ JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 # This is inner join
 
 
-# Other approaches
-SELECT concat(Fname, ' ', Lname)
+-- Would exist solution work? 
+SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 WHERE exists(
     SELECT 1 FROM DEPARTMENT D
              WHERE D.Dnumber = EMPLOYEE.Dno);
+-- How about nested query?
 
 /*
- SQL statements that use the EXISTS Condition in MySQL
- are very inefficient since the sub-query is RE-RUN for EVERY row
- in the outer query's table.
- There are more efficient ways to write most queries,
- that do not use the EXISTS Condition.
- */
 
-
--- Nested query
+*/
 
 
 /*
@@ -215,16 +208,3 @@ WHERE E.Dno = 5 AND NOT exists(
 
 
 
-
-
-
-
-#
-# USE upcompany;
-#
-# SELECT last_name, department_name, employee.department_id
-# FROM employee, department;
-#
-# SELECT last_name, department_name, employee.department_id
-# FROM employee, department
-# WHERE employee.department_id = department.department_id;
