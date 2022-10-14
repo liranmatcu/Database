@@ -1,5 +1,5 @@
 import sys
-from mysql_connector import connection
+import book_dao
 
 menu_options = {
     1: 'Add a Publisher',
@@ -14,8 +14,9 @@ def print_menu():
     print()
     print("Please make a selection")
     for key in menu_options.keys():
-        print (key, '--', menu_options[key])
-    print("The end of options")
+        print (key, '--', menu_options[key], end = " ")
+    print()
+    print("The end of top-level options")
     print()
 
 def option1():
@@ -25,11 +26,12 @@ def option2():
     print('Handle option \'Option 2\'')
 
 def option5():
-    # A sub-menu may be needed
-    cursor = connection.cursor()
-    query = "select * from bookmanager.Book"
-    cursor.execute(query)
-    results = cursor.fetchall()
+    # A sub-menu shall be needed
+    # and user selection
+
+
+    print("Search Option 1: all books were chosen.")
+    results = book_dao.findAll()
     # print(results)
     
     print("The following are the all books.")
@@ -60,7 +62,6 @@ if __name__=='__main__':
             option5()
         elif option == 6:
             print('Thanks your for using our database services! Bye')
-            connection.close()
             exit()
         else:
             print('Invalid option. Please enter a number between 1 and 6.')
