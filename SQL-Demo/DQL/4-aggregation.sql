@@ -45,8 +45,19 @@ ORDER BY AVG(Salary);
 
 # Exercise
 
--- Find those who have the highest salary in each department
+-- Find the highest salary in each department
+SELECT max(Salary)
+FROM EMPLOYEE
+GROUP BY Dno;
 
+-- Find those who have the highest salary in each department
+SELECT concat(Fname, ' ', Lname), Dno, Salary
+FROM EMPLOYEE
+WHERE Salary IN (
+    SELECT max(Salary)
+    FROM EMPLOYEE
+    GROUP BY Dno
+    );
 
 -- Which department has the most employees?
 SELECT Dno, count(*) AS "counter"
