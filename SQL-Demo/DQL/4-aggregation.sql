@@ -1,4 +1,5 @@
 -- SQL aggregate functions: Count(), Sum(), Avg(), Min(), Max()
+-- SQL aggregate keywords: Group by, Having
 
 USE COMPANY;
 SELECT * FROM EMPLOYEE;
