@@ -59,6 +59,31 @@ WHERE Salary IN (
     GROUP BY Dno
     );
 
+-- Find those who work the longest hours in each project
+SELECT max(Hours)
+FROM WORKS_ON
+GROUP BY Pno;
+
+SELECT DISTINCT Essn
+FROM WORKS_ON
+WHERE Hours IN (
+    SELECT max(Hours)
+    FROM WORKS_ON
+    GROUP BY Pno
+    );
+
+SELECT concat(Fname, ' ', Lname)
+FROM EMPLOYEE
+WHERE Ssn IN (
+                SELECT DISTINCT Essn
+                FROM WORKS_ON
+                WHERE Hours IN (
+                    SELECT max(Hours)
+                    FROM WORKS_ON
+                    GROUP BY Pno
+                    )
+    );
+
 -- Which department has the most employees?
 SELECT Dno, count(*) AS "counter"
 FROM EMPLOYEE
