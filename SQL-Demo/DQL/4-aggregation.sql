@@ -12,24 +12,25 @@ SELECT COUNT(Ssn) FROM EMPLOYEE;
 SELECT COUNT(Super_ssn) FROM EMPLOYEE;
 
 
-# AVG()
+# Avg(), Min(), Max()
 SELECT AVG(Salary) FROM EMPLOYEE;
 
 SELECT MIN(Salary) AS "Minimum Salary" FROM EMPLOYEE;
 
 SELECT MAX(Salary) "Maximum Salary" FROM EMPLOYEE;
 
-# Get the average salary by supervisor
+
+-- Get the average salary by supervisor
 SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
 FROM EMPLOYEE
 GROUP BY Super_ssn;
 
-# How to eliminate those without a supervisor?
+-- How to eliminate those without a supervisor?
 SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
 FROM EMPLOYEE
 GROUP BY Super_ssn
 HAVING COUNT(*) > 1;
-
+-- or
 SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
 FROM EMPLOYEE
 GROUP BY Super_ssn
@@ -43,6 +44,10 @@ HAVING COUNT(Ssn) > 1
 ORDER BY AVG(Salary);    
 
 # Exercise
+
+-- Find those who have the highest salary in each department
+
+
 -- Which department has the most employees?
 SELECT Dno, count(*) AS "counter"
 FROM EMPLOYEE
