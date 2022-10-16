@@ -15,7 +15,12 @@ search_menu_options = {
 }
 
 def search_all_books():
+    # Use a data access object (DAO) to 
+    # abstract the retrieval of data from 
+    # a data resource such as a database.
     results = book_dao.findAll()
+
+    # Display results
     print("The following are the all books.")
     for item in results:
         print(item[1])
