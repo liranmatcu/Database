@@ -27,8 +27,6 @@ def search_all_books():
     print("The end of books.")
 
 
-
-
 # def search_by_title():
 #   To be added
 
