@@ -50,7 +50,7 @@ def option5():
 
     # user selection of options and actions
 
-    # Assume option 1 search all books were chosen
+    # Assume the option: search all books was chosen
     print("Search Option 1: all books were chosen.")
     search_all_books()
 
