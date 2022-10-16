@@ -21,10 +21,13 @@ def search_all_books():
     results = book_dao.findAll()
 
     # Display results
-    print("The following are the all books.")
+    print("The following are the ISBNs and titles of all books.")
     for item in results:
-        print(item[1])
-    print("The end of all books.")
+        print(item[0], item[1])
+    print("The end of books.")
+
+
+
 
 # def search_by_title():
 #   To be added
