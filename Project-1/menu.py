@@ -16,13 +16,13 @@ search_menu_options = {
 
 def search_all_books():
     results = book_dao.findAll()
-    # print(results)
-    
     print("The following are the all books.")
     for item in results:
         print(item[1])
     print("The end of all books.")
 
+# def search_by_title():
+#   To be added
 
 def print_menu():
     print()
