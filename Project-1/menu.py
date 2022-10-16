@@ -33,7 +33,7 @@ def print_menu():
     print()
     print("Please make a selection")
     for key in menu_options.keys():
-        print (key, '--', menu_options[key], end = " ")
+        print (str(key)+'.', menu_options[key], end = "  ")
     print()
     print("The end of top-level options")
     print()
