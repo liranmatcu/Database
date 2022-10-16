@@ -10,6 +10,20 @@ menu_options = {
     6: 'Exit',
 }
 
+search_menu_options = {
+    # To be added
+}
+
+def search_all_books():
+    results = book_dao.findAll()
+    # print(results)
+    
+    print("The following are the all books.")
+    for item in results:
+        print(item[1])
+    print("The end of all books.")
+
+
 def print_menu():
     print()
     print("Please make a selection")
@@ -19,25 +33,27 @@ def print_menu():
     print("The end of top-level options")
     print()
 
+
 def option1():
     print('Handle option \'Option 1\'')
+
 
 def option2():
     print('Handle option \'Option 2\'')
 
+
 def option5():
-    # A sub-menu shall be needed
-    # and user selection
+    # A sub-menu shall be printed
+    # and prompt user selection
 
+    # print_search_menu
 
+    # user selection of options and actions
+
+    # Assume option 1 search all books were chosen
     print("Search Option 1: all books were chosen.")
-    results = book_dao.findAll()
-    # print(results)
-    
-    print("The following are the all books.")
-    for item in results:
-        print(item[1])
-    print("The end of all books.")
+    search_all_books()
+
 
 
 if __name__=='__main__':
