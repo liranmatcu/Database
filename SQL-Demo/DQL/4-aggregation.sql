@@ -286,5 +286,12 @@ FROM EMPLOYEE E1, (
 WHERE E1.Salary > t_dept_ave_sal.ave_salary
 AND E1.Dno = t_dept_ave_sal.Dno;
 
-
-
+-- Display employees order by their department name
+SELECT Dno, concat(Fname, ' ', Lname), Salary
+FROM EMPLOYEE E
+ORDER BY (
+    SELECT Dname
+    FROM DEPARTMENT D
+    WHERE E.Dno = D.Dname
+    );
+-- Nested query in Order By clause
