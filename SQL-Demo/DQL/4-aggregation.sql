@@ -16,7 +16,7 @@ SELECT max(Lname), min(Fname)
 FROM EMPLOYEE;
 
 
-# COUNT()
+# COUNT(): count the number of occurrence
 SELECT COUNT(Ssn)
 FROM EMPLOYEE;
 
@@ -38,9 +38,12 @@ FROM EMPLOYEE;
 SELECT COUNT(Super_ssn)
 FROM EMPLOYEE;
 
--- NULL does not count
+-- NULL does not count!
 
 -- What does the following do?
+SELECT avg(Salary), sum(Salary)/count(Salary)
+FROM EMPLOYEE;
+
 SELECT AVG(Salary) * (
     SELECT count(1)
     FROM EMPLOYEE)
@@ -48,33 +51,55 @@ FROM EMPLOYEE;
 
 
 # Group By and Having
+/*
+ The GROUP BY clause groups a set of rows
+ into a set of summary rows by values of columns or expressions.
+ The GROUP BY clause returns one row for each group.
+ */
+SELECT Dno
+FROM EMPLOYEE
+GROUP BY Dno;
+-- similar to distinct
+SELECT DISTINCT Dno
+FROM EMPLOYEE;
+
+-- What will return?
+SELECT Fname
+FROM EMPLOYEE
+GROUP BY Dno;
+
 -- Get the average salary by supervisor
-SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
+SELECT Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
 GROUP BY Super_ssn;
 
 -- How to eliminate those without a supervisor?
-SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
+SELECT Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
 GROUP BY Super_ssn
 HAVING COUNT(*) > 1;
 -- or
-SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
+SELECT Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
-GROUP BY Super_ssn
-HAVING COUNT(1) > 1;
+WHERE Super_ssn IS NOT NULL
+GROUP BY Super_ssn;
 
-
-SELECT AVG(Salary), Super_ssn "Supervisor SSN" 
+-- Group by multiple columns
+SELECT Dno, Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
-GROUP BY Super_ssn
-HAVING COUNT(Ssn) > 1
-ORDER BY AVG(Salary);    
+GROUP BY Dno, Super_ssn;
 
 # Exercise
+-- Find the average salary by department
 
--- Find the highest salary in each department
-SELECT max(Salary)
+
+SELECT Dno, avg(Salary)
+FROM EMPLOYEE
+GROUP BY Dno;
+
+-- Find the highest salary by department
+
+SELECT Dno, max(Salary)
 FROM EMPLOYEE
 GROUP BY Dno;
 
