@@ -195,6 +195,9 @@ WHERE Dnumber = (SELECT Dno
                 LIMIT 1);
 
 # Having
+/*
+ Need to be used in conjunction with GROUP BY
+ */
 -- Show the highest salary of each department
 -- if the highest salary is larger than 35000
 SELECT Dno, max(Salary)
@@ -206,3 +209,15 @@ SELECT Dno, max(Salary)
 FROM EMPLOYEE
 WHERE max(Salary) > 35000
 GROUP BY Dno;
+
+SELECT Dno, max(Salary)
+FROM EMPLOYEE
+WHERE Dno IN (2, 3, 4, 5)
+GROUP BY Dno
+HAVING max(Salary) > 35000;
+-- or
+SELECT Dno, max(Salary)
+FROM EMPLOYEE
+GROUP BY Dno
+HAVING max(Salary) > 35000 AND
+       Dno IN (2, 3, 4, 5);
