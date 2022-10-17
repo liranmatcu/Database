@@ -128,8 +128,42 @@ SELECT Dno,
 FROM EMPLOYEE
 GROUP BY Dno;
 
--- Find those who have the highest salary in each department
 
+-- Find the total number of employees under
+-- each supervisor
+
+
+SELECT
+FROM EMPLOYEE
+GROUP BY Super_ssn;
+
+# Super_ssn, count(*)
+
+
+-- Find the difference between the highest and lowest salary
+-- among all employees
+
+SELECT
+FROM EMPLOYEE;
+
+# max(Salary) - min(Salary)
+
+
+-- Find the lowest salary of each supervisor (not null)
+-- and the lowest salary needs to be higher than 30000
+
+
+
+SELECT
+FROM EMPLOYEE
+WHERE Super_ssn IS NOT NULL
+GROUP BY Super_ssn
+HAVING MIN(Salary) > 30000;
+# Super_ssn, MIN(Salary)
+
+
+-- Find those who have the highest salary in each department
+-- Nested query
 SELECT concat(Fname, ' ', Lname), Dno, Salary
 FROM EMPLOYEE
 WHERE Salary IN (
@@ -144,7 +178,6 @@ FROM WORKS_ON
 GROUP BY Pno;
 
 -- Find the SSN of those who work the longest hours in each project
-
 SELECT DISTINCT Essn
 FROM WORKS_ON
 WHERE Hours IN (
@@ -242,6 +275,7 @@ HAVING max(Salary) > 35000 AND
 -- in general due to the order of execution;
 -- b/c WHERE filters out results for later processing
 
+-- Exercise
 
 
 # Nest queries
