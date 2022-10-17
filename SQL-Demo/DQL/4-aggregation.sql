@@ -52,8 +52,8 @@ FROM EMPLOYEE;
 
 # Group By and Having
 /*
- The GROUP BY clause groups a set of rows
- into a set of summary rows by values of columns or expressions.
+ The GROUP BY statement groups rows that
+ have the same values into summary rows.
  The GROUP BY clause returns one row for each group.
  */
 SELECT Dno
@@ -63,10 +63,16 @@ GROUP BY Dno;
 SELECT DISTINCT Dno
 FROM EMPLOYEE;
 
--- What will return?
-SELECT Fname
+SELECT Dno, AVG(Salary)
 FROM EMPLOYEE
 GROUP BY Dno;
+
+-- What will the following return?
+SELECT Dno, Fname
+FROM EMPLOYEE
+GROUP BY Dno;
+-- Non-group function items (columns) in SELECT
+-- must appear in GROUP BY
 
 -- Get the average salary by supervisor
 SELECT Super_ssn "Supervisor SSN", AVG(Salary)
@@ -84,17 +90,32 @@ FROM EMPLOYEE
 GROUP BY Super_ssn
 HAVING COUNT(*) > 1;
 
+SELECT Super_ssn "Supervisor SSN", AVG(Salary) "Average Salary"
+FROM EMPLOYEE
+WHERE Super_ssn IS NOT NULL
+GROUP BY Super_ssn
+ORDER BY `Average Salary` DESC;
+
+-- WITH ROLLUP
+SELECT Super_ssn "Supervisor SSN", AVG(Salary)
+FROM EMPLOYEE
+WHERE Super_ssn IS NOT NULL
+GROUP BY Super_ssn WITH ROLLUP ;
 
 -- Group by multiple columns
 -- Get the average salary by supervisor and department
 SELECT Dno, Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
 GROUP BY Dno, Super_ssn;
--- Are the the following the same?
+-- Are the following the same?
 SELECT Dno, Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
 GROUP BY Super_ssn, Dno;
 
+-- What are the outputs of the following?
+SELECT Dno, Super_ssn "Supervisor SSN", AVG(Salary)
+FROM EMPLOYEE
+GROUP BY Dno;
 
 
 # Exercise
@@ -172,3 +193,16 @@ WHERE Dnumber = (SELECT Dno
                 GROUP BY Dno
                 ORDER BY count(Dno) DESC
                 LIMIT 1);
+
+# Having
+-- Show the highest salary of each department
+-- if the highest salary is larger than 35000
+SELECT Dno, max(Salary)
+FROM EMPLOYEE
+GROUP BY Dno
+HAVING max(Salary) > 35000;
+-- Would the following work?
+SELECT Dno, max(Salary)
+FROM EMPLOYEE
+WHERE max(Salary) > 35000
+GROUP BY Dno;
