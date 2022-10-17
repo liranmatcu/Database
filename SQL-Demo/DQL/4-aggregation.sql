@@ -122,17 +122,14 @@ GROUP BY Dno;
 -- Find the average salary by department
 
 
-SELECT Dno, avg(Salary)
-FROM EMPLOYEE
-GROUP BY Dno;
-
 -- Find the highest salary by department
 
-SELECT Dno, max(Salary)
+SELECT Dno,
 FROM EMPLOYEE
 GROUP BY Dno;
 
 -- Find those who have the highest salary in each department
+
 SELECT concat(Fname, ' ', Lname), Dno, Salary
 FROM EMPLOYEE
 WHERE Salary IN (
@@ -141,15 +138,12 @@ WHERE Salary IN (
     GROUP BY Dno
     );
 
--- Find the longest hours in each project
+-- Find the longest working hours in each project
 SELECT max(Hours)
 FROM WORKS_ON
 GROUP BY Pno;
 
--- Find those who work the longest hours in each project
-SELECT max(Hours)
-FROM WORKS_ON
-GROUP BY Pno;
+-- Find the SSN of those who work the longest hours in each project
 
 SELECT DISTINCT Essn
 FROM WORKS_ON
@@ -159,6 +153,7 @@ WHERE Hours IN (
     GROUP BY Pno
     );
 
+-- The names ...
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE
 WHERE Ssn IN (
@@ -174,29 +169,45 @@ WHERE Ssn IN (
 
 
 -- Which department has the most employees?
-SELECT Dno, count(*) AS "counter"
+
+SELECT Dno, count(*) AS "Num. of Employees"
 FROM EMPLOYEE
 GROUP BY Dno
-ORDER BY counter DESC
+ORDER BY `Num. of Employees` DESC
 LIMIT 1;
-
+-- Another approach
 SELECT Dno
 FROM EMPLOYEE
 GROUP BY Dno
-ORDER BY count(Dno) DESC
-LIMIT 1;
+HAVING count(*) = (
+    SELECT MAX(num_of_emps)
+    FROM (SELECT count(Ssn) AS num_of_emps
+        FROM EMPLOYEE
+        GROUP BY Dno
+        ) AS NE
+    );
 
-SELECT Dname
+
+
+-- And also select the department name
+SELECT Dnumber, Dname
 FROM DEPARTMENT
 WHERE Dnumber = (SELECT Dno
                 FROM EMPLOYEE
                 GROUP BY Dno
-                ORDER BY count(Dno) DESC
+                ORDER BY count(Ssn) DESC
                 LIMIT 1);
+
 
 # Having
 /*
- Need to be used in conjunction with GROUP BY
+ The HAVING clause was added to SQL because
+ the WHERE keyword cannot be used with aggregate functions.
+
+ HAVING clause enables you to specify conditions that
+ filter which group results appear in the results.
+ 
+ HAVING needs to be used in conjunction with GROUP BY
  */
 -- Show the highest salary of each department
 -- if the highest salary is larger than 35000
@@ -210,6 +221,9 @@ FROM EMPLOYEE
 WHERE max(Salary) > 35000
 GROUP BY Dno;
 
+-- Key point: group functions cannot be used in WHERE
+-- due to the order of execution "FWGHSOL"
+
 SELECT Dno, max(Salary)
 FROM EMPLOYEE
 WHERE Dno IN (2, 3, 4, 5)
@@ -221,3 +235,6 @@ FROM EMPLOYEE
 GROUP BY Dno
 HAVING max(Salary) > 35000 AND
        Dno IN (2, 3, 4, 5);
+-- WHERE is more efficient than HAVING
+-- due to internal optimization
+
