@@ -277,8 +277,14 @@ HAVING max(Salary) > 35000 AND
 
 -- Exercise
 
+/*
+Subquery 
 
-# Nest queries
+When a query is included inside another query, 
+the Outer query is known as Main Query, 
+and Inner query is known as Subquery.
+*/
+
 -- Find whose whose salary is higher than company's average
 SELECT concat(Fname, ' ', Lname), Salary
 FROM EMPLOYEE
@@ -290,6 +296,13 @@ WHERE Salary > (
     SELECT avg(Salary)
     FROM EMPLOYEE
     );
+-- This is also called a Nested Query.
+/*
+ In Nested Query,
+ Inner query runs first, and only once.
+ Outer query is executed with result from Inner query.
+ Hence, Inner query is used in execution of Outer query.
+ */
 
 -- Find whose whose salary is higher than the department
 -- Number 5's average
@@ -310,6 +323,9 @@ WHERE Salary > (
     FROM EMPLOYEE E2
     WHERE E1.Dno = E2.Dno
     );
+-- This is also called a Correlated Query where
+-- Inner query uses values from Outer query.
+
 -- Check out the following solution
 SELECT concat(Fname, ' ', Lname), Salary, E1.Dno
 FROM EMPLOYEE E1, (
@@ -319,6 +335,8 @@ FROM EMPLOYEE E1, (
     ) AS t_dept_ave_sal
 WHERE E1.Salary > t_dept_ave_sal.ave_salary
 AND E1.Dno = t_dept_ave_sal.Dno;
+
+
 
 -- Display employees order by their department name
 SELECT Dno, concat(Fname, ' ', Lname), Salary
