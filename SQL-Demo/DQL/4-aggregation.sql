@@ -153,7 +153,7 @@ WHERE Hours IN (
     GROUP BY Pno
     );
 
--- The names ...
+-- And also the names ...
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE
 WHERE Ssn IN (
@@ -206,15 +206,17 @@ WHERE Dnumber = (SELECT Dno
 
  HAVING clause enables you to specify conditions that
  filter which group results appear in the results.
- 
+
  HAVING needs to be used in conjunction with GROUP BY
  */
+
 -- Show the highest salary of each department
 -- if the highest salary is larger than 35000
 SELECT Dno, max(Salary)
 FROM EMPLOYEE
 GROUP BY Dno
 HAVING max(Salary) > 35000;
+
 -- Would the following work?
 SELECT Dno, max(Salary)
 FROM EMPLOYEE
@@ -224,6 +226,7 @@ GROUP BY Dno;
 -- Key point: group functions cannot be used in WHERE
 -- due to the order of execution "FWGHSOL"
 
+-- Further limit on departments: 2~5
 SELECT Dno, max(Salary)
 FROM EMPLOYEE
 WHERE Dno IN (2, 3, 4, 5)
@@ -236,5 +239,8 @@ GROUP BY Dno
 HAVING max(Salary) > 35000 AND
        Dno IN (2, 3, 4, 5);
 -- WHERE is more efficient than HAVING
--- due to internal optimization
+-- in general due to the order of execution;
+-- b/c WHERE filters out results for later processing
+
+
 
