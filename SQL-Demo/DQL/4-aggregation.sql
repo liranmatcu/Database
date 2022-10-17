@@ -276,4 +276,15 @@ WHERE Salary > (
     FROM EMPLOYEE E2
     WHERE E1.Dno = E2.Dno
     );
+-- Check out the following solution
+SELECT concat(Fname, ' ', Lname), Salary, E1.Dno
+FROM EMPLOYEE E1, (
+    SELECT Dno, avg(Salary) AS ave_salary
+    FROM EMPLOYEE
+    GROUP BY Dno
+    ) AS t_dept_ave_sal
+WHERE E1.Salary > t_dept_ave_sal.ave_salary
+AND E1.Dno = t_dept_ave_sal.Dno;
+
+
 
