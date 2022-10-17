@@ -27,18 +27,17 @@ FROM EMPLOYEE
 CROSS JOIN DEPARTMENT;
 
 -- How to Fix?
-SELECT concat(Fname, ' ', Lname)
+SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E, DEPARTMENT D
 WHERE Dname = 'Research' AND E.Dno = D.Dnumber;
-# , Dname
 
 # Inner Join
-SELECT concat(Fname, ' ', Lname)
+SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 JOIN DEPARTMENT ON Dnumber = Dno
 WHERE Dname = 'Research';
 -- or with aliasing
-SELECT concat(Fname, ' ', Lname)
+SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno
 WHERE Dname = 'Research';
@@ -50,7 +49,7 @@ JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 
 
 # Cross Join
-SELECT concat(Fname, ' ', Lname)
+SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 CROSS JOIN DEPARTMENT D ON D.Dnumber = EMPLOYEE.Dno
 WHERE Dname = 'Research';
@@ -68,11 +67,11 @@ WHERE Dno = (
 
 # EXISTS Condition
 SELECT concat(Fname, ' ', Lname)
-FROM EMPLOYEE
+FROM EMPLOYEE E
 WHERE exists(
     SELECT 1
-    FROM DEPARTMENT
-    WHERE Dname = 'Research'
+    FROM DEPARTMENT D
+    WHERE D.Dname = 'Research' AND E.Dno = D.Dnumber
     );
 
 /*
@@ -84,6 +83,10 @@ WHERE exists(
  */
 
 
+SELECT concat(Fname, ' ', Lname), Dname
+FROM EMPLOYEE E
+JOIN DEPARTMENT D ON D.Dnumber = E.Dno
+WHERE Dname = 'Research' AND Lname = 'Wong';
 
 
 /*
@@ -134,13 +137,15 @@ JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 # This is inner join
 
 
--- Would exist solution work? 
+-- Would the following exist solution work?
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 WHERE exists(
     SELECT 1 FROM DEPARTMENT D
              WHERE D.Dnumber = EMPLOYEE.Dno);
--- How about nested query?
+
+
+
 
 /*
 
