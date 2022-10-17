@@ -244,3 +244,36 @@ HAVING max(Salary) > 35000 AND
 
 
 
+# Nest queries
+-- Find whose whose salary is higher than company's average
+SELECT concat(Fname, ' ', Lname), Salary
+FROM EMPLOYEE
+WHERE Salary > avg(Salary);
+
+SELECT concat(Fname, ' ', Lname), Salary
+FROM EMPLOYEE
+WHERE Salary > (
+    SELECT avg(Salary)
+    FROM EMPLOYEE
+    );
+
+-- Find whose whose salary is higher than the department
+-- Number 5's average
+SELECT concat(Fname, ' ', Lname), Salary
+FROM EMPLOYEE
+WHERE Salary > (
+    SELECT avg(Salary)
+    FROM EMPLOYEE
+    WHERE Dno = 5
+    );
+
+-- Find whose whose salary is higher than their department
+-- average
+SELECT concat(Fname, ' ', Lname), Salary, E1.Dno
+FROM EMPLOYEE E1
+WHERE Salary > (
+    SELECT avg(Salary)
+    FROM EMPLOYEE E2
+    WHERE E1.Dno = E2.Dno
+    );
+
