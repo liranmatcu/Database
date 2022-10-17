@@ -76,18 +76,26 @@ GROUP BY Super_ssn;
 -- How to eliminate those without a supervisor?
 SELECT Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
-GROUP BY Super_ssn
-HAVING COUNT(*) > 1;
+WHERE Super_ssn IS NOT NULL
+GROUP BY Super_ssn;
 -- or
 SELECT Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
-WHERE Super_ssn IS NOT NULL
-GROUP BY Super_ssn;
+GROUP BY Super_ssn
+HAVING COUNT(*) > 1;
+
 
 -- Group by multiple columns
+-- Get the average salary by supervisor and department
 SELECT Dno, Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
 GROUP BY Dno, Super_ssn;
+-- Are the the following the same?
+SELECT Dno, Super_ssn "Supervisor SSN", AVG(Salary)
+FROM EMPLOYEE
+GROUP BY Super_ssn, Dno;
+
+
 
 # Exercise
 -- Find the average salary by department
