@@ -141,8 +141,9 @@ JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 WHERE exists(
-    SELECT 1 FROM DEPARTMENT D
-             WHERE D.Dnumber = EMPLOYEE.Dno);
+    SELECT 1
+    FROM DEPARTMENT D
+    WHERE D.Dnumber = EMPLOYEE.Dno);
 
 
 
