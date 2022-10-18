@@ -344,6 +344,8 @@ FROM EMPLOYEE E
 ORDER BY (
     SELECT Dname
     FROM DEPARTMENT D
-    WHERE E.Dno = D.Dname
+    WHERE E.Dno = D.Dnumber
     );
 -- Nested query in Order By clause
+SELECT Dnumber, Dname
+FROM DEPARTMENT;
