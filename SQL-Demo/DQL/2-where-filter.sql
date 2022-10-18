@@ -126,51 +126,51 @@ SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
 	Fname LIKE "%a%";
 
 # Exercise
--- Select those whose first name contains letter a or m
+-- Select those whose first name contains letter a and m
 SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
-	Fname LIKE "%a%" AND Fname LIKE "%m%";
+	Fname LIKE '%a%' AND Fname LIKE '%m%';
 -- Would the following work?
 SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
-	Fname LIKE "%a%m%";
+	Fname LIKE '%a%m%';
 -- If not, how to make it work?
 SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
 	Fname LIKE "%a%m%" OR Fname LIKE "%m%a%";
 
  SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
-	Fname LIKE "Jo__";   
+	Fname LIKE 'Jo__';
 
 # Exercise
 -- What does the following statement do?
  SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
-	Fname LIKE "J___";  
+	Fname LIKE 'J___';
 
 # Exercise
 -- Show first name that contains `a` at the third place
 SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
-	Fname LIKE "__a%";
+	Fname LIKE '__a%';
 
 # Exercise
 -- What does the following statement do?
 SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
-	Lname LIKE "%\_%";
+	Lname LIKE '%\_%';
 
 
 -- Regular expression
 SELECT Fname FROM EMPLOYEE
-WHERE Fname REGEXP "^R" ;
+WHERE Fname REGEXP '^R' ;
 
 SELECT Fname FROM EMPLOYEE
-WHERE Fname REGEXP "e$" ;
+WHERE Fname REGEXP 'e$' ;
 
 SELECT Fname FROM EMPLOYEE
-WHERE Fname REGEXP "[a-z]" ;
+WHERE Fname REGEXP '[a-z]' ;
 
 # Exercise
 -- Select those first name ends with a or s.
-#
+
 SELECT Fname
 FROM EMPLOYEE
-WHERE Fname REGEXP "[as]$";
+WHERE Fname REGEXP '[as]$';
 
 # . and *
 
