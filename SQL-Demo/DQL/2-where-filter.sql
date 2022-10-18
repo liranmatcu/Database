@@ -118,12 +118,12 @@ SELECT Fname AS "First Name", Dno, Salary FROM EMPLOYEE WHERE
 	Dno = 5 AND Salary > 30000;
 
 
--- Wild card search: LIKE % _ 
+-- Wild card search: LIKE  %  _
 SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
-	Fname LIKE "Jo%";
+	Fname LIKE 'Jo%' ;
 
 SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
-	Fname LIKE "%a%";
+	Fname LIKE '%a%' ;
 
 # Exercise
 -- Select those whose first name contains letter a and m
@@ -134,22 +134,21 @@ SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
 	Fname LIKE '%a%m%';
 -- If not, how to make it work?
 SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
-	Fname LIKE "%a%m%" OR Fname LIKE "%m%a%";
+	Fname LIKE '%a%m%' OR Fname LIKE '%m%a%';
 
- SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
+-- What does the following statement do?
+SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
 	Fname LIKE 'Jo__';
 
-# Exercise
 -- What does the following statement do?
- SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
+SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
 	Fname LIKE 'J___';
 
-# Exercise
 -- Show first name that contains `a` at the third place
 SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
 	Fname LIKE '__a%';
 
-# Exercise
+
 -- What does the following statement do?
 SELECT Fname AS "First Name", Lname "Last Name" FROM EMPLOYEE WHERE
 	Lname LIKE '%\_%';
@@ -167,7 +166,6 @@ WHERE Fname REGEXP '[a-z]' ;
 
 # Exercise
 -- Select those first name ends with a or s.
-
 SELECT Fname
 FROM EMPLOYEE
 WHERE Fname REGEXP '[as]$';
