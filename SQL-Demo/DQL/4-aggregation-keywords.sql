@@ -12,13 +12,15 @@ USE COMPANY;
  have the same values into summary rows.
  The GROUP BY clause returns one row for each group.
  */
+
 SELECT Dno
 FROM EMPLOYEE
 GROUP BY Dno;
--- similar to distinct
+-- In this case, it is similar to distinct
 SELECT DISTINCT Dno
 FROM EMPLOYEE;
 
+-- Get average salary by department
 SELECT Dno, AVG(Salary)
 FROM EMPLOYEE
 GROUP BY Dno;
@@ -27,8 +29,8 @@ GROUP BY Dno;
 SELECT Dno, Fname
 FROM EMPLOYEE
 GROUP BY Dno;
--- Non-group function items (columns) in SELECT
--- must appear in GROUP BY
+-- If non-group function items (columns) appear in SELECT
+-- they must also appear in GROUP BY; not vice visa
 
 -- Get the average salary by supervisor
 SELECT Super_ssn "Supervisor SSN", AVG(Salary)
