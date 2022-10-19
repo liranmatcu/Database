@@ -9,28 +9,10 @@ A subquery must be closed in parentheses.
 A subquery is called an inner query while the query 
 that contains the subquery is called an outer query. 
 
-Also, a subquery can be nested within another subquery.
-
 */
 
 
 USE COMPANY;
-
-
--- Find whose whose salary is higher than company's average
-SELECT concat(Fname, ' ', Lname), Salary
-FROM EMPLOYEE
-WHERE Salary > (
-    SELECT avg(Salary)
-    FROM EMPLOYEE
-    );
--- This is also called a Nested Query.
-
-/*
- In Nested Query, inner query runs first, and only once.
-
- Outer query is executed with result from Inner query.
- */
 
 -- Find the employee(s) who has the highest salary
 SELECT concat(Fname, ' ', Lname), Salary
@@ -39,9 +21,23 @@ WHERE Salary = (
     SELECT max(Salary)
     FROM EMPLOYEE
     );
+/*
+ The inner query runs first, and only once.
+ The outer query is executed with result from inner query.
+ */
 
--- Find those whose salary is higher than
--- department number 5's average
+
+-- Find those whose salary is higher than company's average
+SELECT concat(Fname, ' ', Lname), Salary
+FROM EMPLOYEE
+WHERE Salary > (
+    SELECT avg(Salary)
+    FROM EMPLOYEE
+    );
+
+
+-- Exercise
+-- Find those whose salary is higher than department number 5's average
 
 SELECT concat(Fname, ' ', Lname), Salary
 FROM EMPLOYEE
@@ -50,6 +46,7 @@ WHERE Salary > (
     FROM EMPLOYEE
     WHERE Dno = 5
     );
+
 
 -- Find whose whose salary is higher than
 -- their department average
@@ -73,8 +70,27 @@ FROM EMPLOYEE E1, (
 WHERE E1.Salary > t_dept_ave_sal.ave_salary
 AND E1.Dno = t_dept_ave_sal.Dno;
 
+# Exercise
+-- Find those who have the highest salary in each department
+SELECT concat(Fname, ' ', Lname), Dno, Salary
+FROM EMPLOYEE E1
+WHERE Salary = (
+    SELECT max(E2.Salary)
+    FROM EMPLOYEE E2
+    WHERE E1.Dno = E2.Dno
+    );
+-- How about this solution?
+SELECT concat(Fname, ' ', Lname), Dno, Salary
+FROM EMPLOYEE
+WHERE Salary IN (
+    SELECT max(Salary)
+    FROM EMPLOYEE
+    GROUP BY Dno
+    );
 
 
+
+-- Subquery in (Order By) clause
 -- Display employees ordered by their department name
 SELECT Dno, concat(Fname, ' ', Lname), Salary
 FROM EMPLOYEE E
@@ -83,7 +99,10 @@ ORDER BY (
     FROM DEPARTMENT D
     WHERE E.Dno = D.Dnumber
     );
--- Nested query in Order By clause
+
 
 SELECT Dnumber, Dname
 FROM DEPARTMENT;
+
+
+-- Also, a subquery can be nested within another subquery.
