@@ -214,6 +214,10 @@ SELECT count(*)
 FROM EMPLOYEE
 GROUP BY Dno;
 
+SELECT max(count(*))
+FROM EMPLOYEE
+GROUP BY Dno;
+--
 SELECT max(number_of_emps)
 FROM (
     SELECT count(*) AS number_of_emps
