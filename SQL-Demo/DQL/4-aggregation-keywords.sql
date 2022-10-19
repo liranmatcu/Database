@@ -138,6 +138,8 @@ FROM EMPLOYEE
 WHERE max(Salary) > 35000
 GROUP BY Dno;
 
+-- Key point: group functions cannot be used in WHERE
+-- due to the order of execution "FWGHSOL"
 
 /*
  The HAVING clause was added to SQL because
@@ -155,8 +157,7 @@ SELECT Dno, max(Salary)
 FROM EMPLOYEE
 GROUP BY Dno
 HAVING max(Salary) > 35000;
--- Key point: group functions cannot be used in WHERE
--- due to the order of execution "FWGHSOL"
+
 
 -- Further limit on departments: 2~5
 SELECT Dno, max(Salary)
@@ -176,75 +177,3 @@ HAVING max(Salary) > 35000 AND
 
 -- Exercise
 
-/*
-Subquery 
-
-When a query is included inside another query, 
-the Outer query is known as Main Query, 
-and Inner query is known as Subquery.
-*/
-
--- Find whose whose salary is higher than company's average
-SELECT concat(Fname, ' ', Lname), Salary
-FROM EMPLOYEE
-WHERE Salary > avg(Salary);
-
-SELECT concat(Fname, ' ', Lname), Salary
-FROM EMPLOYEE
-WHERE Salary > (
-    SELECT avg(Salary)
-    FROM EMPLOYEE
-    );
--- This is also called a Nested Query.
-/*
- In Nested Query,
- Inner query runs first, and only once.
- Outer query is executed with result from Inner query.
- Hence, Inner query is used in execution of Outer query.
- */
-
--- Find whose whose salary is higher than the department
--- Number 5's average
-SELECT concat(Fname, ' ', Lname), Salary
-FROM EMPLOYEE
-WHERE Salary > (
-    SELECT avg(Salary)
-    FROM EMPLOYEE
-    WHERE Dno = 5
-    );
-
--- Find whose whose salary is higher than their department
--- average
-SELECT concat(Fname, ' ', Lname), Salary, E1.Dno
-FROM EMPLOYEE E1
-WHERE Salary > (
-    SELECT avg(Salary)
-    FROM EMPLOYEE E2
-    WHERE E1.Dno = E2.Dno
-    );
--- This is also called a Correlated Query where
--- Inner query uses values from Outer query.
-
--- Check out the following solution
-SELECT concat(Fname, ' ', Lname), Salary, E1.Dno
-FROM EMPLOYEE E1, (
-    SELECT Dno, avg(Salary) AS ave_salary
-    FROM EMPLOYEE
-    GROUP BY Dno
-    ) AS t_dept_ave_sal
-WHERE E1.Salary > t_dept_ave_sal.ave_salary
-AND E1.Dno = t_dept_ave_sal.Dno;
-
-
-
--- Display employees order by their department name
-SELECT Dno, concat(Fname, ' ', Lname), Salary
-FROM EMPLOYEE E
-ORDER BY (
-    SELECT Dname
-    FROM DEPARTMENT D
-    WHERE E.Dno = D.Dnumber
-    );
--- Nested query in Order By clause
-SELECT Dnumber, Dname
-FROM DEPARTMENT;
