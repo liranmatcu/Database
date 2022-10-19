@@ -1,13 +1,13 @@
 /*
 Subquery 
 
-A subquery is a query nested within another query 
-such as SELECT, INSERT, UPDATE or DELETE. 
+A subquery is a query nested within another query.
+
+A subquery is called an "inner query";
+The query that contains the subquery is
+called an "outer query" (or main query).
 
 A subquery must be closed in parentheses.
-
-A subquery is called an inner query while the query 
-that contains the subquery is called an outer query. 
 
 Purpose: refine results by recursive filtering
 */
@@ -77,6 +77,8 @@ WHERE Salary > (
     );
 
 
+
+# Correlated Subquery
 -- Example: Find whose whose salary is higher than their department average
 SELECT concat(Fname, ' ', Lname), Salary, E1.Dno
 FROM EMPLOYEE E1
@@ -87,8 +89,8 @@ WHERE Salary > (
     );
 -- 
 /*
-This is also called a "Correlated Subquery" because
-the Inner query uses values from Outer query.
+This is called a "Correlated Subquery" because
+the inner query uses values from outer query.
 
 A correlated subquery may be executed multiple times, 
 precisely once for each row returned by the outer query.
