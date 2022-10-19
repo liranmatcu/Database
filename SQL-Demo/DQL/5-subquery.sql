@@ -58,6 +58,43 @@ WHERE Salary = (
     FROM EMPLOYEE
     );
 
+-- Example: Find the employee(s), not in department 5,
+-- whose salary is less that of anyone's in department 5;
+SELECT concat(Fname, ' ', Lname), Dno, Salary
+FROM EMPLOYEE
+WHERE Dno <> 5
+  AND Salary < ANY (
+    SELECT E.Salary
+    FROM EMPLOYEE E
+    WHERE E.Dno = 5
+);
+-- It is equivalent to
+SELECT concat(Fname, ' ', Lname), Dno, Salary
+FROM EMPLOYEE
+WHERE Dno <> 5
+  AND Salary < (
+    SELECT max(E.Salary)
+    FROM EMPLOYEE E
+    WHERE E.Dno = 5
+);
+
+SELECT concat(Fname, ' ', Lname), Dno, Salary
+FROM EMPLOYEE
+WHERE Dno <> 5
+  AND Salary < ALL (
+    SELECT E.Salary
+    FROM EMPLOYEE E
+    WHERE E.Dno = 5
+);
+-- It is equivalent to
+SELECT concat(Fname, ' ', Lname), Dno, Salary
+FROM EMPLOYEE
+WHERE Dno <> 5
+  AND Salary < (
+    SELECT min(E.Salary)
+    FROM EMPLOYEE E
+    WHERE E.Dno = 5
+);
 
 -- Exercise: Find those whose salary is higher than company's average
 SELECT concat(Fname, ' ', Lname), Salary
