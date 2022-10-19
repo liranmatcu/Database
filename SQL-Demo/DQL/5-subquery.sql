@@ -77,6 +77,9 @@ WHERE Dno <> 5
     FROM EMPLOYEE E
     WHERE E.Dno = 5
 );
+-- Any important difference between these two queries?
+-- The number of results returned by the inner query.
+
 
 -- Example: Find the employee(s), not in department 5,
 -- whose salary is less that of anyone's in department 5;
