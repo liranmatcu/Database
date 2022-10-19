@@ -9,10 +9,27 @@ A subquery must be closed in parentheses.
 A subquery is called an inner query while the query 
 that contains the subquery is called an outer query. 
 
+Purpose: refine results by recursive filtering
 */
 
 
 USE COMPANY;
+
+-- Find those whose salary is higher than Wallace's
+/*
+ Idea:
+ First, find find Wallace's salary;
+ Then, find those with higher salary
+ */
+-- Inner query: find find Wallace's salary
+-- Outer query: find those with higher salary
+SELECT concat(Fname, ' ', Lname), Salary
+FROM EMPLOYEE
+WHERE Salary > (
+    SELECT Salary
+    FROM EMPLOYEE
+    WHERE Lname = 'Wallace'
+    );
 
 -- Find the employee(s) who has the highest salary
 SELECT concat(Fname, ' ', Lname), Salary
@@ -38,7 +55,6 @@ WHERE Salary > (
 
 -- Exercise
 -- Find those whose salary is higher than department number 5's average
-
 SELECT concat(Fname, ' ', Lname), Salary
 FROM EMPLOYEE
 WHERE Salary > (
@@ -48,8 +64,7 @@ WHERE Salary > (
     );
 
 
--- Find whose whose salary is higher than
--- their department average
+-- Find whose whose salary is higher than their department average
 SELECT concat(Fname, ' ', Lname), Salary, E1.Dno
 FROM EMPLOYEE E1
 WHERE Salary > (
