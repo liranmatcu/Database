@@ -21,6 +21,15 @@ USE COMPANY;
  First, find find Wallace's salary;
  Then, find those with higher salary
  */
+SELECT Salary
+FROM EMPLOYEE
+WHERE Lname = 'Wallace';
+
+SELECT concat(Fname, ' ', Lname), Salary
+FROM EMPLOYEE
+WHERE Salary > 43000;
+
+# One-query (subquery) solution
 -- Inner query: find find Wallace's salary
 -- Outer query: find those with higher salary
 SELECT concat(Fname, ' ', Lname), Salary
@@ -34,6 +43,11 @@ WHERE Salary > (
  The inner query runs first, and only once (non-correlated).
  The outer query is executed with result from inner query.
  */
+
+# Another solution: self-referencing
+SELECT concat(E2.Fname, ' ', E2.Lname), E2.Salary
+FROM EMPLOYEE E1, EMPLOYEE E2
+WHERE E1.Lname = 'Wallace' AND  E1.Salary < E2.Salary;
 
 
 -- Example: Find the employee(s) who has the highest salary
