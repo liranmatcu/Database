@@ -116,6 +116,20 @@ WHERE Salary > (
     WHERE Dno = 5
     );
 
+-- Exercise: Find those whose salary is higher than department number 5's average
+-- but less than of the person whose last name is "Wong"
+SELECT concat(Fname, ' ', Lname), Salary
+FROM EMPLOYEE
+WHERE Salary > (
+    SELECT avg(Salary)
+    FROM EMPLOYEE
+    WHERE Dno = 5
+    ) AND Salary < (
+    SELECT Salary
+    FROM EMPLOYEE
+    WHERE Lname = 'Wong'
+    );
+
 
 -- Example: Find the last names of the supervisors
 SELECT Lname
@@ -136,6 +150,8 @@ WHERE Ssn NOT IN (
 
 
 # WHERE Super_ssn IS NOT NULL
+
+
 
 # Correlated Subquery
 -- Example: Find whose whose salary is higher than their department average
