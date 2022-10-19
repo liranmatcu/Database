@@ -121,37 +121,15 @@ HAVING MIN(Salary) > 30000;
 
 
 
--- Which department has the most employees?
+-- Which department (number) has the most employees?
 SELECT Dno, count(*) AS "Num. of Employees"
 FROM EMPLOYEE
 GROUP BY Dno
 ORDER BY `Num. of Employees` DESC
 LIMIT 1;
--- Another approach
-SELECT Dno
-FROM EMPLOYEE
-GROUP BY Dno
-HAVING count(*) = (
-    SELECT MAX(num_of_emps)
-    FROM (SELECT count(Ssn) AS num_of_emps
-        FROM EMPLOYEE
-        GROUP BY Dno
-        ) AS NE
-    );
 
 
 
--- And also select the department name
-SELECT Dnumber, Dname
-FROM DEPARTMENT
-WHERE Dnumber = (SELECT Dno
-                FROM EMPLOYEE
-                GROUP BY Dno
-                ORDER BY count(Ssn) DESC
-                LIMIT 1);
-
-
-# Having
 /*
  The HAVING clause was added to SQL because
  the WHERE keyword cannot be used with aggregate functions.
