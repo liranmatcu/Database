@@ -129,6 +129,15 @@ ORDER BY `Num. of Employees` DESC
 LIMIT 1;
 
 
+-- Show the highest salary of each department
+-- if the highest salary is larger than 35000
+
+-- Would the following work?
+SELECT Dno, max(Salary)
+FROM EMPLOYEE
+WHERE max(Salary) > 35000
+GROUP BY Dno;
+
 
 /*
  The HAVING clause was added to SQL because
@@ -146,13 +155,6 @@ SELECT Dno, max(Salary)
 FROM EMPLOYEE
 GROUP BY Dno
 HAVING max(Salary) > 35000;
-
--- Would the following work?
-SELECT Dno, max(Salary)
-FROM EMPLOYEE
-WHERE max(Salary) > 35000
-GROUP BY Dno;
-
 -- Key point: group functions cannot be used in WHERE
 -- due to the order of execution "FWGHSOL"
 
