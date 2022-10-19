@@ -140,14 +140,29 @@ WHERE Ssn IN (
 -- A subquery can be nested within another subquery.
 -- Note that we are sort of connecting two different relations.
 
-# Exercise
--- Which department (number) has the most employees?
+
+-- Exercise: Which department (number) has the most employees?
+-- Previous approach using order by and limit
 SELECT Dno, count(*) AS "Num. of Employees"
 FROM EMPLOYEE
 GROUP BY Dno
 ORDER BY `Num. of Employees` DESC
 LIMIT 1;
--- Subquery approach
+
+-- Need to use the subquery approach
+-- Question: how to find the max number of employees by dept number?
+-- Answer: Find the number of of employees for each dept, then find max
+SELECT count(*)
+FROM EMPLOYEE
+GROUP BY Dno;
+
+SELECT max(number_of_emps)
+FROM (
+    SELECT count(*) AS number_of_emps
+    FROM EMPLOYEE
+    GROUP BY Dno
+    ) AS count_table;
+
 SELECT Dno, count(*) AS "Num. of Employees"
 FROM EMPLOYEE
 GROUP BY Dno
@@ -161,7 +176,22 @@ HAVING count(*) = (
     );
 # Note that every derived table must have its own alias.
 
--- Which department (name) has the most employees?
+-- Which department name has the most employees?
+SELECT Dnumber, Dname
+FROM DEPARTMENT
+WHERE Dnumber = (SELECT Dno
+                FROM EMPLOYEE
+                GROUP BY Dno
+                HAVING count(*) = (
+                                    SELECT MAX(number_of_emps)
+                                    FROM (
+                                        SELECT count(Ssn) AS number_of_emps
+                                        FROM EMPLOYEE
+                                        GROUP BY Dno
+                                        ) AS NE
+                                    )
+);
+
 SELECT Dnumber, Dname
 FROM DEPARTMENT
 WHERE Dnumber = (SELECT Dno
