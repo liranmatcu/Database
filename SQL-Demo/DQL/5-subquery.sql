@@ -121,7 +121,7 @@ WHERE Ssn IN (
 
 
 # Exercise
--- Which department has the most employees?
+-- Which department (number) has the most employees?
 SELECT Dno, count(*) AS "Num. of Employees"
 FROM EMPLOYEE
 GROUP BY Dno
@@ -140,6 +140,17 @@ HAVING count(*) = (
         ) AS NE
     );
 # Note that every derived table must have its own alias.
+
+-- Which department (name) has the most employees?
+SELECT Dnumber, Dname
+FROM DEPARTMENT
+WHERE Dnumber = (SELECT Dno
+                FROM EMPLOYEE
+                GROUP BY Dno
+                ORDER BY count(Ssn) DESC
+                LIMIT 1);
+
+
 
 -- Subquery in (Order By) clause
 -- Display employees ordered by their department name
