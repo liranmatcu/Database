@@ -70,6 +70,7 @@ FROM EMPLOYEE E1, (
 WHERE E1.Salary > t_dept_ave_sal.ave_salary
 AND E1.Dno = t_dept_ave_sal.Dno;
 
+
 # Exercise
 -- Find those who have the highest salary in each department
 SELECT concat(Fname, ' ', Lname), Dno, Salary
@@ -89,6 +90,54 @@ WHERE Salary IN (
     );
 
 
+-- Find the SSN of those who work the longest hours in each project
+SELECT DISTINCT Essn
+FROM WORKS_ON
+WHERE Hours IN (
+    SELECT max(Hours)
+    FROM WORKS_ON
+    GROUP BY Pno
+    );
+
+-- Find the longest working hours in each project
+SELECT max(Hours)
+FROM WORKS_ON
+GROUP BY Pno;
+
+-- And also the names ...
+
+SELECT concat(Fname, ' ', Lname)
+FROM EMPLOYEE
+WHERE Ssn IN (
+                SELECT DISTINCT Essn
+                FROM WORKS_ON
+                WHERE Hours IN (
+                    SELECT max(Hours)
+                    FROM WORKS_ON
+                    GROUP BY Pno
+                    )
+    );
+-- A subquery can be nested within another subquery.
+
+
+# Exercise
+-- Which department has the most employees?
+SELECT Dno, count(*) AS "Num. of Employees"
+FROM EMPLOYEE
+GROUP BY Dno
+ORDER BY `Num. of Employees` DESC
+LIMIT 1;
+-- Subquery approach
+SELECT Dno
+FROM EMPLOYEE
+GROUP BY Dno
+HAVING count(*) = (
+    SELECT MAX(num_of_emps)
+    FROM (SELECT count(Ssn) AS num_of_emps
+        FROM EMPLOYEE
+        GROUP BY Dno
+        ) AS NE
+    );
 
 -- Subquery in (Order By) clause
 -- Display employees ordered by their department name
@@ -105,4 +154,4 @@ SELECT Dnumber, Dname
 FROM DEPARTMENT;
 
 
--- Also, a subquery can be nested within another subquery.
+

@@ -120,47 +120,8 @@ HAVING MIN(Salary) > 30000;
 # Super_ssn, MIN(Salary)
 
 
--- Find those who have the highest salary in each department
--- Nested query
-SELECT concat(Fname, ' ', Lname), Dno, Salary
-FROM EMPLOYEE
-WHERE Salary IN (
-    SELECT max(Salary)
-    FROM EMPLOYEE
-    GROUP BY Dno
-    );
-
--- Find the longest working hours in each project
-SELECT max(Hours)
-FROM WORKS_ON
-GROUP BY Pno;
-
--- Find the SSN of those who work the longest hours in each project
-SELECT DISTINCT Essn
-FROM WORKS_ON
-WHERE Hours IN (
-    SELECT max(Hours)
-    FROM WORKS_ON
-    GROUP BY Pno
-    );
-
--- And also the names ...
-SELECT concat(Fname, ' ', Lname)
-FROM EMPLOYEE
-WHERE Ssn IN (
-                SELECT DISTINCT Essn
-                FROM WORKS_ON
-                WHERE Hours IN (
-                    SELECT max(Hours)
-                    FROM WORKS_ON
-                    GROUP BY Pno
-                    )
-    );
-
-
 
 -- Which department has the most employees?
-
 SELECT Dno, count(*) AS "Num. of Employees"
 FROM EMPLOYEE
 GROUP BY Dno
