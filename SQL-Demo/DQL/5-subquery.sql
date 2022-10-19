@@ -31,7 +31,7 @@ WHERE Salary > (
     WHERE Lname = 'Wallace'
     );
 /*
- The inner query runs first, and only once.
+ The inner query runs first, and only once (non-correlated).
  The outer query is executed with result from inner query.
  */
 
@@ -71,8 +71,14 @@ WHERE Salary > (
     FROM EMPLOYEE E2
     WHERE E1.Dno = E2.Dno
     );
--- This is also called a "Correlated Query" because
--- Inner query uses values from Outer query.
+-- 
+/*
+This is also called a "Correlated Subquery" because
+the Inner query uses values from Outer query.
+
+A correlated subquery may be executed multiple times, 
+precisely once for each row returned by the outer query.
+*/
 
 -- Check out the following solution
 SELECT concat(Fname, ' ', Lname), Salary, E1.Dno
