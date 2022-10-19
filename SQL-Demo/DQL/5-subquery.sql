@@ -238,6 +238,16 @@ HAVING count(*) = (
     );
 # Note that every derived table must have its own alias.
 
+-- Can we make it simpler? Hint: Use ALL
+SELECT Dno, count(*) AS "Num. of Employees"
+FROM EMPLOYEE
+GROUP BY Dno
+HAVING count(*) >= ALL (
+            SELECT count(Ssn)
+            FROM EMPLOYEE
+            GROUP BY Dno
+    ) ;
+
 -- Which department (show its name) has the most employees?
 SELECT Dnumber, Dname
 FROM DEPARTMENT
@@ -263,8 +273,9 @@ WHERE Dnumber = (SELECT Dno
                 LIMIT 1);
 
 
--- Exercise: find the department (number) with the lowest average salary
 
+
+-- Exercise: find the department (number) with the lowest average salary
 SELECT E1.Dno, avg(E1.Salary)
 FROM EMPLOYEE E1
 GROUP BY E1.Dno
@@ -276,8 +287,15 @@ HAVING avg(E1.Salary) = (
         GROUP BY E2.Dno
          ) AS t_avg
     );
-
-
+-- or
+SELECT E1.Dno, avg(E1.Salary)
+FROM EMPLOYEE E1
+GROUP BY E1.Dno
+HAVING avg(E1.Salary) <= ALL (
+            SELECT avg(E2.Salary)
+            FROM EMPLOYEE E2
+            GROUP BY E2.Dno
+);
 
 
 # Subquery in the "Order By" clause
