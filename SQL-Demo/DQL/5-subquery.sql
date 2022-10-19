@@ -114,7 +114,6 @@ WHERE Salary > (
     );
 
 
-
 # Correlated Subquery
 -- Example: Find whose whose salary is higher than their department average
 SELECT concat(Fname, ' ', Lname), Salary, E1.Dno
@@ -260,9 +259,25 @@ WHERE Dnumber = (SELECT Dno
                 LIMIT 1);
 
 
+-- Exercise: find the department (number) with the lowest average salary
 
--- Subquery in (Order By) clause
--- Display employees ordered by their department name
+SELECT E1.Dno, avg(E1.Salary)
+FROM EMPLOYEE E1
+GROUP BY E1.Dno
+HAVING avg(E1.Salary) = (
+    SELECT min(dept_avg)
+    FROM (
+        SELECT avg(E2.Salary) as dept_avg
+        FROM EMPLOYEE E2
+        GROUP BY E2.Dno
+         ) AS t_avg
+    );
+
+
+
+
+# Subquery in the "Order By" clause
+-- Example: Display employees ordered by their department name
 SELECT Dno, concat(Fname, ' ', Lname), Salary
 FROM EMPLOYEE E
 ORDER BY (
