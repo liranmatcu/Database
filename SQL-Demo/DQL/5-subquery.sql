@@ -176,7 +176,7 @@ HAVING count(*) = (
     );
 # Note that every derived table must have its own alias.
 
--- Which department name has the most employees?
+-- Which department (show its name) has the most employees?
 SELECT Dnumber, Dname
 FROM DEPARTMENT
 WHERE Dnumber = (SELECT Dno
