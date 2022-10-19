@@ -59,16 +59,7 @@ WHERE Salary = (
     );
 
 -- Example: Find the employee(s), not in department 5,
--- whose salary is less that of anyone's in department 5;
-SELECT concat(Fname, ' ', Lname), Dno, Salary
-FROM EMPLOYEE
-WHERE Dno <> 5
-  AND Salary < ANY (
-    SELECT E.Salary
-    FROM EMPLOYEE E
-    WHERE E.Dno = 5
-);
--- It is equivalent to
+-- whose salary is less that of an arbitrary one's in department 5;
 SELECT concat(Fname, ' ', Lname), Dno, Salary
 FROM EMPLOYEE
 WHERE Dno <> 5
@@ -77,16 +68,18 @@ WHERE Dno <> 5
     FROM EMPLOYEE E
     WHERE E.Dno = 5
 );
-
+-- It is equivalent to
 SELECT concat(Fname, ' ', Lname), Dno, Salary
 FROM EMPLOYEE
 WHERE Dno <> 5
-  AND Salary < ALL (
+  AND Salary < ANY (
     SELECT E.Salary
     FROM EMPLOYEE E
     WHERE E.Dno = 5
 );
--- It is equivalent to
+
+-- Example: Find the employee(s), not in department 5,
+-- whose salary is less that of anyone's in department 5;
 SELECT concat(Fname, ' ', Lname), Dno, Salary
 FROM EMPLOYEE
 WHERE Dno <> 5
@@ -95,6 +88,16 @@ WHERE Dno <> 5
     FROM EMPLOYEE E
     WHERE E.Dno = 5
 );
+-- It is equivalent to
+SELECT concat(Fname, ' ', Lname), Dno, Salary
+FROM EMPLOYEE
+WHERE Dno <> 5
+  AND Salary < ALL (
+    SELECT E.Salary
+    FROM EMPLOYEE E
+    WHERE E.Dno = 5
+);
+
 
 -- Exercise: Find those whose salary is higher than company's average
 SELECT concat(Fname, ' ', Lname), Salary
@@ -113,6 +116,26 @@ WHERE Salary > (
     WHERE Dno = 5
     );
 
+
+-- Example: Find the last names of the supervisors
+SELECT Lname
+FROM EMPLOYEE
+WHERE Ssn IN (
+    SELECT Super_ssn
+    FROM EMPLOYEE
+    );
+-- Exercise: Find the last names of whose who are not the supervisors
+SELECT Lname
+FROM EMPLOYEE
+WHERE Ssn NOT IN (
+    SELECT Super_ssn
+    FROM EMPLOYEE
+    );
+
+
+
+
+# WHERE Super_ssn IS NOT NULL
 
 # Correlated Subquery
 -- Example: Find whose whose salary is higher than their department average
