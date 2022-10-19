@@ -15,7 +15,7 @@ Purpose: refine results by recursive filtering
 
 USE COMPANY;
 
--- Find those whose salary is higher than Wallace's
+-- Example: Find those whose salary is higher than Wallace's
 /*
  Idea:
  First, find find Wallace's salary;
@@ -30,21 +30,22 @@ WHERE Salary > (
     FROM EMPLOYEE
     WHERE Lname = 'Wallace'
     );
-
--- Find the employee(s) who has the highest salary
-SELECT concat(Fname, ' ', Lname), Salary
-FROM EMPLOYEE
-WHERE Salary = (
-    SELECT max(Salary)
-    FROM EMPLOYEE
-    );
 /*
  The inner query runs first, and only once.
  The outer query is executed with result from inner query.
  */
 
 
--- Find those whose salary is higher than company's average
+-- Example: Find the employee(s) who has the highest salary
+SELECT concat(Fname, ' ', Lname), Salary
+FROM EMPLOYEE
+WHERE Salary = (
+    SELECT max(Salary)
+    FROM EMPLOYEE
+    );
+
+
+-- Exercise: Find those whose salary is higher than company's average
 SELECT concat(Fname, ' ', Lname), Salary
 FROM EMPLOYEE
 WHERE Salary > (
@@ -52,9 +53,7 @@ WHERE Salary > (
     FROM EMPLOYEE
     );
 
-
--- Exercise
--- Find those whose salary is higher than department number 5's average
+-- Exercise: Find those whose salary is higher than department number 5's average
 SELECT concat(Fname, ' ', Lname), Salary
 FROM EMPLOYEE
 WHERE Salary > (
@@ -64,7 +63,7 @@ WHERE Salary > (
     );
 
 
--- Find whose whose salary is higher than their department average
+-- Example: Find whose whose salary is higher than their department average
 SELECT concat(Fname, ' ', Lname), Salary, E1.Dno
 FROM EMPLOYEE E1
 WHERE Salary > (
@@ -72,7 +71,7 @@ WHERE Salary > (
     FROM EMPLOYEE E2
     WHERE E1.Dno = E2.Dno
     );
--- This is also called a Correlated Query because
+-- This is also called a "Correlated Query" because
 -- Inner query uses values from Outer query.
 
 -- Check out the following solution
@@ -84,10 +83,11 @@ FROM EMPLOYEE E1, (
     ) AS t_dept_ave_sal
 WHERE E1.Salary > t_dept_ave_sal.ave_salary
 AND E1.Dno = t_dept_ave_sal.Dno;
+# The second table t_dept_ave_sal is a derived table.
+# Note that every derived table must have its own alias.
 
 
-# Exercise
--- Find those who have the highest salary in each department
+-- Exercise: Find those who have the highest salary in each department
 SELECT concat(Fname, ' ', Lname), Dno, Salary
 FROM EMPLOYEE E1
 WHERE Salary = (
@@ -95,7 +95,8 @@ WHERE Salary = (
     FROM EMPLOYEE E2
     WHERE E1.Dno = E2.Dno
     );
--- How about this solution?
+
+-- How about the following solution?
 SELECT concat(Fname, ' ', Lname), Dno, Salary
 FROM EMPLOYEE
 WHERE Salary IN (
@@ -105,35 +106,39 @@ WHERE Salary IN (
     );
 
 
--- Find the SSN of those who work the longest hours in each project
-SELECT DISTINCT Essn
-FROM WORKS_ON
-WHERE Hours IN (
+-- Exercise: Find the SSNs of those who work the longest hours in each project
+SELECT Pno, Essn, Hours
+FROM WORKS_ON WO1
+WHERE Hours = (
     SELECT max(Hours)
-    FROM WORKS_ON
-    GROUP BY Pno
-    );
+    FROM WORKS_ON WO2
+    WHERE WO1.Pno = WO2.Pno
+    )
+ORDER BY Pno;
 
--- Find the longest working hours in each project
-SELECT max(Hours)
+-- Verify results, check the longest working hours in each project
+SELECT Pno, max(Hours)
 FROM WORKS_ON
-GROUP BY Pno;
+GROUP BY Pno
+ORDER BY Pno;
 
--- And also the names ...
 
-SELECT concat(Fname, ' ', Lname)
+-- Exercise: And also the names of those employees
+-- In previous query, we get the SSN not the names.
+
+SELECT Ssn, concat(Fname, ' ', Lname)
 FROM EMPLOYEE
 WHERE Ssn IN (
-                SELECT DISTINCT Essn
-                FROM WORKS_ON
-                WHERE Hours IN (
+                SELECT Essn
+                FROM WORKS_ON WO1
+                WHERE Hours = (
                     SELECT max(Hours)
-                    FROM WORKS_ON
-                    GROUP BY Pno
+                    FROM WORKS_ON WO2
+                    WHERE WO1.Pno = WO2.Pno
                     )
     );
 -- A subquery can be nested within another subquery.
-
+-- Note that we are sort of connecting two different relations.
 
 # Exercise
 -- Which department (number) has the most employees?
