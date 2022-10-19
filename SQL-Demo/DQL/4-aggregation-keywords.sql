@@ -70,58 +70,43 @@ SELECT Dno, Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
 GROUP BY Super_ssn, Dno;
 
--- What are the outputs of the following?
+-- Exercise: What are the outputs of the following?
 SELECT Dno, Super_ssn "Supervisor SSN", AVG(Salary)
 FROM EMPLOYEE
 GROUP BY Dno;
 
 
-# Exercise
--- Find the average salary by department
-
-
--- Find the highest salary by department
+-- Exercise: Find the average salary by department
 
 SELECT Dno,
 FROM EMPLOYEE
 GROUP BY Dno;
 
-
--- Find the total number of employees under
--- each supervisor
-
-
-SELECT
-FROM EMPLOYEE
-GROUP BY Super_ssn;
-
-# Super_ssn, count(*)
-
-
--- Find the difference between the highest and lowest salary
--- among all employees
-
-SELECT
-FROM EMPLOYEE;
-
-# max(Salary) - min(Salary)
-
-
--- Find the lowest salary of each supervisor (not null)
--- and the lowest salary needs to be higher than 30000
+-- Exercise: Find the highest salary by department
 
 
 
-SELECT
-FROM EMPLOYEE
-WHERE Super_ssn IS NOT NULL
-GROUP BY Super_ssn
-HAVING MIN(Salary) > 30000;
-# Super_ssn, MIN(Salary)
+
+-- Exercise: Find the total number of employees under each supervisor
+
+
+# SELECT Super_ssn, count(*)
+# FROM EMPLOYEE
+# WHERE Super_ssn IS NOT NULL
+# GROUP BY Super_ssn;
 
 
 
--- Which department (number) has the most employees?
+-- Exercise: Find the difference between
+-- the highest and lowest salary in each department
+
+
+# SELECT max(Salary) - min(Salary)
+# FROM EMPLOYEE
+# GROUP BY Dno;
+
+
+-- Exercise: Which department (number) has the most employees?
 SELECT Dno, count(*) AS "Num. of Employees"
 FROM EMPLOYEE
 GROUP BY Dno
@@ -129,7 +114,7 @@ ORDER BY `Num. of Employees` DESC
 LIMIT 1;
 
 
--- Show the highest salary of each department
+-- Question: Show the highest salary of each department
 -- if the highest salary is larger than 35000
 
 -- Would the following work?
@@ -140,6 +125,7 @@ GROUP BY Dno;
 
 -- Key point: group functions cannot be used in WHERE
 -- due to the order of execution "FWGHSOL"
+# What can we do then?
 
 /*
  The HAVING clause was added to SQL because
@@ -175,5 +161,23 @@ HAVING max(Salary) > 35000 AND
 -- in general due to the order of execution;
 -- b/c WHERE filters out results for later processing
 
--- Exercise
 
+-- Exercise: Find the lowest salary of each supervisor (not null)
+-- and the lowest salary needs to be higher than 30000
+
+
+SELECT Super_ssn, MIN(Salary)
+FROM EMPLOYEE
+WHERE Super_ssn IS NOT NULL
+GROUP BY Super_ssn
+HAVING MIN(Salary) > 30000;
+
+
+-- Exercise: Find the departments who
+-- has at least 3 employees
+
+
+SELECT Dno, COUNT(*)
+FROM EMPLOYEE
+GROUP BY Dno
+HAVING COUNT(*) >= 3;
