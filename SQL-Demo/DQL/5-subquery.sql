@@ -128,16 +128,18 @@ GROUP BY Dno
 ORDER BY `Num. of Employees` DESC
 LIMIT 1;
 -- Subquery approach
-SELECT Dno
+SELECT Dno, count(*) AS "Num. of Employees"
 FROM EMPLOYEE
 GROUP BY Dno
 HAVING count(*) = (
-    SELECT MAX(num_of_emps)
-    FROM (SELECT count(Ssn) AS num_of_emps
+    SELECT MAX(number_of_emps)
+    FROM (
+        SELECT count(Ssn) AS number_of_emps
         FROM EMPLOYEE
         GROUP BY Dno
         ) AS NE
     );
+# Note that every derived table must have its own alias.
 
 -- Subquery in (Order By) clause
 -- Display employees ordered by their department name
