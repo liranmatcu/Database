@@ -2,6 +2,8 @@
 SET Operators (UNION, INTERSECT, Minus) in SQL
 */
 
+USE COMPANY;
+
 -- Union
 /*
 The UNION set operation is used to combine the outputs 
@@ -12,19 +14,18 @@ This will eliminate duplicates from its result set.
 The number of columns and the datatype must be the same 
 in both the tables on which the UNION operation is being used.
 
+Syntax:
 SELECT FROM First
 UNION
 SELECT FROM Second;
 */
 
-USE COMPANY;
 
 /*
 Example: 
-Find the ssn of all employees
-who works on project 20 or project 30.
+    Find the ssn of all employees who works on
+    project 20 or project 30.
 */
-
 SELECT Ssn
 FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
@@ -35,7 +36,7 @@ FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
 WHERE Pno = 30;
 
--- or using EXISTS
+-- Or using EXISTS
 SELECT DISTINCT Ssn
 FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
@@ -59,8 +60,8 @@ SELECT * FROM Second;
 
 MySQL does not recognize MINUS and INTERSECT,
 which are Oracle based operations.
-In MySQL we can use NOT IN or NOT EXISTS as MINUS.
 
+In MySQL we can use NOT IN or NOT EXISTS as MINUS.
  */
 
 
@@ -89,10 +90,13 @@ AND NOT EXISTS
     WHERE Pno = 30 AND E.Ssn = Essn);
 
 /*
- The EXISTS clause is much faster than IN when the subquery results is very large.
- Conversely, the IN clause is faster than EXISTS when the subquery results is very small.
+ The EXISTS clause is much faster than IN
+ when the subquery results is very large.
 
- Also, the IN clause can't compare anything with NULL values,
+ Conversely, the IN clause is faster than EXISTS
+ when the subquery results is very small.
+
+ Also, the IN clause cannot compare anything with NULL values,
  but the EXISTS clause can compare everything with NULLs.
  */
 
@@ -116,6 +120,7 @@ AND EXISTS
     FROM WORKS_ON
     WHERE Pno = 30 AND E.Ssn = Essn);
 
+-- Other solutions
 SELECT L.Essn
 FROM (SELECT Essn FROM WORKS_ON WHERE Pno = 20) AS L
 JOIN (SELECT Essn FROM WORKS_ON WHERE Pno = 30) AS R
@@ -124,7 +129,6 @@ WHERE L.Essn = R.Essn;
 SELECT Ssn FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
 WHERE Pno = 20 or Pno = 30
--- WHERE Pno = 10 or Pno = 30
 GROUP BY (Ssn)
 HAVING count(Ssn) >= 2;
 
