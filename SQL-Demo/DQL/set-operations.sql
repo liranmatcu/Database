@@ -1,5 +1,3 @@
-USE COMPANY;
-
 /*
 SET Operators (UNION, INTERSECT, Minus) in SQL
 */
@@ -19,6 +17,7 @@ UNION
 SELECT FROM Second;
 */
 
+USE COMPANY;
 
 /*
 Example: 
@@ -36,6 +35,16 @@ FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
 WHERE Pno = 30;
 
+-- or using EXISTS
+SELECT DISTINCT Ssn
+FROM EMPLOYEE E
+JOIN WORKS_ON WO ON E.Ssn = WO.Essn
+WHERE Pno = 20 OR exists(
+    SELECT Ssn
+    FROM EMPLOYEE E2
+    JOIN WORKS_ON WO2 ON E2.Ssn = WO2.Essn
+    WHERE WO2.Pno = 30 and E.Ssn = E2.Ssn
+    );
 
 
 -- Minus
@@ -79,7 +88,13 @@ AND NOT EXISTS
     FROM WORKS_ON
     WHERE Pno = 30 AND E.Ssn = Essn);
 
+/*
+ The EXISTS clause is much faster than IN when the subquery results is very large.
+ Conversely, the IN clause is faster than EXISTS when the subquery results is very small.
 
+ Also, the IN clause can't compare anything with NULL values,
+ but the EXISTS clause can compare everything with NULLs.
+ */
 
 -- Intersect
 /*
