@@ -1,4 +1,4 @@
-LOAD DATA LOCAL INFILE "/root/lab6_data/student.dat"
+LOAD DATA LOCAL INFILE "/resources/lab6/student.dat"
 INTO TABLE Student
 FIELDS ENCLOSED BY '"' TERMINATED BY ','
 LINES TERMINATED BY '\r\n';

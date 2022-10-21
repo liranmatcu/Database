@@ -1,4 +1,4 @@
-LOAD DATA LOCAL INFILE "/root/lab6_data/ddoffers.dat"
+LOAD DATA LOCAL INFILE "/resources/lab6/ddoffers.dat"
 INTO TABLE DDoffers
 FIELDS ENCLOSED BY '"' TERMINATED BY ','
 LINES TERMINATED BY '\r\n';

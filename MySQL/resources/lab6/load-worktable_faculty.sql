@@ -1,4 +1,4 @@
-LOAD DATA LOCAL INFILE '/root/lab6_data/faculty.dat' 
+LOAD DATA LOCAL INFILE '/resources/lab6/faculty.dat' 
 INTO TABLE worktable_faculty 
 FIELDS ENCLOSED BY '"' TERMINATED BY ','
 LINES TERMINATED BY '\r\n'
