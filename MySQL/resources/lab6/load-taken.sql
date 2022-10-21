@@ -1,0 +1,4 @@
+LOAD DATA LOCAL INFILE "/root/lab6_data/taken.dat"
+INTO TABLE taken
+FIELDS ENCLOSED BY '"' TERMINATED BY ','
+LINES TERMINATED BY '\r\n';
