@@ -205,6 +205,13 @@ WHERE Salary IN (
     GROUP BY Dno
     );
 
+SELECT concat(Fname, ' ', Lname), Dno, Salary
+FROM EMPLOYEE E
+WHERE (Dno, Salary) IN (
+    SELECT Dno, max(Salary)
+    FROM EMPLOYEE
+    GROUP BY Dno
+    );
 
 -- Exercise: Find the SSNs of those who work the longest hours in each project
 SELECT Pno, Essn, Hours
