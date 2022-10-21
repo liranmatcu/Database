@@ -196,7 +196,7 @@ WHERE Salary = (
     WHERE E1.Dno = E2.Dno
     );
 
--- How about the following solution?
+-- How about the following solutions?
 SELECT concat(Fname, ' ', Lname), Dno, Salary
 FROM EMPLOYEE
 WHERE Salary IN (
@@ -206,7 +206,7 @@ WHERE Salary IN (
     );
 
 SELECT concat(Fname, ' ', Lname), Dno, Salary
-FROM EMPLOYEE E
+FROM EMPLOYEE
 WHERE (Dno, Salary) IN (
     SELECT Dno, max(Salary)
     FROM EMPLOYEE
