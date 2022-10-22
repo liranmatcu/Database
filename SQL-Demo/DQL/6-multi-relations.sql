@@ -21,12 +21,12 @@ SELECT *
 FROM EMPLOYEE, DEPARTMENT;
 -- It is called the Cartesian product.
 
-# It is similar to Cross Join
+# It is similar to a Cross Join
 SELECT *
 FROM EMPLOYEE
 CROSS JOIN DEPARTMENT;
 
--- How to Fix?
+-- How to fix?
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E, DEPARTMENT D
 WHERE Dname = 'Research' AND E.Dno = D.Dnumber;
@@ -36,7 +36,7 @@ SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 JOIN DEPARTMENT ON Dnumber = Dno
 WHERE Dname = 'Research';
--- or with aliasing
+-- Inner Join or with aliasing
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno
@@ -64,32 +64,29 @@ WHERE Dno = (
             WHERE Dname = 'Research'
             );
 
-
-# EXISTS Condition
+# EXISTS operator in a correlated subquery
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE E
 WHERE exists(
-    SELECT 1
+    SELECT *
     FROM DEPARTMENT D
-    WHERE D.Dname = 'Research' AND E.Dno = D.Dnumber
+    WHERE D.Dname = 'Research'
+      AND E.Dno = D.Dnumber
     );
-
 /*
- SQL statements that use the EXISTS Condition in MySQL can
- be inefficient since the sub-query is RE-RUN for EVERY row
- in the outer query's table.
+ The EXISTS operator is used to
+ test for the existence of any record in a subquery.
+
+ The EXISTS operator returns TRUE
+ if the subquery returns one or more records.
+
+ EXISTS is commonly used with correlated subqueries.
  */
 
 
-SELECT concat(Fname, ' ', Lname), Dname
-FROM EMPLOYEE E
-JOIN DEPARTMENT D ON D.Dnumber = E.Dno
-WHERE Dname = 'Research' AND Lname = 'Wong';
-
-
 /*
-   Task: Show each Employee's name and the
-   department name.
+   Exercise:
+   Show each employee's name and their department name.
  */
 -- Erroneous solutions
 SELECT concat(Fname, ' ', Lname), Dname
@@ -99,20 +96,26 @@ SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 CROSS JOIN DEPARTMENT;
 
--- How to get the correct results?
-SELECT concat(Fname, ' ', Lname), Dname
-FROM EMPLOYEE, DEPARTMENT
-WHERE EMPLOYEE.Dno = DEPARTMENT.Dnumber;
--- or
+-- Implicit Join
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E, DEPARTMENT D
 WHERE E.Dno = D.Dnumber;
--- or
+/*
+ Implicit Join: simply lists the tables for joining
+ (in the FROM clause of the SELECT statement),
+ using commas to separate them
+ and WHERE clause to apply to join predicates.
+
+ It performs a CROSS JOIN.
+ It can be difficult to understand and more prone to errors.
+ */
+
+-- or cross join
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 
--- Oder the results by Department name
+-- Order the results by Department name
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno
@@ -132,7 +135,7 @@ LIMIT 5;
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
-# This is inner join
+# This is an inner join
 
 
 -- Would the following exist solution work?
