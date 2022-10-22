@@ -104,8 +104,12 @@ SELECT view_emp_1.Ssn, view_emp_1.Salary, Ave_Sal
 FROM view_emp_1 JOIN view_emp_3 ON Dno = Dept_Num;
 # WHERE Salary > view_emp_3.Ave_Sal;
 
-
-
+-- Show all the views
+SHOW TABLES;
+-- Show structure of a view
+DESC view_emp_1;
+SHOW TABLE STATUS LIKE 'view_emp_1';
+SHOW CREATE VIEW view_emp_1;
 
 
 
