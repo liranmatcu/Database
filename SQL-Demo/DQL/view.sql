@@ -23,13 +23,16 @@ USE COMPANY;
 
 -- Example: create a view from a single table
 CREATE VIEW view_emp_1
-    AS
-SELECT Ssn, Lname, Salary
+AS
+SELECT Ssn, Lname, Dno, Salary
 FROM EMPLOYEE
 WHERE Dno = 5;
 -- Query from the view
 SELECT *
 FROM view_emp_1;
+
+DROP VIEW view_emp_1;
+
 
 -- Example: create a view with different column names
 CREATE VIEW view_emp_2
@@ -46,7 +49,7 @@ DROP VIEW view_emp_2;
 
 -- or
 CREATE VIEW view_emp_2 (Emp_Ssn, `Last Name`, `Monthly Salary`)
-    AS
+AS
 SELECT Ssn, Lname, Salary/12
 FROM EMPLOYEE
 WHERE Salary > 30000;
@@ -56,7 +59,7 @@ FROM view_emp_2;
 
 -- Create view from derived attributes
 CREATE VIEW view_emp_3
-    AS
+AS
 SELECT Dno Dept_Num, avg(Salary) Ave_Sal
 FROM EMPLOYEE
 GROUP BY Dno;
@@ -84,9 +87,22 @@ SELECT concat(Fname, ' ', Lname, ' (', Dname, ')') AS "Employee Info"
 FROM EMPLOYEE
 JOIN DEPARTMENT D ON D.Dnumber = EMPLOYEE.Dno;
 
--- Example
+-- Example: create view from view(s)
+CREATE VIEW view_emp_4
+AS
+SELECT view_emp_1.Ssn, view_emp_1.Salary
+FROM view_emp_1;
 
+SELECT *
+FROM view_emp_4;
 
+DROP VIEW view_emp_4;
+-- from two views
+CREATE VIEW view_emp_4
+AS
+SELECT view_emp_1.Ssn, view_emp_1.Salary, Ave_Sal
+FROM view_emp_1 JOIN view_emp_3 ON Dno = Dept_Num;
+# WHERE Salary > view_emp_3.Ave_Sal;
 
 
 
