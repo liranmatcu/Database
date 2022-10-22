@@ -112,7 +112,24 @@ SHOW TABLE STATUS LIKE 'view_emp_1';
 SHOW CREATE VIEW view_emp_1;
 
 
+-- Update view
+SELECT *
+FROM view_emp_1;
 
+UPDATE view_emp_1
+SET Salary = 30000
+WHERE Ssn = 123456789;
+
+-- Does that affect the original table?
+SELECT Salary
+FROM EMPLOYEE
+WHERE Ssn = 123456789;
+
+
+-- Can we do this?
+UPDATE view_emp_3
+SET Ave_Sal = 50000
+WHERE Dept_Num = 5;
 
 
 
