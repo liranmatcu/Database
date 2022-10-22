@@ -1,21 +1,20 @@
 /*
 View:
 
-A view is a virtual table based on the result-set of an SQL statement.
+A view is a virtual table based on the
+result-set of an SQL SELECT statement.
+A view is created with the CREATE VIEW statement.
+    CREATE VIEW view_name
+    AS
+    SELECT column-1, column-2, ...
+    FROM table_name
+    WHERE condition;
 
-A view contains rows and columns, just like a real table. 
-The fields in a view are fields from one or more real tables in the database.
+A view contains rows and columns, just like a table.
+But, a view does not store data.
 
-You can add SQL statements and functions to a view and 
-present the data as if the data were coming from one single table.
-
-A view is created with the CREATE VIEW statement. 
-
-CREATE VIEW view_name AS
-SELECT column-1, column-2, ...
-FROM table_name
-WHERE condition;
-
+The fields in a view can come from one or more tables;
+They are presented as if the data were coming from one single table.
 */
 
 USE COMPANY;
@@ -162,3 +161,23 @@ FROM emp_20 JOIN emp_30 e ON emp_20.Essn = e.Essn;
 DROP VIEW IF EXISTS emp_20, emp_30;
 
 
+/*
+ Advantages of view:
+ 1. Query Simplification
+ 2. Structural Simplicity (e.g., customized presentation)
+ 3. Security
+
+ Disadvantages of view:
+ 1. performance degradation.
+ Because views only create the appearance of a table,
+ not a real table, the query processor must translate
+ queries against the view into queries against the
+ underlying source tables.
+
+ If the view is defined by a complex, multi-table query,
+ even simple queries against the view become complicated
+ joins that can take a long time to complete.
+
+ 2. Update restrictions
+ */
+ 
