@@ -75,11 +75,9 @@ WHERE exists(
     );
 
 /*
- SQL statements that use the EXISTS Condition in MySQL
- are very inefficient since the sub-query is RE-RUN for EVERY row
+ SQL statements that use the EXISTS Condition in MySQL can
+ be inefficient since the sub-query is RE-RUN for EVERY row
  in the outer query's table.
- There are more efficient ways to write most queries,
- that do not use the EXISTS Condition.
  */
 
 
@@ -149,8 +147,75 @@ WHERE exists(
 
 
 /*
-
+Example:
+Retrieve the name of each employee who works on
+all the projects controlled by department number 4
 */
+SELECT DISTINCT E.Fname, E.Lname, Dno
+FROM EMPLOYEE E
+JOIN WORKS_ON WO ON E.Ssn = WO.Essn
+# JOIN PROJECT P ON P.Pnumber = WO.Pno
+WHERE NOT exists(
+    SELECT 1
+    FROM PROJECT P
+    WHERE P.Dnum <> 5 AND P.Pnumber = WO.Pno
+    );
+
+-- show those who worked on projects
+-- that are managed by dept 4
+SELECT Essn, Pno, Dnum
+FROM WORKS_ON
+JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
+WHERE Pno IN (
+    SELECT P2.Pnumber
+    FROM PROJECT P2
+    WHERE P2.Dnum = 4
+    )
+ORDER BY Essn;
+
+-- Find the total number of projects
+SELECT count(DISTINCT Pno)
+FROM WORKS_ON
+JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
+WHERE Pno IN (
+    SELECT P2.Pnumber
+    FROM PROJECT P2
+    WHERE P2.Dnum = 4
+    );
+
+SELECT Ssn, Fname, Lname
+FROM EMPLOYEE
+JOIN WORKS_ON WO ON EMPLOYEE.Ssn = WO.Essn
+WHERE Pno IN (
+    SELECT DISTINCT Pno
+    FROM WORKS_ON
+    JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
+    WHERE Pno IN (
+        SELECT P2.Pnumber
+        FROM PROJECT P2
+        WHERE P2.Dnum = 4
+        )
+    )
+GROUP BY Ssn
+HAVING count(*) = 2;
+
+-- Exists based solution
+SELECT Ssn, Fname, Lname
+FROM EMPLOYEE
+WHERE NOT exists (
+    SELECT *
+    FROM WORKS_ON WO
+    WHERE (WO.Pno IN (SELECT Pnumber
+                     FROM PROJECT
+                     WHERE Dnum = 4)
+          AND
+          NOT exists(
+              SELECT *
+              FROM WORKS_ON WO2
+              WHERE WO2.Essn = Ssn
+                AND WO2.Pno = WO.Pno)
+         )
+    );
 
 
 /*
