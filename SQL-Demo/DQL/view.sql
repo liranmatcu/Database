@@ -31,12 +31,12 @@ WHERE Dno = 5;
 SELECT *
 FROM view_emp_1;
 
-DROP VIEW view_emp_1;
+DROP VIEW IF EXISTS view_emp_1;
 
 
 -- Example: create a view with different column names
 CREATE VIEW view_emp_2
-    AS
+AS
 SELECT Ssn "Social Security Number", Lname "Last Name", Salary/12 "Monthly Salary"
 FROM EMPLOYEE
 WHERE Salary > 30000;
@@ -45,7 +45,7 @@ SELECT *
 FROM view_emp_2;
 
 -- Delete a view
-DROP VIEW view_emp_2;
+DROP VIEW IF EXISTS view_emp_2;
 
 -- or
 CREATE VIEW view_emp_2 (Emp_Ssn, `Last Name`, `Monthly Salary`)
@@ -67,7 +67,7 @@ GROUP BY Dno;
 SELECT *
 FROM view_emp_3;
 
-DROP VIEW view_emp_3;
+DROP VIEW IF EXISTS view_emp_3;
 
 -- Example: create a view from multiple tables
 CREATE VIEW view_emp_dept (Emp_Name, Dept_Name)
@@ -137,12 +137,12 @@ WHERE Dept_Num = 5;
 
 
 /*
- P. 27
+ Exercise: P. 27
  Find the ssn of all employees
  who works on project 20 and project 30 simultaneously.
- */
-DROP VIEW emp_20, emp_30;
 
+ Design a solution by using views
+ */
 CREATE VIEW emp_20
 AS
 SELECT Essn
@@ -159,6 +159,6 @@ SELECT DISTINCT emp_20.Essn
 FROM emp_20 JOIN emp_30 e ON emp_20.Essn = e.Essn;
 
 
-
+DROP VIEW IF EXISTS emp_20, emp_30;
 
 
