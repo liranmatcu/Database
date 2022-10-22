@@ -180,4 +180,3 @@ DROP VIEW IF EXISTS emp_20, emp_30;
 
  2. Update restrictions
  */
- 
