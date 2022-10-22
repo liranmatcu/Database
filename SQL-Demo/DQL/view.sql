@@ -136,5 +136,29 @@ WHERE Dept_Num = 5;
 
 
 
+/*
+ P. 27
+ Find the ssn of all employees
+ who works on project 20 and project 30 simultaneously.
+ */
+DROP VIEW emp_20, emp_30;
+
+CREATE VIEW emp_20
+AS
+SELECT Essn
+FROM WORKS_ON
+WHERE Pno = 20;
+
+CREATE VIEW emp_30
+AS
+SELECT Essn
+FROM WORKS_ON
+WHERE Pno = 30;
+
+SELECT DISTINCT emp_20.Essn
+FROM emp_20 JOIN emp_30 e ON emp_20.Essn = e.Essn;
+
+
+
 
 
