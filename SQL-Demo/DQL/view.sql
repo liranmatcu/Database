@@ -131,6 +131,8 @@ UPDATE view_emp_3
 SET Ave_Sal = 50000
 WHERE Dept_Num = 5;
 
+DELETE FROM view_emp_3
+WHERE Dept_Num = 5;
 
 
 
