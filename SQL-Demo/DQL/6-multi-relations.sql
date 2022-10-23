@@ -17,21 +17,32 @@ SELECT *
 FROM EMPLOYEE;
 SELECT *
 FROM DEPARTMENT;
+
 SELECT *
 FROM EMPLOYEE, DEPARTMENT;
--- It is called the Cartesian product.
-
-# It is similar to a Cross Join
+-- It is called the Cartesian product,
+-- which is similar to a Cross Join
 SELECT *
 FROM EMPLOYEE
 CROSS JOIN DEPARTMENT;
 
--- How to fix?
+-- How to fix the problem?
+-- Solution 1: implicit join
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E, DEPARTMENT D
 WHERE Dname = 'Research' AND E.Dno = D.Dnumber;
+/*
+ Implicit Join: simply lists the tables for joining
+ (in the FROM clause of the SELECT statement),
+ using commas to separate them
+ and WHERE clause to apply to join predicates.
 
-# Inner Join
+ It performs a CROSS JOIN.
+ It can be difficult to understand and more prone to errors.
+ */
+
+
+# Solution 2: Inner Join
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 JOIN DEPARTMENT ON Dnumber = Dno
@@ -100,15 +111,7 @@ CROSS JOIN DEPARTMENT;
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E, DEPARTMENT D
 WHERE E.Dno = D.Dnumber;
-/*
- Implicit Join: simply lists the tables for joining
- (in the FROM clause of the SELECT statement),
- using commas to separate them
- and WHERE clause to apply to join predicates.
 
- It performs a CROSS JOIN.
- It can be difficult to understand and more prone to errors.
- */
 
 -- or cross join
 SELECT concat(Fname, ' ', Lname), Dname
@@ -137,7 +140,6 @@ FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 # This is an inner join
 
-
 -- Would the following exist solution work?
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
@@ -146,37 +148,14 @@ WHERE exists(
     FROM DEPARTMENT D
     WHERE D.Dnumber = EMPLOYEE.Dno);
 
-
-
-
 /*
 Example:
 Retrieve the name of each employee who works on
 all the projects controlled by department number 4
 */
-SELECT DISTINCT E.Fname, E.Lname, Dno
-FROM EMPLOYEE E
-JOIN WORKS_ON WO ON E.Ssn = WO.Essn
-# JOIN PROJECT P ON P.Pnumber = WO.Pno
-WHERE NOT exists(
-    SELECT 1
-    FROM PROJECT P
-    WHERE P.Dnum <> 5 AND P.Pnumber = WO.Pno
-    );
 
--- show those who worked on projects
--- that are managed by dept 4
-SELECT Essn, Pno, Dnum
-FROM WORKS_ON
-JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
-WHERE Pno IN (
-    SELECT P2.Pnumber
-    FROM PROJECT P2
-    WHERE P2.Dnum = 4
-    )
-ORDER BY Essn;
-
--- Find the total number of projects
+-- Solution 1:
+-- Step 1: Find the total number of projects
 SELECT count(DISTINCT Pno)
 FROM WORKS_ON
 JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
@@ -185,7 +164,7 @@ WHERE Pno IN (
     FROM PROJECT P2
     WHERE P2.Dnum = 4
     );
-
+-- Step 2:
 SELECT Ssn, Fname, Lname
 FROM EMPLOYEE
 JOIN WORKS_ON WO ON EMPLOYEE.Ssn = WO.Essn
@@ -202,7 +181,8 @@ WHERE Pno IN (
 GROUP BY Ssn
 HAVING count(*) = 2;
 
--- Exists based solution
+
+-- Solution 2: Exists operator based
 SELECT Ssn, Fname, Lname
 FROM EMPLOYEE
 WHERE NOT exists (
