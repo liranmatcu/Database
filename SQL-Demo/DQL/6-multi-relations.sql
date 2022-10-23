@@ -114,16 +114,17 @@ JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 # JOIN is inner join by default
 
 
--- Would the following exist-based solution work?
-SELECT concat(Fname, ' ', Lname), Dname
-FROM EMPLOYEE
-WHERE exists(
-    SELECT 1
-    FROM DEPARTMENT D
-    WHERE D.Dnumber = EMPLOYEE.Dno);
+# -- Would the following exist-based solution work?
+# SELECT concat(Fname, ' ', Lname), Dname
+# FROM EMPLOYEE
+# WHERE exists(
+#     SELECT 1
+#     FROM DEPARTMENT D
+#     WHERE D.Dnumber = EMPLOYEE.Dno);
 
 /*
  Exercise: Retrieve SSN, last name, dept name and location
+ using inner join
  */
 
 SELECT E.Ssn, E.Lname, D.Dname, DL.Dlocation
@@ -131,14 +132,33 @@ FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno
 JOIN DEPT_LOCATIONS DL ON D.Dnumber = DL.Dnumber
 ORDER BY E.Ssn;
--- For n relations, at least n-1 join conditions
+-- To join n relations, at least n-1 join conditions
+-- are needed to avoid wrong Cartesian product
+
+SELECT E.Ssn, E.Lname, D.Dname, DL.Dlocation
+FROM EMPLOYEE E, DEPARTMENT D, DEPT_LOCATIONS DL
+WHERE E.Dno = D.Dnumber AND D.Dnumber = DL.Dnumber;
+
+/*
+ Example:
+ Retrieve employee SSN and their supervisor last name
+ */
+SELECT E1.Ssn "Employee SSN", E2.Lname "Boss Last Name"
+FROM EMPLOYEE E1
+JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn;
+-- This is a self-join
+/*
+ A self join is a regular join,
+ but the table is joined with itself.
+ */
+
 
 
 
 /*
- P. 27
- Find the ssn of all employees
- who works on project 20 and project 30 simultaneously.
+ Example: P. 27
+ Find the ssn of all employees who works on
+ project 20 and project 30 simultaneously.
  */
 
 SELECT L.Essn
