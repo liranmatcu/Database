@@ -204,6 +204,25 @@ RIGHT JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn;
  */
 
 
+/*
+ Exercise:
+ Retrieve SSN of employee(s) whose supervisor is
+ also the manager of the department the employee belongs to.
+ */
+
+SELECT E.Ssn, E.Super_ssn, D.Dname, D.Mgr_ssn
+FROM EMPLOYEE E
+JOIN DEPARTMENT D ON D.Dnumber = E.Dno
+AND D.Mgr_ssn = E.Super_ssn;
+
+SELECT E.Ssn, E.Super_ssn, D.Dname, D.Mgr_ssn
+FROM EMPLOYEE E
+NATURAL JOIN DEPARTMENT D;
+-- This is a natural join, but a failed one.
+-- Would work if Mgr_ssn and Super_ssn;
+-- Dnumber and Dno are the same name
+
+
 
 /*
  Example: P. 27
