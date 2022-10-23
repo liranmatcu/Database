@@ -59,6 +59,8 @@ SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno
 WHERE Dname = 'Research';
+-- Alias leads to less ambiguity, and better optimization
+-- Once introduced, original name no longer can be used.
 
 -- To make sense of the inner join
 SELECT *
