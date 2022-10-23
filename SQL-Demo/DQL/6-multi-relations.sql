@@ -140,18 +140,54 @@ FROM EMPLOYEE E, DEPARTMENT D, DEPT_LOCATIONS DL
 WHERE E.Dno = D.Dnumber AND D.Dnumber = DL.Dnumber;
 
 /*
- Example:
+ Example: self-join
+
  Retrieve employee SSN and their supervisor last name
  */
 SELECT E1.Ssn "Employee SSN", E2.Lname "Boss Last Name"
 FROM EMPLOYEE E1
 JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn;
--- This is a self-join
 /*
  A self join is a regular join,
  but the table is joined with itself.
  */
 
+
+/*
+ Outer Joins:
+ Left (outer) Join
+ Right (outer) Join
+ Full (outer) Join
+ */
+
+-- Left (outer) Join
+SELECT E1.Ssn "Employee SSN", E2.Lname "Boss Last Name"
+FROM EMPLOYEE E1
+LEFT JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn;
+-- One more tuple is shown, which did not have a supervisor
+
+-- Right (outer) Join
+SELECT E1.Ssn "Employee SSN", E2.Lname "Boss Last Name"
+FROM EMPLOYEE E1
+RIGHT JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn;
+-- Many more tuples shown b/c they are non-supervisor
+
+
+-- Full (outer) Join not supported in MySQL
+-- You will need to use UNION to emulate
+SELECT E1.Ssn "Employee SSN", E2.Lname "Boss Last Name"
+FROM EMPLOYEE E1
+LEFT JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn
+UNION
+SELECT E1.Ssn "Employee SSN", E2.Lname "Boss Last Name"
+FROM EMPLOYEE E1
+RIGHT JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn;
+/*
+ The only difference between Union and Union All is that
+ Union extracts the rows that are being specified in the query,
+ while Union All extracts all the rows including the duplicates
+ from both the queries.
+ */
 
 
 
