@@ -161,16 +161,30 @@ JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn;
  */
 
 -- Left (outer) Join
+/*
+ The LEFT JOIN returns all records from the left table,
+ and the matching records from the right table.
+
+ The result is 0 records from the right side, if there is no match.
+ */
 SELECT E1.Ssn "Employee SSN", E2.Lname "Boss Last Name"
 FROM EMPLOYEE E1
 LEFT JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn;
--- One more tuple is shown, which did not have a supervisor
+-- One more tuple is shown, who does not have a supervisor
+-- This query show all employees and their supervisor (regardless existence)
 
 -- Right (outer) Join
+/*
+ The RIGHT JOIN returns all records from the right table,
+ and the matching records from the left table.
+
+ The result is 0 records from the left side, if there is no match.
+ */
 SELECT E1.Ssn "Employee SSN", E2.Lname "Boss Last Name"
 FROM EMPLOYEE E1
 RIGHT JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn;
 -- Many more tuples shown b/c they are non-supervisor
+-- This query show everyone's subordinate (regardless existence)
 
 
 -- Full (outer) Join not supported in MySQL
