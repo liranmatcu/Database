@@ -59,7 +59,7 @@ SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno
 WHERE Dname = 'Research';
--- Alias leads to less ambiguity, and better optimization
+-- Alias leads to less ambiguity, and better optimization.
 -- Once introduced, original name no longer can be used.
 
 -- To make sense of the inner join
@@ -107,8 +107,7 @@ SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E, DEPARTMENT D
 WHERE E.Dno = D.Dnumber;
 
-
-# Preferred approach: (inner) join
+-- Preferred approach: (inner) join
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
@@ -122,6 +121,18 @@ WHERE exists(
     SELECT 1
     FROM DEPARTMENT D
     WHERE D.Dnumber = EMPLOYEE.Dno);
+
+/*
+ Exercise: Retrieve SSN, last name, dept name and location
+ */
+
+SELECT E.Ssn, E.Lname, D.Dname, DL.Dlocation
+FROM EMPLOYEE E
+JOIN DEPARTMENT D ON D.Dnumber = E.Dno
+JOIN DEPT_LOCATIONS DL ON D.Dnumber = DL.Dnumber
+ORDER BY E.Ssn;
+-- For n relations, at least n-1 join conditions
+
 
 
 /*
