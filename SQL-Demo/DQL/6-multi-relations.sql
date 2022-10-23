@@ -10,11 +10,12 @@ USE COMPANY;
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE, DEPARTMENT
 WHERE Dname = 'Research';
--- Did it work? Why or why not?
+-- Did the results make sense?
 
--- How you interpret the results?
+-- How to interpret the results?
 SELECT *
 FROM EMPLOYEE;
+
 SELECT *
 FROM DEPARTMENT;
 
@@ -40,6 +41,11 @@ WHERE Dname = 'Research' AND E.Dno = D.Dnumber;
  It performs a CROSS JOIN.
  It can be difficult to understand and more prone to errors.
  */
+# Cross Join
+SELECT concat(Fname, ' ', Lname), Dname
+FROM EMPLOYEE
+CROSS JOIN DEPARTMENT D ON D.Dnumber = EMPLOYEE.Dno
+WHERE Dname = 'Research';
 
 
 # Solution 2: Inner Join
@@ -47,6 +53,7 @@ SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 JOIN DEPARTMENT ON Dnumber = Dno
 WHERE Dname = 'Research';
+
 -- Inner Join or with aliasing
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
@@ -59,14 +66,7 @@ FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
 
 
-# Cross Join
-SELECT concat(Fname, ' ', Lname), Dname
-FROM EMPLOYEE
-CROSS JOIN DEPARTMENT D ON D.Dnumber = EMPLOYEE.Dno
-WHERE Dname = 'Research';
-
-
-# Nested query
+# Solution 3: Nested query
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE
 WHERE Dno = (
@@ -75,7 +75,7 @@ WHERE Dno = (
             WHERE Dname = 'Research'
             );
 
-# EXISTS operator in a correlated subquery
+# Solution 4: EXISTS operator in a correlated query
 SELECT concat(Fname, ' ', Lname)
 FROM EMPLOYEE E
 WHERE exists(
@@ -99,13 +99,6 @@ WHERE exists(
    Exercise:
    Show each employee's name and their department name.
  */
--- Erroneous solutions
-SELECT concat(Fname, ' ', Lname), Dname
-FROM EMPLOYEE, DEPARTMENT;
--- Like a cross join
-SELECT concat(Fname, ' ', Lname), Dname
-FROM EMPLOYEE
-CROSS JOIN DEPARTMENT;
 
 -- Implicit Join
 SELECT concat(Fname, ' ', Lname), Dname
@@ -113,40 +106,81 @@ FROM EMPLOYEE E, DEPARTMENT D
 WHERE E.Dno = D.Dnumber;
 
 
--- or cross join
-SELECT concat(Fname, ' ', Lname), Dname
-FROM EMPLOYEE E
-CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
-
--- Order the results by Department name
-SELECT concat(Fname, ' ', Lname), Dname
-FROM EMPLOYEE E
-CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno
-ORDER BY Dname DESC ;
-
--- and show page by page, with each page of 5 records
-SELECT concat(Fname, ' ', Lname), Dname
-FROM EMPLOYEE E
-CROSS JOIN DEPARTMENT D ON D.Dnumber = E.Dno
-ORDER BY Dname DESC
-LIMIT 5;
-
-/*
- However, cross join is not a preferred approach.
- */
-# Preferred approach: join
+# Preferred approach: (inner) join
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
-# This is an inner join
+# JOIN is inner join by default
 
--- Would the following exist solution work?
+
+-- Would the following exist-based solution work?
 SELECT concat(Fname, ' ', Lname), Dname
 FROM EMPLOYEE
 WHERE exists(
     SELECT 1
     FROM DEPARTMENT D
     WHERE D.Dnumber = EMPLOYEE.Dno);
+
+
+/*
+ P. 27
+ Find the ssn of all employees
+ who works on project 20 and project 30 simultaneously.
+ */
+
+SELECT L.Essn
+FROM (SELECT Essn FROM WORKS_ON WHERE Pno = 20) AS L
+JOIN (SELECT Essn FROM WORKS_ON WHERE Pno = 30) AS R
+WHERE L.Essn = R.Essn;
+
+SELECT Ssn
+FROM EMPLOYEE E
+JOIN WORKS_ON WO ON E.Ssn = WO.Essn
+WHERE Pno = 20 or Pno = 30
+GROUP BY Ssn
+HAVING count(*) = 2;
+
+SELECT Pnumber
+FROM PROJECT;
+
+SELECT Pno
+FROM WORKS_ON
+WHERE Essn = 987654321;
+
+SELECT Essn
+FROM WORKS_ON
+GROUP BY Essn
+HAVING count(Essn) = 2;
+
+/*
+P.39
+ Find the name of employees who work for Department 5
+ but do not work on the project named “Project X”
+ */
+
+SELECT DISTINCT Fname, Lname FROM EMPLOYEE E
+JOIN DEPARTMENT D ON D.Dnumber = E.Dno
+JOIN WORKS_ON WO ON E.Ssn = WO.Essn
+JOIN PROJECT P ON P.Pnumber = WO.Pno
+WHERE E.Dno = 5 AND P.Pname <> 'Project X'
+ORDER BY Lname;
+
+SELECT DISTINCT Fname, Lname FROM EMPLOYEE E
+WHERE E.Dno = 5 AND NOT exists(
+    SELECT 1 FROM WORKS_ON WO
+    JOIN PROJECT P ON P.Pnumber = WO.Pno
+    WHERE P.Pname = 'Project X' AND WO.Essn = E.Ssn
+    );
+
+SELECT DISTINCT Fname, Lname FROM EMPLOYEE E
+WHERE E.Dno = 5 AND NOT exists(
+    SELECT 1 FROM WORKS_ON
+    JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
+    WHERE P.Pname = 'Project X'
+    );
+
+
+
 
 /*
 Example:
@@ -199,66 +233,4 @@ WHERE NOT exists (
                 AND WO2.Pno = WO.Pno)
          )
     );
-
-
-/*
- P. 27
- Find the ssn of all employees
- who works on project 61/20 and project 62/30 simultaneously.
- */
-
-SELECT L.Essn
-FROM (SELECT Essn FROM WORKS_ON WHERE Pno = 20) AS L
-JOIN (SELECT Essn FROM WORKS_ON WHERE Pno = 30) AS R
-WHERE L.Essn = R.Essn;
-
-SELECT Ssn FROM EMPLOYEE E
-JOIN WORKS_ON WO ON E.Ssn = WO.Essn
-WHERE Pno = 20 or Pno = 30
--- WHERE Pno = 10 or Pno = 30
-GROUP BY (Ssn)
-HAVING count(Ssn) >= 2;
-
-SELECT Pnumber
-FROM PROJECT;
-
-SELECT Pno
-FROM WORKS_ON
-WHERE Essn = 987654321;
-
-SELECT Essn
-FROM WORKS_ON
-GROUP BY Essn
-HAVING count(Essn) = 2;
-
-/*
-P.39
- Find the name of employees who work for Department 5
- but do not work on the project named “Project X”
- */
-
-SELECT DISTINCT Fname, Lname FROM EMPLOYEE E
-JOIN DEPARTMENT D ON D.Dnumber = E.Dno
-JOIN WORKS_ON WO ON E.Ssn = WO.Essn
-JOIN PROJECT P ON P.Pnumber = WO.Pno
-WHERE E.Dno = 5 AND P.Pname <> 'Project X'
-ORDER BY Lname;
-
-SELECT DISTINCT Fname, Lname FROM EMPLOYEE E
-WHERE E.Dno = 5 AND NOT exists(
-    SELECT 1 FROM WORKS_ON WO
-    JOIN PROJECT P ON P.Pnumber = WO.Pno
-    WHERE P.Pname = 'Project X' AND WO.Essn = E.Ssn
-    );
-
-SELECT DISTINCT Fname, Lname FROM EMPLOYEE E
-WHERE E.Dno = 5 AND NOT exists(
-    SELECT 1 FROM WORKS_ON
-    JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
-    WHERE P.Pname = 'Project X'
-    );
-
-
-
-
 
