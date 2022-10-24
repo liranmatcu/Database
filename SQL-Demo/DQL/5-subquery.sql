@@ -256,24 +256,26 @@ GROUP BY Dno
 ORDER BY `Num. of Employees` DESC
 LIMIT 1;
 
--- Need to use the subquery approach
--- Question: how to find the max number of employees by dept number?
+-- Requirement: Need to use the subquery approach
+-- Step 1: how to find the max number of employees by dept number?
 -- Answer: Find the number of of employees for each dept, then find max
-SELECT count(*)
-FROM EMPLOYEE
-GROUP BY Dno;
-
 SELECT max(count(*))
 FROM EMPLOYEE
 GROUP BY Dno;
---
+-- Not supported by MySQL
+
+-- Solution: apply the two aggregation
+-- functions (count and max) separately
 SELECT max(number_of_emps)
 FROM (
     SELECT count(*) AS number_of_emps
     FROM EMPLOYEE
     GROUP BY Dno
     ) AS count_table;
+-- Introduced a derived table named count_table
+-- with a single column named number_of_emps
 
+-- Step 2: write the outer query
 SELECT Dno, count(*) AS "Num. of Employees"
 FROM EMPLOYEE
 GROUP BY Dno
@@ -283,7 +285,7 @@ HAVING count(*) = (
         SELECT count(Ssn) AS number_of_emps
         FROM EMPLOYEE
         GROUP BY Dno
-        ) AS NE
+        ) AS count_table
     );
 # Note that every derived table must have its own alias.
 
@@ -295,9 +297,9 @@ HAVING count(*) >= ALL (
             SELECT count(Ssn)
             FROM EMPLOYEE
             GROUP BY Dno
-    ) ;
+    );
 
--- Which department (show its name) has the most employees?
+-- Extended exercise: Which department (name) has the most employees?
 SELECT Dnumber, Dname
 FROM DEPARTMENT
 WHERE Dnumber = (SELECT Dno
@@ -322,9 +324,11 @@ WHERE Dnumber = (SELECT Dno
                 LIMIT 1);
 
 
+-- Exercise: find the department (number)
+-- with the lowest average salary
 
-
--- Exercise: find the department (number) with the lowest average salary
+-- Solution 1: inner query: find the lowest ave salary
+-- outer query: find the dept = the lowest
 SELECT E1.Dno, avg(E1.Salary)
 FROM EMPLOYEE E1
 GROUP BY E1.Dno
@@ -336,7 +340,8 @@ HAVING avg(E1.Salary) = (
         GROUP BY E2.Dno
          ) AS t_avg
     );
--- or
+-- Solution 2: find the dept whose ave
+-- salary is less or equal to each dept ave
 SELECT E1.Dno, avg(E1.Salary)
 FROM EMPLOYEE E1
 GROUP BY E1.Dno
@@ -356,8 +361,7 @@ ORDER BY (
     FROM DEPARTMENT D
     WHERE E.Dno = D.Dnumber
     );
-
-
+-- Verify the results ordered by dept name
 SELECT Dnumber, Dname
 FROM DEPARTMENT;
 
