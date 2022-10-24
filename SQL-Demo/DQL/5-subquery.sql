@@ -249,7 +249,7 @@ WHERE Ssn IN (
 
 
 -- Exercise: Which department (number) has the most employees?
--- Previous approach using order by and limit
+-- Previous solution uses order by and limit
 SELECT Dno, count(*) AS "Num. of Employees"
 FROM EMPLOYEE
 GROUP BY Dno
@@ -314,7 +314,7 @@ WHERE Dnumber = (SELECT Dno
                                         ) AS NE
                                     )
 );
-
+-- LIMIT based solution
 SELECT Dnumber, Dname
 FROM DEPARTMENT
 WHERE Dnumber = (SELECT Dno
