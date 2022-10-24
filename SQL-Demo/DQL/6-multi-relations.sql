@@ -126,7 +126,6 @@ JOIN DEPARTMENT D ON D.Dnumber = E.Dno;
  Exercise: Retrieve SSN, last name, dept name and location
  using inner join
  */
-
 SELECT E.Ssn, E.Lname, D.Dname, DL.Dlocation
 FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno
@@ -135,9 +134,59 @@ ORDER BY E.Ssn;
 -- To join n relations, at least n-1 join conditions
 -- are needed to avoid wrong Cartesian product
 
+-- Implicit join based solution
 SELECT E.Ssn, E.Lname, D.Dname, DL.Dlocation
 FROM EMPLOYEE E, DEPARTMENT D, DEPT_LOCATIONS DL
 WHERE E.Dno = D.Dnumber AND D.Dnumber = DL.Dnumber;
+
+
+/*
+ Exercise: Find those who work in Houston
+ Last Name, Dept ID, and Dept Name.
+ */
+SELECT Lname, Dno, Dname, Dlocation
+FROM EMPLOYEE
+JOIN DEPARTMENT D ON D.Dnumber = EMPLOYEE.Dno
+JOIN DEPT_LOCATIONS DL ON D.Dnumber = DL.Dnumber
+WHERE DL.Dlocation = 'Houston';
+
+/*
+ Exercise: Find those who work in both Houston and Sugarland
+ Last Name, Dept ID, and Dept Name.
+ */
+-- Would the following work?
+SELECT Lname, Dno, Dname, Dlocation
+FROM EMPLOYEE
+JOIN DEPARTMENT D ON D.Dnumber = EMPLOYEE.Dno
+JOIN DEPT_LOCATIONS DL ON D.Dnumber = DL.Dnumber
+WHERE DL.Dlocation = 'Houston' AND DL.Dlocation = 'Sugarland';
+
+-- Step 1: Find all depts that have the two locations
+SELECT D.Dnumber
+FROM DEPARTMENT D
+JOIN DEPT_LOCATIONS DL ON D.Dnumber = DL.Dnumber
+WHERE DL.Dlocation IN ('Houston', 'Sugarland')
+GROUP BY D.Dnumber
+HAVING count(*) = 2;
+-- Step 2: Find all employees that work in the depts
+-- found in step 1
+SELECT Lname, Dno, Dname, Dlocation
+FROM EMPLOYEE E
+JOIN DEPARTMENT D ON D.Dnumber = E.Dno
+JOIN DEPT_LOCATIONS DL ON D.Dnumber = DL.Dnumber
+WHERE E.Dno IN (
+    SELECT D.Dnumber
+    FROM DEPARTMENT D
+    JOIN DEPT_LOCATIONS DL ON D.Dnumber = DL.Dnumber
+    WHERE DL.Dlocation IN ('Houston', 'Sugarland')
+    AND E.Dno = D.Dnumber
+    GROUP BY D.Dnumber
+    HAVING count(*) = 2
+    )
+ORDER BY Lname;
+# AND DL.Dlocation IN ('Houston', 'Sugarland')
+
+
 
 /*
  Example: self-join
@@ -289,6 +338,7 @@ all the projects controlled by department number 4
 
 -- Solution 1:
 -- Step 1: Find the total number of projects
+--         controlled by department 4
 SELECT count(DISTINCT Pno)
 FROM WORKS_ON
 JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
@@ -297,7 +347,8 @@ WHERE Pno IN (
     FROM PROJECT P2
     WHERE P2.Dnum = 4
     );
--- Step 2:
+-- Step 2: Select all employees that meet
+--         the count requirement
 SELECT Ssn, Fname, Lname
 FROM EMPLOYEE
 JOIN WORKS_ON WO ON EMPLOYEE.Ssn = WO.Essn
@@ -316,6 +367,7 @@ HAVING count(*) = 2;
 
 
 -- Solution 2: Exists operator based
+-- This is solution is hard to understand
 SELECT Ssn, Fname, Lname
 FROM EMPLOYEE
 WHERE NOT exists (
@@ -332,4 +384,6 @@ WHERE NOT exists (
                 AND WO2.Pno = WO.Pno)
          )
     );
+
+
 
