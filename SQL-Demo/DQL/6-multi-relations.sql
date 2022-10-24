@@ -339,31 +339,30 @@ all the projects controlled by department number 4
 -- Solution 1:
 -- Step 1: Find the total number of projects
 --         controlled by department 4
-SELECT count(DISTINCT Pno)
-FROM WORKS_ON
-JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
-WHERE Pno IN (
-    SELECT P2.Pnumber
-    FROM PROJECT P2
-    WHERE P2.Dnum = 4
-    );
+SELECT COUNT(*)
+FROM PROJECT
+WHERE Dnum = 4;
+
+SELECT Pnumber
+FROM PROJECT
+WHERE Dnum = 4;
+
 -- Step 2: Select all employees that meet
 --         the count requirement
 SELECT Ssn, Fname, Lname
 FROM EMPLOYEE
 JOIN WORKS_ON WO ON EMPLOYEE.Ssn = WO.Essn
 WHERE Pno IN (
-    SELECT DISTINCT Pno
-    FROM WORKS_ON
-    JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
-    WHERE Pno IN (
-        SELECT P2.Pnumber
-        FROM PROJECT P2
-        WHERE P2.Dnum = 4
-        )
+    SELECT Pnumber
+    FROM PROJECT
+    WHERE Dnum = 4
     )
 GROUP BY Ssn
-HAVING count(*) = 2;
+HAVING count(*) = (
+    SELECT COUNT(*)
+    FROM PROJECT
+    WHERE Dnum = 4
+    );
 
 
 -- Solution 2: Exists operator based
