@@ -206,6 +206,7 @@ RIGHT JOIN EMPLOYEE E2 ON E1.Super_ssn = E2.Ssn;
 
 /*
  Exercise:
+
  Retrieve SSN of employee(s) whose supervisor is
  also the manager of the department the employee belongs to.
  */
@@ -225,16 +226,28 @@ NATURAL JOIN DEPARTMENT D;
 
 
 /*
- Example: P. 27
+ Exercise: P. 27
  Find the ssn of all employees who works on
  project 20 and project 30 simultaneously.
  */
+-- Solution 1: UNION base solution
+SELECT Ssn
+FROM EMPLOYEE E
+JOIN WORKS_ON WO ON E.Ssn = WO.Essn
+WHERE Pno = 20
+UNION
+SELECT Ssn
+FROM EMPLOYEE E
+JOIN WORKS_ON WO ON E.Ssn = WO.Essn
+WHERE Pno = 30;
 
+-- Solution 2: nested query
 SELECT L.Essn
 FROM (SELECT Essn FROM WORKS_ON WHERE Pno = 20) AS L
 JOIN (SELECT Essn FROM WORKS_ON WHERE Pno = 30) AS R
 WHERE L.Essn = R.Essn;
 
+-- Solution 3: count-based
 SELECT Ssn
 FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
@@ -242,50 +255,34 @@ WHERE Pno = 20 or Pno = 30
 GROUP BY Ssn
 HAVING count(*) = 2;
 
-SELECT Pnumber
-FROM PROJECT;
 
-SELECT Pno
-FROM WORKS_ON
-WHERE Essn = 987654321;
-
-SELECT Essn
-FROM WORKS_ON
-GROUP BY Essn
-HAVING count(Essn) = 2;
 
 /*
-P.39
+ Exercise: P.39
  Find the name of employees who work for Department 5
  but do not work on the project named “Project X”
  */
-
-SELECT DISTINCT Fname, Lname FROM EMPLOYEE E
+-- Solution 1: 3-table join
+SELECT DISTINCT Fname, Lname
+FROM EMPLOYEE E
 JOIN DEPARTMENT D ON D.Dnumber = E.Dno
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
 JOIN PROJECT P ON P.Pnumber = WO.Pno
 WHERE E.Dno = 5 AND P.Pname <> 'Project X'
 ORDER BY Lname;
 
-SELECT DISTINCT Fname, Lname FROM EMPLOYEE E
+-- Solution 2: exists operator
+SELECT Fname, Lname
+FROM EMPLOYEE E
 WHERE E.Dno = 5 AND NOT exists(
     SELECT 1 FROM WORKS_ON WO
     JOIN PROJECT P ON P.Pnumber = WO.Pno
     WHERE P.Pname = 'Project X' AND WO.Essn = E.Ssn
     );
 
-SELECT DISTINCT Fname, Lname FROM EMPLOYEE E
-WHERE E.Dno = 5 AND NOT exists(
-    SELECT 1 FROM WORKS_ON
-    JOIN PROJECT P ON P.Pnumber = WORKS_ON.Pno
-    WHERE P.Pname = 'Project X'
-    );
-
-
-
 
 /*
-Example:
+Exercise:
 Retrieve the name of each employee who works on
 all the projects controlled by department number 4
 */
