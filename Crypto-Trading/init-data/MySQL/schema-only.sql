@@ -1,9 +1,10 @@
-# DROP DATABASE IF EXISTS trading;
+DROP DATABASE IF EXISTS trading;
+
 CREATE DATABASE IF NOT EXISTS trading;
 USE trading;
 
 CREATE TABLE members (
-  `member_id` VARCHAR(6) PRIMARY KEY ,
+  `member_id` VARCHAR(6) PRIMARY KEY,
   `first_name` VARCHAR(7),
   `region` VARCHAR(13)
 );
@@ -21,7 +22,7 @@ CREATE TABLE prices (
 );
 
 CREATE TABLE transactions (
-  `txn_id` INTEGER PRIMARY KEY ,
+  `txn_id` INTEGER PRIMARY KEY,
   `member_id` VARCHAR(6),
   `ticker` VARCHAR(3),
   `txn_date` DATE,

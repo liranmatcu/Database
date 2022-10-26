@@ -1,4 +1,5 @@
-# DROP DATABASE IF EXISTS trading;
+DROP DATABASE IF EXISTS trading;
+
 CREATE DATABASE IF NOT EXISTS trading;
 USE trading;
 
