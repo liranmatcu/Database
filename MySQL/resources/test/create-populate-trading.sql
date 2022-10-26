@@ -3460,7 +3460,7 @@ VALUES
   ('BTC', '2017-01-01', '995.4', '963.4', '1001.6', '956.1', '41.15K', '3.33%');
 
 
-INSERT INTO trading.transactions
+INSERT IGNORE INTO trading.transactions
   (`txn_id`, `member_id`, `ticker`, `txn_time`, `txn_type`, `quantity`, `percentage_fee`)
 VALUES
   ('1', '45c48c', 'ETH', '2017-01-01 06:22:20.202995', 'SELL', '8.84298701787532', '0.12'),
