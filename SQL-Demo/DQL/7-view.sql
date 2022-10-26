@@ -30,6 +30,7 @@ WHERE Dno = 5;
 SELECT *
 FROM view_emp_1;
 
+-- Delete a view
 DROP VIEW IF EXISTS view_emp_1;
 
 
@@ -43,18 +44,15 @@ WHERE Salary > 30000;
 SELECT *
 FROM view_emp_2;
 
--- Delete a view
-DROP VIEW IF EXISTS view_emp_2;
 
 -- or
+DROP VIEW IF EXISTS view_emp_2;
 CREATE VIEW view_emp_2 (Emp_Ssn, `Last Name`, `Monthly Salary`)
 AS
 SELECT Ssn, Lname, Salary/12
 FROM EMPLOYEE
 WHERE Salary > 30000;
 
-SELECT *
-FROM view_emp_2;
 
 -- Create view from derived attributes
 CREATE VIEW view_emp_3
@@ -78,15 +76,16 @@ JOIN DEPARTMENT D ON D.Dnumber = EMPLOYEE.Dno;
 SELECT *
 FROM view_emp_dept;
 
-DROP VIEW view_emp_dept;
+
 -- Use view to format data
+DROP VIEW IF EXISTS view_emp_dept;
 CREATE VIEW view_emp_dept
 AS
 SELECT concat(Fname, ' ', Lname, ' (', Dname, ')') AS "Employee Info"
 FROM EMPLOYEE
 JOIN DEPARTMENT D ON D.Dnumber = EMPLOYEE.Dno;
 
--- Example: create view from view(s)
+-- Example: create view from another view
 CREATE VIEW view_emp_4
 AS
 SELECT view_emp_1.Ssn, view_emp_1.Salary
@@ -95,8 +94,8 @@ FROM view_emp_1;
 SELECT *
 FROM view_emp_4;
 
-DROP VIEW view_emp_4;
--- from two views
+-- Example: create view from more than one views
+DROP VIEW IF EXISTS view_emp_4;
 CREATE VIEW view_emp_4
 AS
 SELECT view_emp_1.Ssn, view_emp_1.Salary, Ave_Sal
@@ -111,7 +110,7 @@ SHOW TABLE STATUS LIKE 'view_emp_1';
 SHOW CREATE VIEW view_emp_1;
 
 
--- Update view
+-- Update a view
 SELECT *
 FROM view_emp_1;
 
