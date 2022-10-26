@@ -383,6 +383,10 @@ WHERE NOT exists (
                 AND WO2.Pno = WO.Pno)
          )
     );
+/*
+ Rephrase the query: Select each employee such that
+ there does not exist a project controlled by department 4 that the employee does not work on.
+ */
 
 
 
