@@ -6,9 +6,7 @@ USE `testcompany`;
 SET FOREIGN_KEY_CHECKS = 0;
 
 /*Table structure for table `department` */
-
 DROP TABLE IF EXISTS `department`;
-
 CREATE TABLE `department` (
   `department_id` int NOT NULL AUTO_INCREMENT,
   `department_name` varchar(3) DEFAULT NULL,
@@ -24,9 +22,7 @@ insert  into `department`(`department_id`,`department_name`,`manager_id`,`locati
 
 
 /*Table structure for table `employee` */
-
 DROP TABLE IF EXISTS `employee`;
-
 CREATE TABLE `employee` (
   `employee_id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(20) DEFAULT NULL,
@@ -53,9 +49,7 @@ insert  into `employee`(`employee_id`,`first_name`,`last_name`,`email`,`phone_nu
 
 
 /*Table structure for table `job` */
-
 DROP TABLE IF EXISTS `job`;
-
 CREATE TABLE `job` (
   `job_id` varchar(10) NOT NULL,
   `job_title` varchar(35) DEFAULT NULL,
@@ -65,12 +59,11 @@ CREATE TABLE `job` (
 ) ENGINE=InnoDB;
 
 /*Data for the table `job` */
-
 insert  into `job`(`job_id`,`job_title`,`min_salary`,`max_salary`) 
 values ('AC_ACCOUNT','Public Accountant',4200,9000),('AC_MGR','Accounting Manager',8200,16000),('AD_ASST','Administration Assistant',3000,6000),('AD_PRES','President',20000,40000),('AD_VP','Administration Vice President',15000,30000),('FI_ACCOUNT','Accountant',4200,9000),('FI_MGR','Finance Manager',8200,16000),('HR_REP','Human Resources Representative',4000,9000),('IT_PROG','Programmer',4000,10000),('MK_MAN','Marketing Manager',9000,15000),('MK_REP','Marketing Representative',4000,9000),('PR_REP','Public Relations Representative',4500,10500),('PU_CLERK','Purchasing Clerk',2500,5500),('PU_MAN','Purchasing Manager',8000,15000),('SA_MAN','Sales Manager',10000,20000),('SA_REP','Sales Representative',6000,12000),('SH_CLERK','Shipping Clerk',2500,5500),('ST_CLERK','Stock Clerk',2000,5000),('ST_MAN','Stock Manager',5500,8500);
 
-/*Table structure for table `location` */
 
+/*Table structure for table `location` */
 DROP TABLE IF EXISTS `location`;
 
 CREATE TABLE `location` (
@@ -84,8 +77,8 @@ CREATE TABLE `location` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3201;
 
 /*Data for the table `location` */
-
 insert  into `location`(`location_id`,`street_address`,`postal_code`,`city`,`state_province`,`country_id`) 
 values (1000,'1297 Via Cola di Rie','00989','Roma',NULL,'IT'),(1100,'93091 Calle della Testa','10934','Venice',NULL,'IT'),(1200,'2017 Shinjuku-ku','1689','Tokyo','Tokyo Prefecture','JP'),(1300,'9450 Kamiya-cho','6823','Hiroshima',NULL,'JP'),(1400,'2014 Jabberwocky Rd','26192','Southlake','Texas','US'),(1500,'2011 Interiors Blvd','99236','South San Francisco','California','US'),(1600,'2007 Zagora St','50090','South Brunswick','New Jersey','US'),(1700,'2004 Charade Rd','98199','Seattle','Washington','US'),(1800,'147 Spadina Ave','M5V 2L7','Toronto','Ontario','CA'),(1900,'6092 Boxwood St','YSW 9T2','Whitehorse','Yukon','CA'),(2000,'40-5-12 Laogianggen','190518','Beijing',NULL,'CN'),(2100,'1298 Vileparle (E)','490231','Bombay','Maharashtra','IN'),(2200,'12-98 Victoria Street','2901','Sydney','New South Wales','AU'),(2300,'198 Clementi North','540198','Singapore',NULL,'SG'),(2400,'8204 Arthur St',NULL,'London',NULL,'UK'),(2500,'Magdalen Centre, The Oxford Science Park','OX9 9ZB','Oxford','Oxford','UK'),(2600,'9702 Chester Road','09629850293','Stretford','Manchester','UK'),(2700,'Schwanthalerstr. 7031','80925','Munich','Bavaria','DE'),(2800,'Rua Frei Caneca 1360 ','01307-002','Sao Paulo','Sao Paulo','BR'),(2900,'20 Rue des Corps-Saints','1730','Geneva','Geneve','CH'),(3000,'Murtenstrasse 921','3095','Bern','BE','CH'),(3100,'Pieter Breughelstraat 837','3029SK','Utrecht','Utrecht','NL'),(3200,'Mariano Escobedo 9991','11932','Mexico City','Distrito Federal,','MX');
 
 
+SET FOREIGN_KEY_CHECKS = 1;
