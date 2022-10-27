@@ -271,7 +271,13 @@ NATURAL JOIN DEPARTMENT D;
 -- This is a natural join, but a failed one.
 -- Would work if Mgr_ssn and Super_ssn;
 -- Dnumber and Dno are the same name
-
+-- Example shown below (using alias)
+EXPLAIN SELECT E.Ssn, E.Super_ssn, D.Dname, D.Super_ssn
+FROM EMPLOYEE E
+NATURAL JOIN (
+    SELECT Dname, Dnumber AS Dno, Mgr_ssn AS Super_ssn
+    FROM DEPARTMENT
+) AS D;
 
 
 /*
