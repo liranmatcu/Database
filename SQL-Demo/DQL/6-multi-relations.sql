@@ -275,9 +275,9 @@ NATURAL JOIN DEPARTMENT D;
 
 
 /*
- Exercise: P. 27
+ Exercise:
  Find the ssn of all employees who works on
- project 20 and project 30 simultaneously.
+ project 20 or project 30.
  */
 -- Solution 1: UNION base solution
 SELECT Ssn
@@ -290,21 +290,16 @@ FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
 WHERE Pno = 30;
 
--- Solution 2: nested query
-SELECT L.Essn
-FROM (SELECT Essn FROM WORKS_ON WHERE Pno = 20) AS L
-JOIN (SELECT Essn FROM WORKS_ON WHERE Pno = 30) AS R
-WHERE L.Essn = R.Essn;
-
--- Solution 3: count-based
-SELECT Ssn
+-- Solution 2: correlated subquery with exists operator
+SELECT DISTINCT Ssn
 FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
-WHERE Pno = 20 or Pno = 30
-GROUP BY Ssn
-HAVING count(*) = 2;
-
-
+WHERE Pno = 20 OR exists(
+    SELECT Ssn
+    FROM EMPLOYEE E2
+    JOIN WORKS_ON WO2 ON E2.Ssn = WO2.Essn
+    WHERE WO2.Pno = 30 and E.Ssn = E2.Ssn
+    );
 
 /*
  Exercise: P.39
@@ -314,7 +309,6 @@ HAVING count(*) = 2;
 -- Solution 1: 3-table join
 SELECT DISTINCT Fname, Lname
 FROM EMPLOYEE E
-JOIN DEPARTMENT D ON D.Dnumber = E.Dno
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
 JOIN PROJECT P ON P.Pnumber = WO.Pno
 WHERE E.Dno = 5 AND P.Pname <> 'Project X'
