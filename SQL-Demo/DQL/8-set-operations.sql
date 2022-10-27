@@ -110,7 +110,7 @@ AND NOT EXISTS
  Find the ssn of all employees
  who works on project 20 and project 30 simultaneously.
  */
-
+-- Solution 1: EXISTS operator
 SELECT Ssn
 FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
@@ -120,17 +120,17 @@ AND EXISTS
     FROM WORKS_ON
     WHERE Pno = 30 AND E.Ssn = Essn);
 
--- Other solutions
+-- Solution 2: nested query
 SELECT L.Essn
 FROM (SELECT Essn FROM WORKS_ON WHERE Pno = 20) AS L
 JOIN (SELECT Essn FROM WORKS_ON WHERE Pno = 30) AS R
 WHERE L.Essn = R.Essn;
 
+-- Solution 3: count-based
 SELECT Ssn
 FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
 WHERE Pno = 20 or Pno = 30
-GROUP BY (Ssn)
-HAVING count(Ssn) = 2;
-
+GROUP BY Ssn
+HAVING count(*) = 2;
 
