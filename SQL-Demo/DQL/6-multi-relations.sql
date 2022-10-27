@@ -285,7 +285,7 @@ NATURAL JOIN (
  Find the ssn of all employees who works on
  project 20 or project 30.
  */
--- Solution 1: UNION base solution
+-- Solution 1: UNION based
 SELECT Ssn
 FROM EMPLOYEE E
 JOIN WORKS_ON WO ON E.Ssn = WO.Essn
