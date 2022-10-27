@@ -120,7 +120,7 @@ AND EXISTS
     FROM WORKS_ON
     WHERE Pno = 30 AND E.Ssn = Essn);
 
--- Solution 2: nested query
+-- Solution 2: join and nested query
 SELECT L.Essn
 FROM (SELECT Essn FROM WORKS_ON WHERE Pno = 20) AS L
 JOIN (SELECT Essn FROM WORKS_ON WHERE Pno = 30) AS R
