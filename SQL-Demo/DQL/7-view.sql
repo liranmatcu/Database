@@ -180,5 +180,5 @@ DROP VIEW IF EXISTS emp_20, emp_30;
  joins that can take a long time to complete.
 
  2. Update restrictions
- 
+
  */
