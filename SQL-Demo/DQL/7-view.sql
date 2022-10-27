@@ -161,13 +161,15 @@ DROP VIEW IF EXISTS emp_20, emp_30;
 
 
 /*
+
  Advantages of view:
  1. Query Simplification
  2. Structural Simplicity (e.g., customized presentation)
  3. Security
 
+
  Disadvantages of view:
- 1. performance degradation.
+ 1. performance degradation
  Because views only create the appearance of a table,
  not a real table, the query processor must translate
  queries against the view into queries against the
@@ -178,4 +180,5 @@ DROP VIEW IF EXISTS emp_20, emp_30;
  joins that can take a long time to complete.
 
  2. Update restrictions
+ 
  */
