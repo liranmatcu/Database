@@ -153,8 +153,9 @@ SELECT Essn
 FROM WORKS_ON
 WHERE Pno = 30;
 
-SELECT DISTINCT emp_20.Essn
-FROM emp_20 JOIN emp_30 e ON emp_20.Essn = e.Essn;
+SELECT DISTINCT e20.Essn
+FROM emp_20 e20
+JOIN emp_30 e30 ON e20.Essn = e30.Essn;
 
 
 DROP VIEW IF EXISTS emp_20, emp_30;
