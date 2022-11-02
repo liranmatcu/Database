@@ -67,24 +67,34 @@ SELECT @@autocommit;
 SET AUTOCOMMIT = 0;
 -- SET @@autocommit=0;
 
--- Normal execution vs. Exception
+-- Normal Execution vs. Exception
 UPDATE bank_account
 SET balance = balance + 1000
 WHERE name = 'Tom';
 
 -- Check
-SELECT *
-FROM bank_account;
+SELECT * FROM bank_account;
 
+-- COMMIT
+/*
+ The COMMIT statement saves all the modifications
+ made in the current transaction since the last commit
+ or the START TRANSACTION statement.
+
+ COMMIT makes its changes permanent.
+ */
 COMMIT;
+-- Check values in database
 
--- Data recovery
+-- Data recovery with ROLLBACK
+/*
+ ROLLBACK rolls back the current transaction,
+ canceling its changes.
+ */
 ROLLBACK;
 
 
-
 -- Method 2: Use "START TRANSACTION"
-
 # Set AUTOCOMMIT back to 1, which is the default value
 SET AUTOCOMMIT = 1;
 
