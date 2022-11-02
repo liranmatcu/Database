@@ -1,19 +1,17 @@
 USE demo;
 
-DROP DATABASE IF EXISTS bank_account;
-
+DROP TABLE IF EXISTS bank_account;
+-- Create a bank account table
 CREATE TABLE IF NOT EXISTS bank_account(
     cid INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(30),
+    name VARCHAR(30) UNIQUE,
     balance INT
 );
-
--- Populate database
+-- Populate the table with two user accounts
 INSERT INTO bank_account(name, balance)
 VALUES ('Tom', 5000), ('Sue', 5000);
 
-
--- Money Transfer
+# Demo: Money Transfer as "Transactions"
 -- Example: transfer 1,000 from Tom to Sue
 
 # Normal sequence
@@ -32,11 +30,11 @@ UPDATE bank_account
 SET balance = balance + 1000
 WHERE name = 'Sue';
 
--- Check
-SELECT *
-FROM bank_account;
+-- Check results
+SELECT * FROM bank_account;
+-- Also check the data in DB
 
-# With exception
+# With an exception
 -- Step 1:
 SELECT balance
 FROM bank_account
@@ -45,23 +43,31 @@ WHERE name = 'Tom';
 UPDATE bank_account
 SET balance = balance - 1000
 WHERE name = 'Tom';
-
+-- An exception
 This is an exception...
 -- Step 3
 UPDATE bank_account
 SET balance = balance + 1000
 WHERE name = 'Sue';
 
+-- Check results
+SELECT * FROM bank_account;
+-- Also check the data in DB
 
-# Introduce transaction control
+# Set balance to the original values
+UPDATE bank_account
+SET balance = 5000
+WHERE name = 'Tom' OR name = 'Sue';
 
--- Method 1: Change autocommit to false/zero
+
+# Transaction Control (TCL) in SQL
+
+-- Method 1: Change AUTOCOMMIT to false
 SELECT @@autocommit;
 SET AUTOCOMMIT = 0;
-# SET @@autocommit=0;
+-- SET @@autocommit=0;
 
 -- Normal execution vs. Exception
-
 UPDATE bank_account
 SET balance = balance + 1000
 WHERE name = 'Tom';
@@ -75,13 +81,17 @@ COMMIT;
 -- Data recovery
 ROLLBACK;
 
--- Set balance to original values
+
+
+-- Method 2: Use "START TRANSACTION"
+
+# Set AUTOCOMMIT back to 1, which is the default value
+SET AUTOCOMMIT = 1;
+
+# Set balance to the original values
 UPDATE bank_account
 SET balance = 5000
 WHERE name = 'Tom' OR name = 'Sue';
-
--- Method 2: Start transaction
-SET AUTOCOMMIT = 1;
 
 START TRANSACTION;
 -- Step 1:
@@ -97,5 +107,7 @@ This is an exception...
 UPDATE bank_account
 SET balance = balance + 1000
 WHERE name = 'Sue';
+
+SELECT * FROM bank_account;
 
 ROLLBACK;
