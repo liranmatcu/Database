@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS bank_account(
 INSERT INTO bank_account(name, balance)
 VALUES ('Tom', 5000), ('Sue', 5000);
 
+
 -- Money Transfer
 -- Example: transfer 1,000 from Tom to Sue
 
@@ -74,8 +75,13 @@ COMMIT;
 -- Data recovery
 ROLLBACK;
 
+-- Set balance to original values
+UPDATE bank_account
+SET balance = 5000
+WHERE name = 'Tom' OR name = 'Sue';
+
 -- Method 2: Start transaction
-SET autocommit=1;
+SET AUTOCOMMIT = 1;
 
 START TRANSACTION;
 -- Step 1:
