@@ -121,3 +121,42 @@ WHERE name = 'Sue';
 SELECT * FROM bank_account;
 
 ROLLBACK;
+
+# Isolation in ACID
+/*
+ The database transactions must complete their tasks
+ independently from the other transactions.
+
+ This property enables us to execute the transactions
+ concurrently on the database systems.
+
+ So, the data changes which are made up by the
+ transactions are not visible until the transactions
+ complete (committed) their actions.
+
+ The SQL standard describes three read phenomena,
+ and they can be experienced when more than one transaction
+ tries to read and write to the same resources.
+    1. Dirty-reads: the state of reading uncommitted data
+    2. Non-repeatable reads
+    3. Phantom reads
+ */
+
+/*
+ InnoDB offers all four transaction isolation levels described
+ by the SQL:1992 standard:
+ READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, and SERIALIZABLE.
+ The default isolation level for InnoDB is REPEATABLE READ.
+ */
+
+# Show current TRANSACTION ISOLATION LEVEL
+SELECT @@transaction_ISOLATION;
+
+# START TRANSACTION;
+# UPDATE bank_account
+# SET balance = balance - 1000
+# WHERE name = 'Tom';
+# SELECT * FROM bank_account;
+#
+# ROLLBACK;
+
