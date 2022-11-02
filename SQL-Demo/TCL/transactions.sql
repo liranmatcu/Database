@@ -1,5 +1,7 @@
 USE demo;
 
+DROP DATABASE IF EXISTS bank_account;
+
 CREATE TABLE IF NOT EXISTS bank_account(
     cid INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30),
@@ -8,7 +10,7 @@ CREATE TABLE IF NOT EXISTS bank_account(
 
 -- Populate database
 INSERT INTO bank_account(name, balance)
-VALUES ('Tom', 5000), ('Sue', 3000);
+VALUES ('Tom', 5000), ('Sue', 5000);
 
 -- Money Transfer
 -- Example: transfer 1,000 from Tom to Sue
@@ -42,6 +44,7 @@ WHERE name = 'Tom';
 UPDATE bank_account
 SET balance = balance - 1000
 WHERE name = 'Tom';
+
 This is an exception...
 -- Step 3
 UPDATE bank_account
@@ -50,10 +53,11 @@ WHERE name = 'Sue';
 
 
 # Introduce transaction control
--- Method 1: Change autocommit
+
+-- Method 1: Change autocommit to false/zero
 SELECT @@autocommit;
-SET @@autocommit=0;
-# SET autocommit=0;
+SET AUTOCOMMIT = 0;
+# SET @@autocommit=0;
 
 -- Normal execution vs. Exception
 
