@@ -94,7 +94,7 @@ COMMIT;
 ROLLBACK;
 
 
--- Method 2: Use "START TRANSACTION"
+-- Method 2: Use "START TRANSACTION" or "BEGIN TRANSACTION"
 # Set AUTOCOMMIT back to 1, which is the default value
 SET AUTOCOMMIT = 1;
 
