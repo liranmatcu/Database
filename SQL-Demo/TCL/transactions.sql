@@ -122,7 +122,7 @@ SELECT * FROM bank_account;
 
 ROLLBACK;
 
-# Isolation in ACID
+# Isolation in AC(I)D
 /*
  The database transactions must complete their tasks
  independently from the other transactions.
@@ -142,6 +142,7 @@ ROLLBACK;
     3. Phantom reads
  */
 
+# Concurrent Transactions
 /*
  InnoDB offers all four transaction isolation levels described
  by the SQL:1992 standard:
@@ -152,11 +153,27 @@ ROLLBACK;
 # Show current TRANSACTION ISOLATION LEVEL
 SELECT @@transaction_ISOLATION;
 
-# START TRANSACTION;
-# UPDATE bank_account
-# SET balance = balance - 1000
-# WHERE name = 'Tom';
-# SELECT * FROM bank_account;
-#
-# ROLLBACK;
+# Set ISOLATION LEVEL to be READ UNCOMMITTED
+SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+SELECT @@transaction_ISOLATION;
 
+START TRANSACTION;
+SELECT * FROM bank_account;
+
+-- Run update in a separate session
+UPDATE bank_account
+SET balance = balance - 1000
+WHERE name = 'Tom';
+
+ROLLBACK;
+
+# Set ISOLATION LEVEL to be READ UNCOMMITTED
+SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;
+SELECT @@transaction_ISOLATION;
+
+START TRANSACTION;
+SELECT * FROM bank_account;
+-- Run update in another session; check; then commit; check again
+
+# Set ISOLATION LEVEL to be the default
+SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
