@@ -165,6 +165,8 @@ UPDATE bank_account
 SET balance = balance - 1000
 WHERE name = 'Tom';
 
+-- Dirty read will happen
+
 ROLLBACK;
 
 # Set ISOLATION LEVEL to be READ UNCOMMITTED
@@ -174,6 +176,46 @@ SELECT @@transaction_ISOLATION;
 START TRANSACTION;
 SELECT * FROM bank_account;
 -- Run update in another session; check; then commit; check again
+-- Dirty read will NOT happen; Yet, unrepeatable reads;
 
-# Set ISOLATION LEVEL to be the default
+# Set ISOLATION LEVEL to default
 SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+SELECT @@transaction_ISOLATION;
+
+START TRANSACTION;
+SELECT * FROM bank_account;
+-- Run insert in another session and commit; check select and insert
+START TRANSACTION;
+INSERT INTO bank_account(name, balance)
+VALUES ('Daemon', 5000);
+COMMIT;
+-- Check select and insert in this session
+SELECT * FROM bank_account WHERE name = 'Daemon';
+
+INSERT INTO bank_account(name, balance)
+VALUES ('Daemon', 5000);
+-- Phantom read will happen during insertion
+
+
+-- Now, read again with a new transaction
+START TRANSACTION;
+SELECT * FROM bank_account;
+
+
+
+# Set ISOLATION LEVEL to SERIALIZABLE
+SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+SELECT @@transaction_ISOLATION;
+
+START TRANSACTION;
+SELECT * FROM bank_account;
+-- Run insert in another session
+INSERT INTO bank_account(name, balance)
+VALUES ('Real', 5000);
+COMMIT;
+
+-- The insertion would fail b/c SERIALIZABLE
+-- Phantom read will not happen during insertion
+
+DELETE FROM bank_account
+WHERE name = 'Real' OR name = 'Daemon';
