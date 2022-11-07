@@ -127,9 +127,6 @@ ROLLBACK;
  The database transactions must complete their tasks
  independently from the other transactions.
 
- This property enables us to execute the transactions
- concurrently on the database systems.
-
  So, the data changes which are made up by the
  transactions are not visible until the transactions
  complete (committed) their actions.
@@ -137,9 +134,13 @@ ROLLBACK;
  The SQL standard describes three read phenomena/anomalies,
  and they can be experienced when more than one transaction
  tries to read and write to the same resources.
-    1. Dirty-reads: the state of reading uncommitted data
-    2. Non-repeatable reads
-    3. Phantom reads
+    1. Dirty-reads: read uncommitted data
+
+    2. Non-repeatable reads: read committed UPDATES from another transaction.
+    The same row now has different values than it did when the transaction began.
+
+    3. Phantom reads: read committed INSERTS and/or DELETES from another transaction.
+    There are new rows or disappeared rows since the begin the transaction.
  */
 
 # Transaction Isolation Levels
@@ -217,6 +218,7 @@ COMMIT;
 
 -- Check select
 SELECT * FROM bank_account WHERE name = 'Daemon';
+SELECT * FROM bank_account WHERE cid = ;
 -- and insert in this session
 INSERT INTO bank_account(name, balance)
 VALUES ('Daemon', 5000);
