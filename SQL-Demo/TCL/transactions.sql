@@ -208,20 +208,24 @@ SELECT @@transaction_ISOLATION;
 
 START TRANSACTION;
 SELECT * FROM bank_account;
--- Run insert in another session and commit; check select and insert
+
+-- Run insert in another session and commit;
 START TRANSACTION;
 INSERT INTO bank_account(name, balance)
 VALUES ('Daemon', 5000);
 COMMIT;
--- Check select and insert in this session
-SELECT * FROM bank_account WHERE name = 'Daemon';
 
+-- Check select
+SELECT * FROM bank_account WHERE name = 'Daemon';
+-- and insert in this session
 INSERT INTO bank_account(name, balance)
 VALUES ('Daemon', 5000);
+
+
 -- Phantom read will happen during insertion
 
 
--- Now, read again with a new transaction
+-- Now, if read again with a new transaction
 START TRANSACTION;
 SELECT * FROM bank_account;
 
@@ -233,10 +237,15 @@ SELECT @@transaction_ISOLATION;
 
 START TRANSACTION;
 SELECT * FROM bank_account;
+
 -- Run insert in another session
+START TRANSACTION;
 INSERT INTO bank_account(name, balance)
 VALUES ('Real', 5000);
 COMMIT;
+-- Would the insert be successfully?
+
+
 
 -- The insertion would fail b/c SERIALIZABLE
 -- Phantom read will not happen during insertion
