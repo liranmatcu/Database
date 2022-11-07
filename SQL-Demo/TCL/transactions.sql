@@ -122,7 +122,7 @@ SELECT * FROM bank_account;
 
 ROLLBACK;
 
-# Isolation in AC(I)D
+# Isolation in AC(I)D for Concurrent Transactions
 /*
  The database transactions must complete their tasks
  independently from the other transactions.
@@ -134,7 +134,7 @@ ROLLBACK;
  transactions are not visible until the transactions
  complete (committed) their actions.
 
- The SQL standard describes three read phenomena,
+ The SQL standard describes three read phenomena/anomalies,
  and they can be experienced when more than one transaction
  tries to read and write to the same resources.
     1. Dirty-reads: the state of reading uncommitted data
@@ -142,12 +142,20 @@ ROLLBACK;
     3. Phantom reads
  */
 
-# Concurrent Transactions
+# Transaction Isolation Levels
 /*
- InnoDB offers all four transaction isolation levels described
- by the SQL:1992 standard:
+ InnoDB offers all four transaction isolation levels:
  READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, and SERIALIZABLE.
  The default isolation level for InnoDB is REPEATABLE READ.
+
++----------------+------------+---------------------+--------------+
+|isolation level | dirty read | non-repeatable read | phantom read |
++----------------+------------+---------------------+--------------+
+|Read uncommitted| ×(unsolved)|   ×                 |  ×           |
+|Read committed  | √(solved)  |   ×                 |  ×           |
+|Repeatable read | √          |   √                 |  ×           |
+|Serializable    | √          |   √                 |  √           |
++----------------+------------+---------------------+--------------+
  */
 
 # Show current TRANSACTION ISOLATION LEVEL
@@ -160,25 +168,41 @@ SELECT @@transaction_ISOLATION;
 START TRANSACTION;
 SELECT * FROM bank_account;
 
--- Run update in a separate session
+-- Run an update transaction in a separate session
+START TRANSACTION;
 UPDATE bank_account
 SET balance = balance - 1000
 WHERE name = 'Tom';
+-- Note that this transaction is not committed yet
 
--- Dirty read will happen
+-- Check (the select query) again in this session.
+-- What will happen?
+
+-- Dirty read will happen; so do other anomalies
 
 ROLLBACK;
 
-# Set ISOLATION LEVEL to be READ UNCOMMITTED
+
+
+# Set ISOLATION LEVEL to be READ COMMITTED
 SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;
 SELECT @@transaction_ISOLATION;
 
 START TRANSACTION;
 SELECT * FROM bank_account;
--- Run update in another session; check; then commit; check again
+-- Run update in another session; check;
+-- then commit; check again
+
+
+
+
+
 -- Dirty read will NOT happen; Yet, unrepeatable reads;
 
-# Set ISOLATION LEVEL to default
+
+
+
+# Set ISOLATION LEVEL to default: REPEATABLE READ
 SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 SELECT @@transaction_ISOLATION;
 
