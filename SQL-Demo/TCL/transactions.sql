@@ -193,8 +193,10 @@ START TRANSACTION;
 SELECT * FROM bank_account;
 -- Run update in another session; check;
 -- then commit; check again
-
-
+START TRANSACTION;
+UPDATE bank_account
+SET balance = balance - 1000
+WHERE name = 'Tom';
 
 
 
@@ -212,16 +214,16 @@ SELECT * FROM bank_account;
 
 -- Run insert in another session and commit;
 START TRANSACTION;
-INSERT INTO bank_account(name, balance)
-VALUES ('Daemon', 5000);
+INSERT INTO bank_account(cid, name, balance)
+VALUES (100, 'Daemon', 5000);
 COMMIT;
 
--- Check select
+-- Check select in this session
+SELECT * FROM bank_account WHERE cid = 100;
 SELECT * FROM bank_account WHERE name = 'Daemon';
-SELECT * FROM bank_account WHERE cid = ;
--- and insert in this session
-INSERT INTO bank_account(name, balance)
-VALUES ('Daemon', 5000);
+-- and check insert in this session
+INSERT INTO bank_account(cid, name, balance)
+VALUES (100, 'Daemon', 5000);
 
 
 -- Phantom read will happen during insertion
@@ -252,5 +254,7 @@ COMMIT;
 -- The insertion would fail b/c SERIALIZABLE
 -- Phantom read will not happen during insertion
 
+
+-- Clean the demo data
 DELETE FROM bank_account
 WHERE name = 'Real' OR name = 'Daemon';
