@@ -179,7 +179,9 @@ WHERE name = 'Tom';
 -- Check (the select query) again in this session.
 -- What will happen?
 
--- Dirty read will happen; so do other anomalies
+-- Dirty read happened; so can other anomalies happen
+-- Can continue demo with rollback and reverse operation
+-- two different sessions, respectively.
 
 ROLLBACK;
 
