@@ -12,7 +12,7 @@ CREATE TABLE Publisher(
 CREATE TABLE Book(
 	ISBN VARCHAR(10) PRIMARY KEY,
 	title VARCHAR(50),
-	year INTEGER(4),
+	year INT,
 	published_by VARCHAR(25),
 	previous_edition VARCHAR(10),
 	price DECIMAL(10,2),
