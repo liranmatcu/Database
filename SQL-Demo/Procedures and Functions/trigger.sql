@@ -44,6 +44,10 @@ BEGIN
 END //
 DELIMITER ;
 
+-- View existing triggers
+SHOW TRIGGERS;
+SHOW CREATE TRIGGER before_insertion_test_trigger;
+
 INSERT INTO test_trigger(t_note)
 VALUES ('First record');
 
@@ -69,9 +73,19 @@ VALUES ('Second record');
 SELECT * FROM test_trigger;
 SELECT * FROM test_trigger_log;
 
-# Create a trigger before insertion to employee table
-# terminate insertion if the new record/employee salary is higher than his/her manager
-USE testcompany;
+-- Delete triggers
+DROP TRIGGER IF EXISTS before_insertion_test_trigger;
+DROP TRIGGER IF EXISTS after_insertion_test_trigger;
+
+-- Exercise/Exercise: Create a trigger before insertion to employee table
+-- terminate insertion if the newly inserted employee's salary is higher than his/her manager
+
+CREATE TABLE IF NOT EXISTS employee
+AS
+SELECT employee_id, salary, manager_id
+FROM testcompany.employee;
+
+DROP TRIGGER IF EXISTS before_insertion_employee;
 
 DELIMITER //
 CREATE TRIGGER before_insertion_employee
@@ -87,9 +101,12 @@ BEGIN
         THEN SIGNAL SQLSTATE 'HY000'
         SET MESSAGE_TEXT = 'Salary higher than the manger';
     END IF;
-
 END //
 DELIMITER ;
+
+-- Test
+INSERT INTO employee
+VALUES (301, 15000, 205);
 
 
 
