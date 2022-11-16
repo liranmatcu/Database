@@ -3,9 +3,11 @@ USE demo;
 /*
 Trigger: A trigger is a stored procedure which automatically 
 invokes whenever a special event in the database occurs. 
+
 For example, a trigger can be invoked when a row is inserted 
 into a specified table or when certain table columns are being updated. 
 
+Syntax: 
 create trigger [trigger_name] 
 [before | after]  
 {insert | update | delete}  
@@ -66,3 +68,32 @@ VALUES ('Second record');
 
 SELECT * FROM test_trigger;
 SELECT * FROM test_trigger_log;
+
+# Create a trigger before insertion to employee table
+# terminate insertion if the new record/employee salary is higher than his/her manager
+USE testcompany;
+
+DELIMITER //
+CREATE TRIGGER before_insertion_employee
+BEFORE INSERT ON  employee
+FOR EACH ROW
+BEGIN
+    DECLARE mgr_salary DOUBLE;
+
+    SELECT salary INTO mgr_salary
+    FROM employee WHERE employee_id = NEW.manager_id;
+
+    IF NEW.salary > mgr_salary
+        THEN SIGNAL SQLSTATE 'HY000'
+        SET MESSAGE_TEXT = 'Salary higher than the manger';
+    END IF;
+
+END //
+DELIMITER ;
+
+
+
+
+
+
+
