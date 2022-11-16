@@ -17,7 +17,7 @@ USE COMPANY;
 -- Stored Procedure Creation
 /*
 	CREATE PROCEDURE procedure_name (IN|OUT|INOUT parameters)
-	BEGIN;
+	BEGIN
 	SQL statements;
 	END;
 */
