@@ -1,0 +1,161 @@
+[{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ec5"
+  },
+  "ISBN": "0133970779",
+  "title": "Fundamentals of DB 7",
+  "year": 2015,
+  "published_by": "Pearson",
+  "previous_edition": "0136086209",
+  "price": 98.3
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ec6"
+  },
+  "ISBN": "0136086209",
+  "title": "Fundamentals of DB 6",
+  "year": 2009,
+  "published_by": "Pearson",
+  "previous_edition": "0321369572",
+  "price": 172.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ec7"
+  },
+  "ISBN": "0321122267",
+  "title": "Fundamentals of DB 4",
+  "year": 2003,
+  "published_by": "Addison Wesley",
+  "previous_edition": "0805317554",
+  "price": 15.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ec8"
+  },
+  "ISBN": "0321369572",
+  "title": "Fundamentals of DB 5",
+  "year": 2008,
+  "published_by": "Addison Wesley",
+  "previous_edition": "0321122267",
+  "price": 162.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ec9"
+  },
+  "ISBN": "0805317481",
+  "title": "Fundamentals of DB 2",
+  "year": 1994,
+  "published_by": "ABC",
+  "previous_edition": "0806666666",
+  "price": 87.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68eca"
+  },
+  "ISBN": "0805317554",
+  "title": "Fundamentals of DB 3",
+  "year": 1999,
+  "published_by": "ABC",
+  "previous_edition": "0805317481",
+  "price": 12.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ecb"
+  },
+  "ISBN": "0806666611",
+  "title": "Software Requirements",
+  "year": 2013,
+  "published_by": "Springer",
+  "previous_edition": null,
+  "price": 99.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ecc"
+  },
+  "ISBN": "0806666612",
+  "title": "UML Modeling",
+  "year": 2000,
+  "published_by": "O Reiley",
+  "previous_edition": null,
+  "price": 89.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ecd"
+  },
+  "ISBN": "0806666613",
+  "title": "Machine Learning 2",
+  "year": 2008,
+  "published_by": "Addison Wesley",
+  "previous_edition": "0806666614",
+  "price": 109.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ece"
+  },
+  "ISBN": "0806666614",
+  "title": "Machine Learning 1",
+  "year": 2000,
+  "published_by": "Addison Wesley",
+  "previous_edition": null,
+  "price": 109.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ecf"
+  },
+  "ISBN": "0806666620",
+  "title": "Big Bang Theory",
+  "year": 1975,
+  "published_by": "Oxford Press",
+  "previous_edition": null,
+  "price": 19.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ed0"
+  },
+  "ISBN": "0806666622",
+  "title": "Java Programming",
+  "year": 2008,
+  "published_by": "Pearson",
+  "previous_edition": null,
+  "price": 59.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ed1"
+  },
+  "ISBN": "0806666666",
+  "title": "Fundamentals of DB 1",
+  "year": 1992,
+  "published_by": "ABC",
+  "previous_edition": null,
+  "price": 82.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ed2"
+  },
+  "ISBN": "9780073376",
+  "title": "OO Software Engineering",
+  "year": 2014,
+  "published_by": "McGraw Hill",
+  "previous_edition": null,
+  "price": 102.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ed3"
+  },
+  "ISBN": "9806667755",
+  "title": "Java Programming",
+  "year": 2007,
+  "published_by": "O Reiley",
+  "previous_edition": null,
+  "price": 29.5
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ed4"
+  },
+  "ISBN": "9897756820",
+  "title": "UML Modeling",
+  "year": 2018,
+  "published_by": "ABC",
+  "previous_edition": null,
+  "price": 289.5
+}]

@@ -1,0 +1,50 @@
+[{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ed5"
+  },
+  "name": "ABC",
+  "phone": "123456789",
+  "city": "Wichita Falls"
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ed6"
+  },
+  "name": "Addison Wesley",
+  "phone": "8175689789",
+  "city": "Dallas"
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ed7"
+  },
+  "name": "McGraw Hill",
+  "phone": "8175689542",
+  "city": "Fort Worth"
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ed8"
+  },
+  "name": "O Reiley",
+  "phone": "8885961258",
+  "city": "Chicago"
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68ed9"
+  },
+  "name": "Oxford Press",
+  "phone": "123456789",
+  "city": "London"
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68eda"
+  },
+  "name": "Pearson",
+  "phone": "8175689666",
+  "city": "OKC"
+},{
+  "_id": {
+    "$oid": "63764b938746e710f7c68edb"
+  },
+  "name": "Springer",
+  "phone": "9852365",
+  "city": "New York"
+}]
