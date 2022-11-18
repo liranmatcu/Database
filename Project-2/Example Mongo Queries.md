@@ -68,6 +68,12 @@ db.Book.updateOne(
    }
 )
 
+# Delete a document
+db.Book.deleteOne(
+   { "title":"MongoDB" }
+)
+
+
 
 # ObjectId is similar to "Primary Key"
 ObjectId()
