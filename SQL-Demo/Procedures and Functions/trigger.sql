@@ -79,7 +79,7 @@ SELECT * FROM demo_trigger_table_log;
 DROP TRIGGER IF EXISTS before_insertion_demo_trigger_table;
 DROP TRIGGER IF EXISTS after_insertion_demo_trigger_table;
 
--- Example:
+# Example:
 -- Create a trigger before insertion to employee table;
 -- terminate insertion if the newly inserted employee's salary
 -- is higher than his/her manager's salary
@@ -121,7 +121,8 @@ VALUES (301, 15000, 205);
  */
 
 
--- Exercise: Create a trigger that, after inserting a new record to employee table,
+#  Exercise:
+-- Create a trigger that, after inserting a new record to employee table,
 -- inserts the same record into the table named employee_backup
 
 # Create an empty table for backup
@@ -146,5 +147,13 @@ DELIMITER ;
 
 INSERT INTO employee
 VALUES (401, 5000, 205);
-
+-- Verify results
 SELECT * FROM employee_backup;
+
+-- Exercise Extension: after deleting a row from the employee table,
+-- insert the deleted row into another backup table (say emp_del_backup)
+-- Hint: the keyword that represents the deleted tuple would be OLD instead of NEW
+
+
+#  Exercise:
+-- Create a trigger that,
