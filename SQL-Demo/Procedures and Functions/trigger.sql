@@ -145,6 +145,7 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Test
 INSERT INTO employee
 VALUES (401, 5000, 205);
 -- Verify results
