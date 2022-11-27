@@ -55,7 +55,6 @@ SELECT * FROM demo_trigger_table;
 SELECT * FROM demo_trigger_table_log;
 
 
-
 # Create a trigger after insertion to demo_trigger_table table
 DELIMITER //
 CREATE TRIGGER after_insertion_demo_trigger_table
@@ -80,10 +79,10 @@ SELECT * FROM demo_trigger_table_log;
 DROP TRIGGER IF EXISTS before_insertion_demo_trigger_table;
 DROP TRIGGER IF EXISTS after_insertion_demo_trigger_table;
 
--- Exercise/Example:
+-- Example:
 -- Create a trigger before insertion to employee table;
 -- terminate insertion if the newly inserted employee's salary
--- is higher than his/her manager
+-- is higher than his/her manager's salary
 
 DROP TABLE IF EXISTS employee;
 CREATE TABLE IF NOT EXISTS employee
@@ -114,9 +113,38 @@ DELIMITER ;
 INSERT INTO employee
 VALUES (301, 15000, 205);
 
+/*
+ Benefits of triggers:
+ - allow basic auditing and validation on insert or update data
+ - make sure certain events always happen when data is inserted, updated or deleted
+ - implement referential integrity across tables (e.g., like ON DELETE SET NULL)
+ */
 
 
+-- Exercise: Create a trigger that, after inserting a new record to employee table,
+-- inserts the same record into the table named employee_backup
 
+# Create an empty table for backup
+DROP TABLE IF EXISTS employee_backup;
+CREATE TABLE IF NOT EXISTS employee_backup
+AS
+SELECT employee_id, salary, manager_id
+FROM testcompany.employee
+WHERE 1 = 2;
 
+DROP TRIGGER IF EXISTS emp_insertion_backup;
 
+DELIMITER //
+CREATE TRIGGER emp_insertion_backup
+AFTER INSERT ON  employee
+FOR EACH ROW
+BEGIN
+    INSERT INTO employee_backup
+        VALUES (NEW.employee_id, NEW.salary, NEW.manager_id);
+END //
+DELIMITER ;
 
+INSERT INTO employee
+VALUES (401, 5000, 205);
+
+SELECT * FROM employee_backup;
