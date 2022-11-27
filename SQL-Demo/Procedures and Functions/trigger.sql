@@ -180,8 +180,3 @@ SELECT * FROM emp_backup2;
 
 -- What happens if
 DELETE FROM employee;
-
-
-
-#  Exercise:
--- Create a trigger that,
