@@ -150,9 +150,37 @@ VALUES (401, 5000, 205);
 -- Verify results
 SELECT * FROM employee_backup;
 
--- Exercise Extension: after deleting a row from the employee table,
--- insert the deleted row into another backup table (say emp_del_backup)
+-- Exercise Extension: before deleting a row from the employee table,
+-- insert the to-be-deleted row into another backup table (say emp_backup2)
 -- Hint: the keyword that represents the deleted tuple would be OLD instead of NEW
+
+DROP TABLE IF EXISTS emp_backup2;
+CREATE TABLE IF NOT EXISTS emp_backup2
+AS
+SELECT employee_id, salary, manager_id
+FROM testcompany.employee
+WHERE 1 = 2;
+
+DROP TRIGGER IF EXISTS emp_deletion_backup;
+DELIMITER //
+CREATE TRIGGER emp_deletion_backup
+BEFORE DELETE ON employee
+FOR EACH ROW
+BEGIN
+    INSERT INTO emp_backup2
+        VALUES (OLD.employee_id, OLD.salary, OLD.manager_id);
+END //
+DELIMITER ;
+
+-- Test
+DELETE FROM employee
+WHERE employee_id = 102;
+-- Verify
+SELECT * FROM emp_backup2;
+
+-- What happens if
+DELETE FROM employee;
+
 
 
 #  Exercise:
