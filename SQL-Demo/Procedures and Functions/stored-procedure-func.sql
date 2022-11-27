@@ -217,6 +217,30 @@ DELIMITER ;
 -- Call function via select
 SELECT fun_show_mgr_name('John');
 
+
+-- Use a local declared variable in function
+DROP FUNCTION IF EXISTS fun_show_mgr_name2;
+DELIMITER  //
+CREATE FUNCTION fun_show_mgr_name2(e_f_name VARCHAR(15))
+RETURNS VARCHAR(15)
+    DETERMINISTIC CONTAINS SQL READS SQL DATA
+BEGIN
+    DECLARE mgr_name VARCHAR(15);
+
+    SELECT Fname INTO mgr_name
+    FROM EMPLOYEE WHERE Ssn = (
+            SELECT Super_ssn FROM EMPLOYEE
+            WHERE Fname = e_f_name
+            LIMIT 1
+            );
+
+    RETURN mgr_name;
+END //
+DELIMITER ;
+-- Call function via select
+SELECT fun_show_mgr_name2('John');
+
+
 -- Exercise, replace the following procedure with a functions
 DELIMITER  //
 CREATE PROCEDURE get_min_salary(OUT min_sal DECIMAL(10,2))
