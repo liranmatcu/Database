@@ -17,69 +17,75 @@ on [table_name]
 */
 
 # Prep work
-DROP TABLE IF EXISTS test_trigger;
-DROP TABLE IF EXISTS test_trigger_log;
+DROP TABLE IF EXISTS demo_trigger_table;
+DROP TABLE IF EXISTS demo_trigger_table_log;
 
-CREATE TABLE IF NOT EXISTS test_trigger (
+CREATE TABLE IF NOT EXISTS demo_trigger_table (
     tid INT PRIMARY KEY AUTO_INCREMENT,
-    t_note VARCHAR(100)
+    t_note VARCHAR(150)
 );
 
-CREATE TABLE IF NOT EXISTS test_trigger_log (
+CREATE TABLE IF NOT EXISTS demo_trigger_table_log (
     lid INT PRIMARY KEY AUTO_INCREMENT,
-    t_log VARCHAR(100)
+    t_log VARCHAR(150)
 )
 
-SELECT * FROM test_trigger;
-SELECT * FROM test_trigger_log;
+SELECT * FROM demo_trigger_table;
+SELECT * FROM demo_trigger_table_log;
 
-# Create a trigger before insertion to test_trigger table
+# Create a trigger before insertion to demo_trigger_table table
 DELIMITER //
-CREATE TRIGGER before_insertion_test_trigger
-BEFORE INSERT ON  test_trigger
+CREATE TRIGGER before_insertion_demo_trigger_table
+BEFORE INSERT ON  demo_trigger_table
 FOR EACH ROW
 BEGIN
-    INSERT INTO test_trigger_log(t_log)
-    VALUES ('Before inserting a new row in test_trigger');
+    INSERT INTO demo_trigger_table_log(t_log)
+    VALUES ('Log Event: Before inserting a new row in demo_trigger_table');
 END //
 DELIMITER ;
 
 -- View existing triggers
 SHOW TRIGGERS;
-SHOW CREATE TRIGGER before_insertion_test_trigger;
+SHOW CREATE TRIGGER before_insertion_demo_trigger_table;
 
-INSERT INTO test_trigger(t_note)
-VALUES ('First record');
+INSERT INTO demo_trigger_table(t_note)
+VALUES ('First record in the demo table');
 
-SELECT * FROM test_trigger;
-SELECT * FROM test_trigger_log;
+SELECT * FROM demo_trigger_table;
+SELECT * FROM demo_trigger_table_log;
 
 
 
-# Create a trigger after insertion to test_trigger table
+# Create a trigger after insertion to demo_trigger_table table
 DELIMITER //
-CREATE TRIGGER after_insertion_test_trigger
-AFTER INSERT ON  test_trigger
+CREATE TRIGGER after_insertion_demo_trigger_table
+AFTER INSERT ON  demo_trigger_table
 FOR EACH ROW
 BEGIN
-    INSERT INTO test_trigger_log(t_log)
-    VALUES ('After inserting a new row in test_trigger');
+    SELECT count(*)+1 INTO @num_item FROM demo_trigger_table;
+    INSERT INTO demo_trigger_table_log(t_log)
+    VALUES (concat('Log Event: After inserting the ',
+                    @num_item,
+                    'th row in demo_trigger_table'));
 END //
 DELIMITER ;
 
-INSERT INTO test_trigger(t_note)
+INSERT INTO demo_trigger_table(t_note)
 VALUES ('Second record');
 
-SELECT * FROM test_trigger;
-SELECT * FROM test_trigger_log;
+SELECT * FROM demo_trigger_table;
+SELECT * FROM demo_trigger_table_log;
 
 -- Delete triggers
-DROP TRIGGER IF EXISTS before_insertion_test_trigger;
-DROP TRIGGER IF EXISTS after_insertion_test_trigger;
+DROP TRIGGER IF EXISTS before_insertion_demo_trigger_table;
+DROP TRIGGER IF EXISTS after_insertion_demo_trigger_table;
 
--- Exercise/Exercise: Create a trigger before insertion to employee table
--- terminate insertion if the newly inserted employee's salary is higher than his/her manager
+-- Exercise/Example:
+-- Create a trigger before insertion to employee table;
+-- terminate insertion if the newly inserted employee's salary
+-- is higher than his/her manager
 
+DROP TABLE IF EXISTS employee;
 CREATE TABLE IF NOT EXISTS employee
 AS
 SELECT employee_id, salary, manager_id
