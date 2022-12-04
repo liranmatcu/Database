@@ -65,10 +65,11 @@ BEGIN
     REPEAT
         SET i = i + 1;
         INSERT INTO course (course_id, course_name )
-        VALUES (rand_num(10000,10100), rand_string(6));
+        VALUES (rand_num(10000,10100),
+                rand_string(6));
         UNTIL i = max_num
     END REPEAT;
-COMMIT;
+    COMMIT;
 END //
 DELIMITER ;
 
@@ -98,15 +99,18 @@ CALL insert_stu(1000000);
 
 SELECT count(*) FROM student_info;
 
-# Query before indexing
+# Query based on student_id before indexing
 SELECT * FROM student_info
 WHERE student_id = 123456;
 
+# Create index on student_id
 ALTER TABLE student_info
 ADD INDEX idx_stu_id(student_id);
+SHOW INDEX FROM student_info;
 
-# Query after indexing
+# Query after index creation
 SELECT * FROM student_info
 WHERE student_id = 123456;
 
+# Drop the index
 DROP INDEX idx_stu_id ON student_info;
