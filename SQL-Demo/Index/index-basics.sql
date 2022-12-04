@@ -19,18 +19,22 @@ CREATE TABLE IF NOT EXISTS emp_index_demo(
 
 SHOW INDEXES FROM emp_index_demo;
 
-# Explicit index creation on table creation
+# Explicit index creation:
+# Create indexes for a table at the time of creation
+/*
+ [UNIQUE | FULLTEXT | SPATIAL] INDEX index_name (column_list)
+ */
 DROP TABLE IF EXISTS book;
 CREATE TABLE IF NOT EXISTS book(
     book_id INT,
     book_name VARCHAR(100),
     book_author VARCHAR(100),
     book_comments VARCHAR(300),
-    INDEX idx_name(book_name)
+    INDEX idx_name(book_name) # A simple index on book_name
 ) ;
 SHOW INDEXES FROM book;
 
-# Performance analysis
+# Execution plan via EXPLAIN
 EXPLAIN SELECT * FROM book WHERE book_name = 'MySQL';
 EXPLAIN SELECT * FROM book WHERE book_author = 'John Doe';
 
@@ -40,11 +44,14 @@ CREATE TABLE IF NOT EXISTS book(
     book_name VARCHAR(100),
     book_author VARCHAR(100),
     book_comments VARCHAR(300),
-    UNIQUE INDEX idx_comments(book_comments)
+    UNIQUE INDEX idx_comments(book_comments) # A UNIQUE index on book_comments
 ) ;
 SHOW INDEXES FROM book;
 
-
+#
+/*
+ CREATE INDEX index_name ON table_name (column_list)
+ */
 
 
 
