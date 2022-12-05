@@ -99,28 +99,31 @@ CALL insert_stu(1000000);
 -- Check how many records inserted
 SELECT count(*) FROM student_info;
 
--- Make the index invisible
-ALTER TABLE student_info ALTER INDEX idx_stu_id INVISIBLE ;
-
-# Query based on student_id without indexing
-SELECT * FROM student_info
-WHERE student_id = 123456; # About 763 ms
-
-SELECT student_id, count(*) FROM student_info
-GROUP BY student_id LIMIT 100; # About 3 S 590 ms
-
-SELECT student_id, count(*) FROM student_info
-GROUP BY student_id ORDER BY student_id LIMIT 100; # About 3 S 800 ms
-
 # Create index on student_id
 ALTER TABLE student_info
 ADD INDEX idx_stu_id(student_id);
 SHOW INDEX FROM student_info;
 
+-- Make the index invisible
+ALTER TABLE student_info ALTER INDEX idx_stu_id INVISIBLE ;
+SHOW INDEX FROM student_info;
+
+# Query based on student_id without indexing
+EXPLAIN SELECT * FROM student_info
+WHERE student_id = 123456; # About 763 ms
+
+EXPLAIN SELECT student_id, count(*) FROM student_info
+GROUP BY student_id LIMIT 100; # About 3 S 590 ms
+
+EXPLAIN SELECT student_id, count(*) FROM student_info
+GROUP BY student_id ORDER BY student_id LIMIT 100; # About 3 S 800 ms
+
+EXPLAIN SELECT DISTINCT(student_id) FROM student_info; # About 200 ms
 
 # Query with indexing on student_id
 -- Make the index visible
 ALTER TABLE student_info ALTER INDEX idx_stu_id VISIBLE ;
+SHOW INDEX FROM student_info;
 
 SELECT * FROM student_info
 WHERE student_id = 123456; # About 180 ms
@@ -129,7 +132,24 @@ SELECT student_id, count(*) FROM student_info
 GROUP BY student_id LIMIT 100; # About 181 ms
 
 SELECT student_id, count(*) FROM student_info
-GROUP BY student_id ORDER BY student_id LIMIT 100; # About 320 ms
+GROUP BY student_id ORDER BY student_id LIMIT 100; # About 180 ms
+
+SELECT DISTINCT(student_id) FROM student_info; # About 185 ms
+
+
+# More complex scenarios
+SELECT student_id, count(*) FROM student_info
+GROUP BY student_id
+ORDER BY create_time DESC
+LIMIT 100; # Should be even longer
+-- Need to modify sql_mode to exec the above SQL statement
+SELECT @@sql_mode;
+
+-- How to create index?
+CREATE INDEX idx_id_time ON student_info(student_id, create_time DESC);
+-- Would the following work?
+CREATE INDEX idx_time_id ON student_info(create_time DESC, student_id);
+
 
 # Drop the index
 # DROP INDEX idx_stu_id ON student_info;
