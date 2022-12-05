@@ -103,7 +103,16 @@ CREATE TABLE IF NOT EXISTS book(
 ) ;
 
 CREATE INDEX idx_name ON book(book_name);
-CREATE UNIQUE INDEX idx_comments ON book(book_comments);
+
+CREATE UNIQUE INDEX idx_bid ON book(book_id);
+ALTER TABLE book ADD UNIQUE INDEX idx_bid (book_id);
+
+CREATE FULLTEXT INDEX idx_comments ON book(book_comments(50));
+
+CREATE FULLTEXT INDEX mul_idx_aut_com ON book(book_author, book_comments(50));
+ALTER TABLE book ADD FULLTEXT INDEX
+    mul_idx_aut_com (book_author, book_comments(50));
+
 SHOW INDEX FROM book;
 
 ALTER TABLE book
@@ -112,7 +121,11 @@ SHOW INDEX FROM book;
 
 -- Delete indexes
 DROP INDEX idx_name ON book;
+DROP INDEX idx_bid ON book;
+
 ALTER TABLE book DROP INDEX idx_comments;
+ALTER TABLE book DROP INDEX mul_idx_aut_com;
+
 ALTER TABLE book DROP PRIMARY KEY;
 
 SHOW INDEX FROM book;
