@@ -1,7 +1,7 @@
 CREATE DATABASE idx_demo_db;
 USE idx_demo_db;
 
-# Create the student table
+# Create the student info table
 CREATE TABLE `student_info` (
     `id` INT ( 11 ) NOT NULL AUTO_INCREMENT,
     `student_id` INT NOT NULL,
@@ -93,24 +93,43 @@ END //
 DELIMITER ;
 
 
-# Can the procedures
+# Call the procedures to populate the two tables
 CALL insert_course(100);
 CALL insert_stu(1000000);
-
+-- Check how many records inserted
 SELECT count(*) FROM student_info;
 
-# Query based on student_id before indexing
+-- Make the index invisible
+ALTER TABLE student_info ALTER INDEX idx_stu_id INVISIBLE ;
+
+# Query based on student_id without indexing
 SELECT * FROM student_info
-WHERE student_id = 123456;
+WHERE student_id = 123456; # About 763 ms
+
+SELECT student_id, count(*) FROM student_info
+GROUP BY student_id LIMIT 100; # About 3 S 590 ms
+
+SELECT student_id, count(*) FROM student_info
+GROUP BY student_id ORDER BY student_id LIMIT 100; # About 3 S 800 ms
 
 # Create index on student_id
 ALTER TABLE student_info
 ADD INDEX idx_stu_id(student_id);
 SHOW INDEX FROM student_info;
 
-# Query after index creation
+
+# Query with indexing on student_id
+-- Make the index visible
+ALTER TABLE student_info ALTER INDEX idx_stu_id VISIBLE ;
+
 SELECT * FROM student_info
-WHERE student_id = 123456;
+WHERE student_id = 123456; # About 180 ms
+
+SELECT student_id, count(*) FROM student_info
+GROUP BY student_id LIMIT 100; # About 181 ms
+
+SELECT student_id, count(*) FROM student_info
+GROUP BY student_id ORDER BY student_id LIMIT 100; # About 320 ms
 
 # Drop the index
-DROP INDEX idx_stu_id ON student_info;
+# DROP INDEX idx_stu_id ON student_info;
