@@ -87,6 +87,8 @@ SHOW INDEXES FROM book;
 EXPLAIN SELECT * FROM book WHERE book_name = 'MySQL' AND book_author = 'John Doe';
 EXPLAIN SELECT * FROM book WHERE book_author = 'John Doe';
 
+# What happens if one the column is dropped?
+ALTER TABLE book DROP COLUMN book_author;
 
 
 /*
@@ -108,6 +110,8 @@ CREATE UNIQUE INDEX idx_bid ON book(book_id);
 ALTER TABLE book ADD UNIQUE INDEX idx_bid (book_id);
 
 CREATE FULLTEXT INDEX idx_comments ON book(book_comments(50));
+# Note that search a fulltext column should use MATCH () AGAINST ()
+# e.g., from book where MATCH (book_comments) AGAINST ('Great book!')
 
 CREATE FULLTEXT INDEX mul_idx_aut_com ON book(book_author, book_comments(50));
 ALTER TABLE book ADD FULLTEXT INDEX
