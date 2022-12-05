@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS book(
     book_comments VARCHAR(300),
     UNIQUE INDEX idx_comments(book_comments) # A UNIQUE index on book_comments
 ) ;
-SHOW INDEXES FROM book;
+SHOW INDEX FROM book;
 
 # Create a multi-column index
 DROP TABLE IF EXISTS book;
@@ -82,6 +82,11 @@ CREATE TABLE IF NOT EXISTS book(
     INDEX idx_multi(book_name, book_author, book_comments)
 ) ;
 SHOW INDEXES FROM book;
+
+# Check execution plan via EXPLAIN
+EXPLAIN SELECT * FROM book WHERE book_name = 'MySQL' AND book_author = 'John Doe';
+EXPLAIN SELECT * FROM book WHERE book_author = 'John Doe';
+
 
 
 /*
@@ -109,5 +114,6 @@ SHOW INDEX FROM book;
 DROP INDEX idx_name ON book;
 ALTER TABLE book DROP INDEX idx_comments;
 ALTER TABLE book DROP PRIMARY KEY;
+
 SHOW INDEX FROM book;
 
