@@ -134,13 +134,17 @@ ALTER TABLE book DROP PRIMARY KEY;
 
 SHOW INDEX FROM book;
 
+
+# New index features after MySQL 8.0
+
 # Index ordering: DESC and ASC
 CREATE TABLE test1 (
     c1 INT,
     c2 INT,
     INDEX idx_w_order(c1 ASC, c2 DESC )
 );
-SELECT * FROM test1 ORDER BY c1 ASC, c2 DESC;
+EXPLAIN SELECT * FROM test1 ORDER BY c1 ASC, c2 DESC;
+EXPLAIN SELECT * FROM test1 ORDER BY c1 ASC, c2 ASC;
 
 # Invisible indexes (soft deletion)
 -- Add indivisible indexes at table creation
