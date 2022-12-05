@@ -118,7 +118,7 @@ GROUP BY student_id LIMIT 100; # About 3 S 590 ms
 EXPLAIN SELECT student_id, count(*) FROM student_info
 GROUP BY student_id ORDER BY student_id LIMIT 100; # About 3 S 800 ms
 
-EXPLAIN SELECT DISTINCT(student_id) FROM student_info; # About 200 ms
+EXPLAIN SELECT DISTINCT(student_id) FROM student_info; # About 350 ms
 
 # Query with indexing on student_id
 -- Make the index visible
@@ -134,7 +134,7 @@ GROUP BY student_id LIMIT 100; # About 181 ms
 SELECT student_id, count(*) FROM student_info
 GROUP BY student_id ORDER BY student_id LIMIT 100; # About 180 ms
 
-SELECT DISTINCT(student_id) FROM student_info; # About 185 ms
+SELECT DISTINCT(student_id) FROM student_info; # About 180 ms
 
 
 # More complex scenarios
