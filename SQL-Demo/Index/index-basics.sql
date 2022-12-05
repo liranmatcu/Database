@@ -105,7 +105,7 @@ ALTER TABLE book
 ADD PRIMARY KEY (book_id);
 SHOW INDEX FROM book;
 
--- Drop indexes
+-- Delete indexes
 DROP INDEX idx_name ON book;
 ALTER TABLE book DROP INDEX idx_comments;
 ALTER TABLE book DROP PRIMARY KEY;
