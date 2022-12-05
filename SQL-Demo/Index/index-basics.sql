@@ -87,7 +87,7 @@ SHOW INDEXES FROM book;
 EXPLAIN SELECT * FROM book WHERE book_name = 'MySQL' AND book_author = 'John Doe';
 EXPLAIN SELECT * FROM book WHERE book_author = 'John Doe';
 
-# What happens if one the column is dropped?
+# What happens if one of the columns is dropped?
 ALTER TABLE book DROP COLUMN book_author;
 
 
