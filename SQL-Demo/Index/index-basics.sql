@@ -141,3 +141,40 @@ CREATE TABLE test1 (
     INDEX idx_w_order(c1 ASC, c2 DESC )
 );
 SELECT * FROM test1 ORDER BY c1 ASC, c2 DESC;
+
+# Invisible indexes (soft deletion)
+-- Add indivisible indexes at table creation
+DROP TABLE IF EXISTS book;
+CREATE TABLE IF NOT EXISTS book(
+    book_id INT,
+    book_name VARCHAR(100),
+    book_author VARCHAR(100),
+    book_comments VARCHAR(300),
+    INDEX idx_book_name(book_name) INVISIBLE
+) ;
+SHOW INDEX FROM book;
+
+-- Add indivisible indexes after table creation
+DROP TABLE IF EXISTS book;
+CREATE TABLE IF NOT EXISTS book(
+    book_id INT,
+    book_name VARCHAR(100),
+    book_author VARCHAR(100),
+    book_comments VARCHAR(300)
+) ;
+
+ALTER TABLE book
+    ADD UNIQUE INDEX idx_book_name(book_name) INVISIBLE ;
+
+CREATE INDEX idx_book_author ON book(book_author) INVISIBLE ;
+
+SHOW INDEX FROM book;
+
+EXPLAIN SELECT * FROM book WHERE book_name = 'MySQL';
+
+-- Alter indexes to be invisible after creation
+CREATE INDEX idx_book_comments ON book(book_comments);
+EXPLAIN SELECT * FROM book WHERE book_comments = 'Great Book';
+
+ALTER TABLE book ALTER INDEX idx_book_comments INVISIBLE ;
+SHOW INDEX FROM book;
