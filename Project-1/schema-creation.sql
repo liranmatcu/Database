@@ -15,7 +15,7 @@ CREATE TABLE Book(
 	year INT,
 	published_by VARCHAR(25),
 	previous_edition VARCHAR(10),
-	price DECIMAL(10,2),
+	price FLOAT,
 	FOREIGN KEY(published_by) REFERENCES Publisher(name),
 	FOREIGN KEY(previous_edition) REFERENCES Book(ISBN)
 );
